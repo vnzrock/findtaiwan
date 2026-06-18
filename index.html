@@ -306,7 +306,7 @@
   }
 
   /* === Desktop Hero (handoff: Desktop Hero AD) — phone cycler, turning globe, drifting reels === */
-  #hero-desktop{position:relative;min-height:100vh;overflow:hidden;}
+  #hero-desktop{position:relative;min-height:100vh;overflow:hidden;background:linear-gradient(160deg,#2f93f5 0%,#1574e6 55%,#0f63cf 100%);}
   #hero-desktop .hd-grid{position:absolute;inset:0;z-index:1;pointer-events:none;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.05) 0 1px,transparent 1px 72px),repeating-linear-gradient(90deg,rgba(255,255,255,0.05) 0 1px,transparent 1px 72px);}
   #hero-desktop .hd-deco{position:absolute;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:1240px;height:100%;padding:0 clamp(28px,5vw,64px);pointer-events:none;z-index:2;}
   #hero-desktop .hd-globe{position:absolute;top:50%;right:-40px;transform:translateY(-50%);width:clamp(540px,52vw,860px);aspect-ratio:1;opacity:0.62;}
@@ -403,11 +403,11 @@
 </div>
 
 <!-- HERO -->
-<section id="top" style="position:relative;background:linear-gradient(160deg,#2f93f5 0%,#1574e6 55%,#0f63cf 100%);overflow:hidden;">
-  <canvas id="hero-particles" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></canvas>
+<section id="top" style="position:relative;background:linear-gradient(135deg,#2f93f5 0%,#1574e6 60%,#0f63cf 100%);overflow:hidden;">
 
   <!-- ===== DESKTOP HERO (handoff: Desktop Hero AD — phone cycler, turning globe, drifting reels) ===== -->
   <div id="hero-desktop">
+    <canvas id="hero-particles" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></canvas>
 
     <!-- grid backdrop -->
     <div class="hd-grid" aria-hidden="true"></div>
