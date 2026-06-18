@@ -1730,6 +1730,13 @@ function setupOffscreenPause() {
 function setupLazyVideo() {
   const iframe = document.getElementById('campaign-iframe');
   if (!iframe || !iframe.dataset.src) return;
+  // On mobile: start 5s in, hide the controls and make it non-interactive (plays like a background reel)
+  const isMobile = window.matchMedia('(max-width:768px)').matches || window.matchMedia('(pointer:coarse)').matches;
+  if (isMobile) {
+    iframe.dataset.src += '&start=5&controls=0&disablekb=1&fs=0&iv_load_policy=3';
+    iframe.style.pointerEvents = 'none';
+    iframe.setAttribute('tabindex', '-1');
+  }
   const load = () => { if (iframe.dataset.src) { iframe.src = iframe.dataset.src; delete iframe.dataset.src; } };
   if (!('IntersectionObserver' in window)) { load(); return; }
   const io = new IntersectionObserver((entries) => {
