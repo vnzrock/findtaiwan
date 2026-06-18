@@ -222,116 +222,56 @@
   @media(max-width:768px){
     #nav-burger{display:flex;}
     #nav-desktop-items{display:none!important;}
-    #top{min-height:100dvh;display:flex;flex-direction:column;}
-    #hero-thumbs{display:none!important;}
+    #top{min-height:100svh;padding:0!important;overflow:hidden;}
     #hero-mobile-cards{display:none!important;}
     #hero-filmstrip{display:none!important;}
-    #hm-bg{display:block!important;}
-    #hm-phone{display:block!important;}
-    #hm-ticker{display:flex!important;}
-    #hero-blob{width:160px!important;height:160px!important;bottom:-40px!important;right:-40px!important;opacity:0.55!important;}
-    #hero-inner{flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding-top:96px!important;padding-bottom:50px!important;padding-right:38%!important;}
-    #hero-logo-img{display:none!important;}
-    #hero-kicker{margin-bottom:4px;}
-    #hero-title-row{flex-direction:column!important;gap:10px!important;margin-top:20px!important;}
-    #hero-title{font-size:clamp(30px,9vw,44px)!important;line-height:1.12!important;}
-    #hero-cta{margin-top:22px!important;gap:10px!important;flex-direction:column!important;}
-    #hero-cta a{text-align:center!important;}
-    #hero-prize-box{flex-direction:column!important;gap:6px!important;align-items:flex-start!important;margin-top:20px!important;padding:12px 16px!important;}
-    #hero-prize-sep{display:none!important;}
     section{scroll-margin-top:66px;}
     .about-gallery{grid-template-columns:repeat(2,1fr)!important;}
     .about-gallery .ag-wide{grid-column:span 2!important;}
     .about-gallery .ag-cell{grid-column:span 1!important;}
   }
 
-  /* === mobile hero AD: phone cycler + reel drift + dust motes === */
-  #hm-bg,#hm-phone,#hm-ticker{display:none;}
+  /* === Mobile Hero AD — phone cycler, drifting reel cards, turning globe === */
+  /* (hidden by default; enabled on phones / touch via media queries below)   */
+  #mh{display:none;}
 
-  /* ── Background container ── */
-  #hm-bg{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
+  /* drifting background reel cards */
+  @keyframes ad-driftA { 0%,100% { transform: translate(0,0) rotate(-6deg); } 50% { transform: translate(8px,-22px) rotate(-3deg); } }
+  @keyframes ad-driftB { 0%,100% { transform: translate(0,0) rotate(7deg); } 50% { transform: translate(-10px,-30px) rotate(4deg); } }
+  @keyframes ad-driftC { 0%,100% { transform: translate(0,0) rotate(-3deg); } 50% { transform: translate(-6px,-18px) rotate(-6deg); } }
+  @keyframes ad-driftD { 0%,100% { transform: translate(0,0) rotate(5deg); } 50% { transform: translate(10px,-24px) rotate(8deg); } }
+  @keyframes ad-driftE { 0%,100% { transform: translate(0,0) rotate(-4deg); } 50% { transform: translate(5px,-16px) rotate(-2deg); } }
+  @keyframes ad-pulse  { 0%,100% { box-shadow: 0 0 0 0 rgba(56,229,140,0.55); } 60% { box-shadow: 0 0 0 12px rgba(56,229,140,0); } }
+  @keyframes ad-rise   { 0% { transform: translateY(100%); opacity: 0; } 12%,88% { opacity: 0.55; } 100% { transform: translateY(-180%); opacity: 0; } }
+  @keyframes ad-globe  { from { transform: translateX(0); } to { transform: translateX(-400px); } }
 
-  /* ── Drifting film reel cards ── */
-  .hm-reel{position:absolute;border-radius:9px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.38);}
-  .hm-reel img{width:100%;display:block;object-fit:cover;aspect-ratio:16/10;}
-  .hm-rf{height:8px;background:rgba(5,10,40,0.82);display:flex;align-items:center;gap:3px;padding:0 5px;}
-  .hm-rp{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.22);flex:none;}
-  .hm-r1{width:18vw;bottom:15%;left:6%;opacity:0.6;animation:hmRD1 20s linear infinite;}
-  .hm-r2{width:15vw;bottom:5%;left:55%;opacity:0.5;animation:hmRD2 24s linear infinite 5s;}
-  .hm-r3{width:20vw;bottom:8%;left:25%;opacity:0.55;animation:hmRD3 22s linear infinite 2s;}
-  .hm-r4{width:14vw;bottom:20%;left:70%;opacity:0.5;animation:hmRD4 28s linear infinite 9s;}
-  .hm-r5{width:12vw;bottom:2%;left:12%;opacity:0.45;animation:hmRD5 18s linear infinite 7s;}
-  @keyframes hmRD1{0%{transform:translate(0,0) rotate(-5deg)}100%{transform:translate(6vw,-115vh) rotate(4deg)}}
-  @keyframes hmRD2{0%{transform:translate(0,0) rotate(7deg)}100%{transform:translate(-4vw,-110vh) rotate(-3deg)}}
-  @keyframes hmRD3{0%{transform:translate(0,0) rotate(-3deg)}100%{transform:translate(-8vw,-112vh) rotate(6deg)}}
-  @keyframes hmRD4{0%{transform:translate(0,0) rotate(9deg)}100%{transform:translate(4vw,-118vh) rotate(-5deg)}}
-  @keyframes hmRD5{0%{transform:translate(0,0) rotate(-7deg)}100%{transform:translate(5vw,-108vh) rotate(3deg)}}
+  /* inner phone reel cycling — 4 reels × 4s each = 16s loop */
+  @keyframes ad-reel1 { 0%, 22% { opacity: 1; transform: translateY(0) scale(1); } 25%, 100% { opacity: 0; transform: translateY(-24px) scale(0.96); } }
+  @keyframes ad-reel2 { 0%, 22% { opacity: 0; transform: translateY(24px) scale(0.96); } 25%, 47% { opacity: 1; transform: translateY(0) scale(1); } 50%, 100% { opacity: 0; transform: translateY(-24px) scale(0.96); } }
+  @keyframes ad-reel3 { 0%, 47% { opacity: 0; transform: translateY(24px) scale(0.96); } 50%, 72% { opacity: 1; transform: translateY(0) scale(1); } 75%, 100% { opacity: 0; transform: translateY(-24px) scale(0.96); } }
+  @keyframes ad-reel4 { 0%, 72% { opacity: 0; transform: translateY(24px) scale(0.96); } 75%, 97% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-24px) scale(0.96); } }
+  /* slow Ken-Burns zoom on the active reel photo */
+  @keyframes ad-kb1 { 0%,25% { transform: scale(1.08) translate(-1%,-1%); } 100% { transform: scale(1.14) translate(2%,1%); } }
+  @keyframes ad-kb2 { 0%,25% { transform: scale(1.08) translate(1%,-1%); } 100% { transform: scale(1.14) translate(-2%,2%); } }
+  @keyframes ad-kb3 { 0%,25% { transform: scale(1.08) translate(-1%,1%); } 100% { transform: scale(1.14) translate(2%,-2%); } }
+  @keyframes ad-kb4 { 0%,25% { transform: scale(1.08) translate(1%,1%); } 100% { transform: scale(1.14) translate(-2%,-1%); } }
 
-  /* ── Dust motes ── */
-  .hm-mote{position:absolute;border-radius:50%;background:rgba(255,255,255,0.7);}
-  .hm-ma{animation:hmMA 7s ease-in-out infinite;}
-  .hm-mb{animation:hmMB 9.5s ease-in-out infinite;}
-  .hm-mc{animation:hmMC 11s ease-in-out infinite;}
-  .hm-md{animation:hmMD 8.2s ease-in-out infinite;}
-  .hm-me{animation:hmME 13s ease-in-out infinite;}
-  @keyframes hmMA{0%,100%{transform:translate(0,0);opacity:.65}50%{transform:translate(9px,-16px);opacity:1}}
-  @keyframes hmMB{0%,100%{transform:translate(0,0);opacity:.4}50%{transform:translate(-11px,12px);opacity:.8}}
-  @keyframes hmMC{0%,100%{transform:translate(0,0);opacity:.55}50%{transform:translate(13px,10px);opacity:.25}}
-  @keyframes hmMD{0%,100%{transform:translate(0,0);opacity:.7}50%{transform:translate(-8px,-18px);opacity:.45}}
-  @keyframes hmME{0%,100%{transform:translate(0,0);opacity:.35}50%{transform:translate(15px,-8px);opacity:.9}}
+  @keyframes ad-shimmer { 0% { transform: translateX(-120%) skewX(-20deg); } 100% { transform: translateX(280%) skewX(-20deg); } }
+  @keyframes ad-progress { 0% { width: 0; } 100% { width: 100%; } }
+  @keyframes ad-heart  { 0%,100% { transform: scale(1); } 40% { transform: scale(1.28); } }
 
-  /* ── Phone mockup ── */
-  #hm-phone{position:absolute;top:50%;right:3%;transform:translateY(-50%);width:min(29vw,124px);z-index:4;pointer-events:none;}
-  #hm-pf{position:relative;border-radius:18px;border:2.5px solid rgba(255,255,255,0.68);background:#080e20;box-shadow:0 24px 54px rgba(0,0,0,0.58),inset 0 0 0 1px rgba(255,255,255,0.1);overflow:hidden;aspect-ratio:9/19;}
-  #hm-ps{position:relative;width:100%;height:100%;overflow:hidden;}
-  .hm-slide{position:absolute;inset:0;opacity:0;}
-  .hm-slide img{width:100%;height:100%;object-fit:cover;display:block;}
-  #hm-notch{position:absolute;top:5px;left:50%;transform:translateX(-50%);width:30%;height:6px;background:#080e20;border-radius:4px;z-index:6;}
-  #hm-dots{position:absolute;bottom:8px;left:0;right:0;display:flex;justify-content:center;gap:4px;z-index:5;}
-  .hm-dot{width:4px;height:4px;border-radius:50%;}
-  .hm-lbl{position:absolute;bottom:22px;left:0;right:0;text-align:center;padding:4px 8px;background:linear-gradient(transparent,rgba(0,0,0,0.5));}
-  .hm-lbl-zh{display:block;font-family:'Noto Sans TC','Montserrat';font-weight:800;font-size:9px;color:#fff;text-shadow:0 1px 5px rgba(0,0,0,0.8);}
-  .hm-lbl-en{display:block;font-family:'Montserrat';font-size:7px;font-weight:600;color:rgba(255,255,255,0.82);letter-spacing:0.07em;text-transform:uppercase;}
+  @media (prefers-reduced-motion: reduce) {
+    #mh *, #mh *::before, #mh *::after { animation: none !important; transition: none !important; }
+  }
 
-  /* Slide cycling — 16s total, 4s each */
-  .hm-s1{animation:hmC1 16s ease-in-out infinite;}
-  .hm-s2{animation:hmC2 16s ease-in-out infinite;}
-  .hm-s3{animation:hmC3 16s ease-in-out infinite;}
-  .hm-s4{animation:hmC4 16s ease-in-out infinite;}
-  .hm-d1{animation:hmD1 16s ease-in-out infinite;}
-  .hm-d2{animation:hmD2 16s ease-in-out infinite;}
-  .hm-d3{animation:hmD3 16s ease-in-out infinite;}
-  .hm-d4{animation:hmD4 16s ease-in-out infinite;}
-  @keyframes hmC1{0%{opacity:1}22%{opacity:1}25%{opacity:0}100%{opacity:0}}
-  @keyframes hmC2{0%,25%{opacity:0}27%{opacity:1}47%{opacity:1}50%{opacity:0}100%{opacity:0}}
-  @keyframes hmC3{0%,50%{opacity:0}52%{opacity:1}72%{opacity:1}75%{opacity:0}100%{opacity:0}}
-  @keyframes hmC4{0%,75%{opacity:0}77%{opacity:1}97%{opacity:1}100%{opacity:0}}
-  @keyframes hmD1{0%{background:rgba(255,255,255,.85)}25%{background:rgba(255,255,255,.85)}26%{background:rgba(255,255,255,.28)}100%{background:rgba(255,255,255,.28)}}
-  @keyframes hmD2{0%,25%{background:rgba(255,255,255,.28)}27%{background:rgba(255,255,255,.85)}50%{background:rgba(255,255,255,.85)}51%{background:rgba(255,255,255,.28)}100%{background:rgba(255,255,255,.28)}}
-  @keyframes hmD3{0%,50%{background:rgba(255,255,255,.28)}52%{background:rgba(255,255,255,.85)}75%{background:rgba(255,255,255,.85)}76%{background:rgba(255,255,255,.28)}100%{background:rgba(255,255,255,.28)}}
-  @keyframes hmD4{0%,75%{background:rgba(255,255,255,.28)}77%{background:rgba(255,255,255,.85)}97%{background:rgba(255,255,255,.85)}100%{background:rgba(255,255,255,.28)}}
-
-  /* ── Ticker ── */
-  #hm-ticker{position:absolute;bottom:0;left:0;right:0;height:34px;overflow:hidden;pointer-events:none;z-index:5;background:rgba(8,24,72,0.58);backdrop-filter:blur(6px);align-items:center;}
-  #hm-ticker::before,#hm-ticker::after{content:'';position:absolute;top:0;bottom:0;width:28px;z-index:4;}
-  #hm-ticker::before{left:0;background:linear-gradient(to right,rgba(15,99,207,0.92),transparent);}
-  #hm-ticker::after{right:0;background:linear-gradient(to left,rgba(15,99,207,0.92),transparent);}
-  .hm-ticker-inner{display:flex;align-items:center;gap:14px;animation:hmTicker 22s linear infinite;width:max-content;white-space:nowrap;font-family:'Montserrat','Noto Sans TC';font-size:11px;font-weight:700;color:rgba(255,255,255,0.92);letter-spacing:0.05em;padding:0 16px;}
-  .hm-sep{color:#38e58c;font-size:13px;font-weight:900;}
-  @keyframes hmTicker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-  /* touch/landscape phones wider than 768px — same mobile hero */
+  /* ── show the mobile hero / hide the desktop hero on phones & touch ── */
+  @media(max-width:768px){
+    #mh{display:block!important;}
+    #hero-inner,#hero-thumbs,#hero-blob,#hero-particles{display:none!important;}
+  }
   @media(pointer:coarse){
-    #hm-bg{display:block!important;}
-    #hm-phone{display:block!important;}
-    #hm-ticker{display:flex!important;}
-    #hero-thumbs{display:none!important;}
-    #hero-mobile-cards{display:none!important;}
-    #hero-filmstrip{display:none!important;}
-    #hero-inner{padding-right:38%!important;padding-top:96px!important;padding-bottom:50px!important;}
-    #hero-cta{flex-direction:column!important;}
-    #hero-cta a{text-align:center!important;}
-    #hero-blob{width:160px!important;height:160px!important;bottom:-40px!important;right:-40px!important;opacity:0.55!important;}
+    #mh{display:block!important;}
+    #hero-inner,#hero-thumbs,#hero-blob,#hero-particles,#hero-mobile-cards,#hero-filmstrip{display:none!important;}
   }
 </style>
 </head>
@@ -409,42 +349,327 @@
       <span id="hero-prize-sub" style="font-family:'Noto Sans TC';font-weight:500;font-size:14px;color:rgba(255,255,255,0.92);"></span>
     </div>
   </div>
-<div id="hm-bg" aria-hidden="true">
-<div class="hm-reel hm-r1"><div class="hm-rf"><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div></div><img src="https://images.unsplash.com/photo-1583395145517-1e3177037600?w=220&q=65&auto=format&fit=crop" alt="" loading="lazy"><div class="hm-rf"><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div></div></div>
-<div class="hm-reel hm-r2"><div class="hm-rf"><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div></div><img src="https://images.unsplash.com/photo-1720918496270-1acc2e4d2435?w=190&q=65&auto=format&fit=crop" alt="" loading="lazy"><div class="hm-rf"><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div></div></div>
-<div class="hm-reel hm-r3"><div class="hm-rf"><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div></div><img src="https://images.unsplash.com/photo-1591356442491-99d7775bc7b1?w=200&q=65&auto=format&fit=crop" alt="" loading="lazy"><div class="hm-rf"><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div></div></div>
-<div class="hm-reel hm-r4"><div class="hm-rf"><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div></div><img src="https://images.unsplash.com/photo-1549042609-e0ed62b6d1c3?w=190&q=65&auto=format&fit=crop" alt="" loading="lazy"><div class="hm-rf"><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div></div></div>
-<div class="hm-reel hm-r5"><div class="hm-rf"><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div></div><img src="https://images.unsplash.com/photo-1583395145517-1e3177037600?w=160&q=65&auto=format&fit=crop" alt="" loading="lazy"><div class="hm-rf"><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div><div class="hm-rp"></div></div></div>
-  <div class="hm-mote hm-ma" style="left:8%;top:18%;width:3px;height:3px;animation-delay:0s;"></div>
-  <div class="hm-mote hm-mb" style="left:22%;top:42%;width:2px;height:2px;animation-delay:1.2s;"></div>
-  <div class="hm-mote hm-mc" style="left:38%;top:26%;width:4px;height:4px;animation-delay:2.8s;"></div>
-  <div class="hm-mote hm-md" style="left:55%;top:55%;width:2px;height:2px;animation-delay:0.5s;"></div>
-  <div class="hm-mote hm-me" style="left:70%;top:35%;width:3px;height:3px;animation-delay:3.4s;"></div>
-  <div class="hm-mote hm-ma" style="left:14%;top:68%;width:2px;height:2px;animation-delay:4.1s;"></div>
-  <div class="hm-mote hm-mb" style="left:30%;top:80%;width:3px;height:3px;animation-delay:1.8s;"></div>
-  <div class="hm-mote hm-mc" style="left:60%;top:72%;width:2px;height:2px;animation-delay:5.2s;"></div>
-  <div class="hm-mote hm-md" style="left:80%;top:20%;width:3px;height:3px;animation-delay:2.0s;"></div>
-  <div class="hm-mote hm-me" style="left:46%;top:48%;width:2px;height:2px;animation-delay:6.0s;"></div>
-  <div class="hm-mote hm-mc" style="left:6%;top:55%;width:2px;height:2px;animation-delay:3.7s;"></div>
-  <div class="hm-mote hm-ma" style="left:88%;top:60%;width:3px;height:3px;animation-delay:0.8s;"></div>
-  <div class="hm-mote hm-mb" style="left:50%;top:15%;width:2px;height:2px;animation-delay:4.6s;"></div>
-  <div class="hm-mote hm-md" style="left:74%;top:82%;width:4px;height:4px;animation-delay:1.5s;"></div>
+<div id="mh" aria-label="#FindingTAIWAN 2.0" style="position: relative; width: 100%; max-width: 430px; margin: 0 auto; min-height: 100svh; overflow: hidden; background: linear-gradient(160deg,#2f93f5 0%,#1574e6 55%,#0f63cf 100%); font-family: 'Montserrat','Noto Sans TC',sans-serif;">
+                    <!-- ===== line-drawn EARTH slowly turning ===== -->
+          <div aria-hidden="true" style="position: absolute; left: 50%; top: 52%; transform: translate(-50%,-50%); width: 580px; height: 580px; pointer-events: none; opacity: 0.85;">
+            <svg viewBox="0 0 400 400" style="width: 100%; height: 100%; display: block; overflow: visible;">
+              <defs>
+                <clipPath id="ad-globe-clip"><circle cx="200" cy="200" r="180"></circle></clipPath>
+              </defs>
+              <!-- disc -->
+              <circle cx="200" cy="200" r="180" fill="none" stroke="#ffffff" stroke-width="1.2" opacity="0.6"></circle>
+              <!-- latitudes (fixed) -->
+              <g fill="none" stroke="#ffffff" stroke-width="0.8" opacity="0.24">
+                <ellipse cx="200" cy="200" rx="180" ry="172"></ellipse>
+                <ellipse cx="200" cy="200" rx="180" ry="140"></ellipse>
+                <ellipse cx="200" cy="200" rx="180" ry="95"></ellipse>
+                <ellipse cx="200" cy="200" rx="180" ry="42"></ellipse>
+                <line x1="20" y1="200" x2="380" y2="200"></line>
+              </g>
+              <!-- pole markers -->
+              <g fill="#ffffff" opacity="0.6"><circle cx="200" cy="22" r="1.6"></circle><circle cx="200" cy="378" r="1.6"></circle></g>
+              <!-- rotating continents + meridians -->
+              <g clip-path="url(#ad-globe-clip)">
+                <g style="animation: ad-globe 60s linear infinite;">
+                  <g transform="translate(0 0)">
+                    <!-- meridians -->
+                    <g fill="none" stroke="#ffffff" stroke-width="0.6" opacity="0.18">
+                      <path d="M40,28 Q60,200 40,372"></path>
+                      <path d="M120,22 Q140,200 120,378"></path>
+                      <path d="M200,20 Q220,200 200,380"></path>
+                      <path d="M280,22 Q300,200 280,378"></path>
+                      <path d="M360,28 Q380,200 360,372"></path>
+                    </g>
+                    <!-- continents (simplified line drawing) -->
+                    <g fill="none" stroke="#aaffd6" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" opacity="0.7">
+                      <!-- North America: Alaska → Canada → US → Mexico -->
+                      <path d="M22,58 L34,52 L48,58 L60,66 L72,62 L86,68 L96,74 L106,76 L114,72 L124,76 L134,82 L142,92 L148,104 L142,118 L132,128 L120,138 L110,150 L102,162 L96,172 L86,176 L74,170 L62,158 L52,144 L44,128 L36,114 L28,98 L22,82 L20,68 L22,58 Z"></path>
+                      <!-- Greenland -->
+                      <path d="M150,30 L160,26 L172,30 L180,40 L182,56 L178,72 L168,82 L156,84 L148,76 L144,62 L144,46 L150,30 Z"></path>
+                      <!-- Central America bridge -->
+                      <path d="M102,174 L110,184 L120,194 L128,206"></path>
+                      <!-- South America: bulge top, taper bottom -->
+                      <path d="M126,208 L138,206 L150,214 L158,228 L162,244 L158,260 L152,274 L144,290 L134,304 L122,314 L110,312 L100,300 L96,284 L100,266 L106,248 L114,232 L122,218 L126,208 Z"></path>
+                      <!-- UK / Ireland -->
+                      <path d="M186,108 q5,-4 9,-1 q3,6 -3,7 q-8,0 -6,-6 Z"></path>
+                      <!-- Scandinavia -->
+                      <path d="M210,72 L220,70 L228,78 L226,90 L218,98 L210,96 L206,86 L208,76 L210,72 Z"></path>
+                      <!-- Europe core -->
+                      <path d="M190,114 L204,110 L222,108 L238,112 L250,118 L256,128 L250,134 L236,138 L222,134 L208,134 L196,128 L190,120 L190,114 Z"></path>
+                      <!-- Russia / Siberia (Eurasia top) -->
+                      <path d="M236,84 L268,76 L304,72 L340,76 L362,84 L370,98 L362,108 L344,114 L322,112 L300,108 L280,114 L264,118 L250,114 L240,104 L234,94 L236,84 Z"></path>
+                      <!-- Africa -->
+                      <path d="M198,144 L218,142 L236,148 L250,162 L256,178 L252,196 L240,210 L228,228 L222,250 L214,270 L202,282 L190,280 L182,266 L180,248 L184,228 L188,208 L190,188 L190,168 L194,154 L198,144 Z"></path>
+                      <!-- Arabian peninsula -->
+                      <path d="M254,150 L264,154 L270,166 L266,180 L256,188 L248,180 L246,168 L250,158 L254,150 Z"></path>
+                      <!-- Middle East / Persia / Asia minor -->
+                      <path d="M256,134 L278,132 L300,138 L310,148 L304,158 L286,158 L268,154 L256,148 L254,140 L256,134 Z"></path>
+                      <!-- India / South Asia -->
+                      <path d="M298,164 L308,170 L314,184 L310,200 L300,206 L292,200 L290,186 L294,172 L298,164 Z"></path>
+                      <!-- SE Asia mainland -->
+                      <path d="M316,176 L326,180 L332,192 L328,206 L320,212 L312,206 L310,194 L312,182 L316,176 Z"></path>
+                      <!-- China east coast -->
+                      <path d="M320,132 L334,128 L348,134 L354,146 L346,156 L334,156 L324,150 L320,140 L320,132 Z"></path>
+                      <!-- Japan archipelago -->
+                      <path d="M362,116 q4,-3 7,0 q1,5 -3,5 q-5,0 -4,-5 Z"></path>
+                      <path d="M366,128 q4,-2 6,1 q0,5 -4,4 q-4,-1 -2,-5 Z"></path>
+                      <path d="M370,140 q3,-2 5,0 q0,4 -3,4 q-4,0 -2,-4 Z"></path>
+                      <!-- Indonesia / Philippines dots -->
+                      <path d="M318,218 q5,-3 9,0 q1,5 -4,5 q-6,0 -5,-5 Z"></path>
+                      <path d="M332,222 q4,-2 7,0 q1,4 -3,4 q-5,0 -4,-4 Z"></path>
+                      <path d="M344,218 q5,-2 8,0 q0,4 -4,4 q-5,0 -4,-4 Z"></path>
+                      <path d="M340,206 q4,-2 6,0 q0,4 -3,3 q-4,-1 -3,-3 Z"></path>
+                      <!-- Australia -->
+                      <path d="M330,236 L348,232 L366,234 L378,242 L382,254 L376,266 L362,272 L344,272 L330,266 L322,256 L324,244 L330,236 Z"></path>
+                      <!-- New Zealand -->
+                      <path d="M386,272 q3,4 1,10 q-4,2 -5,-4 q-1,-5 4,-6 Z"></path>
+                      <!-- Madagascar -->
+                      <path d="M252,232 q4,8 3,18 q-3,8 -8,6 q-4,-9 -3,-19 q3,-7 8,-5 Z"></path>
+                      <!-- Iceland -->
+                      <path d="M170,86 q5,-2 8,1 q0,4 -4,4 q-5,0 -4,-5 Z"></path>
+                      <!-- Antarctica edge -->
+                      <path d="M30,360 Q120,378 200,376 Q280,378 372,358"></path>
+                      <!-- Caribbean dots -->
+                      <path d="M108,172 q3,-2 5,0 q0,3 -3,3 q-3,0 -2,-3 Z"></path>
+                      <path d="M118,168 q3,-2 5,0 q0,3 -3,3 q-3,0 -2,-3 Z"></path>
+                    </g>
+                  </g>
+                  <!-- duplicate for seamless loop -->
+                  <g transform="translate(400 0)">
+                    <g fill="none" stroke="#ffffff" stroke-width="0.6" opacity="0.18">
+                      <path d="M40,28 Q60,200 40,372"></path>
+                      <path d="M120,22 Q140,200 120,378"></path>
+                      <path d="M200,20 Q220,200 200,380"></path>
+                      <path d="M280,22 Q300,200 280,378"></path>
+                      <path d="M360,28 Q380,200 360,372"></path>
+                    </g>
+                    <g fill="none" stroke="#aaffd6" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" opacity="0.7">
+                      <path d="M22,58 L34,52 L48,58 L60,66 L72,62 L86,68 L96,74 L106,76 L114,72 L124,76 L134,82 L142,92 L148,104 L142,118 L132,128 L120,138 L110,150 L102,162 L96,172 L86,176 L74,170 L62,158 L52,144 L44,128 L36,114 L28,98 L22,82 L20,68 L22,58 Z"></path>
+                      <path d="M150,30 L160,26 L172,30 L180,40 L182,56 L178,72 L168,82 L156,84 L148,76 L144,62 L144,46 L150,30 Z"></path>
+                      <path d="M102,174 L110,184 L120,194 L128,206"></path>
+                      <path d="M126,208 L138,206 L150,214 L158,228 L162,244 L158,260 L152,274 L144,290 L134,304 L122,314 L110,312 L100,300 L96,284 L100,266 L106,248 L114,232 L122,218 L126,208 Z"></path>
+                      <path d="M186,108 q5,-4 9,-1 q3,6 -3,7 q-8,0 -6,-6 Z"></path>
+                      <path d="M210,72 L220,70 L228,78 L226,90 L218,98 L210,96 L206,86 L208,76 L210,72 Z"></path>
+                      <path d="M190,114 L204,110 L222,108 L238,112 L250,118 L256,128 L250,134 L236,138 L222,134 L208,134 L196,128 L190,120 L190,114 Z"></path>
+                      <path d="M236,84 L268,76 L304,72 L340,76 L362,84 L370,98 L362,108 L344,114 L322,112 L300,108 L280,114 L264,118 L250,114 L240,104 L234,94 L236,84 Z"></path>
+                      <path d="M198,144 L218,142 L236,148 L250,162 L256,178 L252,196 L240,210 L228,228 L222,250 L214,270 L202,282 L190,280 L182,266 L180,248 L184,228 L188,208 L190,188 L190,168 L194,154 L198,144 Z"></path>
+                      <path d="M254,150 L264,154 L270,166 L266,180 L256,188 L248,180 L246,168 L250,158 L254,150 Z"></path>
+                      <path d="M256,134 L278,132 L300,138 L310,148 L304,158 L286,158 L268,154 L256,148 L254,140 L256,134 Z"></path>
+                      <path d="M298,164 L308,170 L314,184 L310,200 L300,206 L292,200 L290,186 L294,172 L298,164 Z"></path>
+                      <path d="M316,176 L326,180 L332,192 L328,206 L320,212 L312,206 L310,194 L312,182 L316,176 Z"></path>
+                      <path d="M320,132 L334,128 L348,134 L354,146 L346,156 L334,156 L324,150 L320,140 L320,132 Z"></path>
+                      <path d="M362,116 q4,-3 7,0 q1,5 -3,5 q-5,0 -4,-5 Z"></path>
+                      <path d="M366,128 q4,-2 6,1 q0,5 -4,4 q-4,-1 -2,-5 Z"></path>
+                      <path d="M370,140 q3,-2 5,0 q0,4 -3,4 q-4,0 -2,-4 Z"></path>
+                      <path d="M318,218 q5,-3 9,0 q1,5 -4,5 q-6,0 -5,-5 Z"></path>
+                      <path d="M332,222 q4,-2 7,0 q1,4 -3,4 q-5,0 -4,-4 Z"></path>
+                      <path d="M344,218 q5,-2 8,0 q0,4 -4,4 q-5,0 -4,-4 Z"></path>
+                      <path d="M340,206 q4,-2 6,0 q0,4 -3,3 q-4,-1 -3,-3 Z"></path>
+                      <path d="M330,236 L348,232 L366,234 L378,242 L382,254 L376,266 L362,272 L344,272 L330,266 L322,256 L324,244 L330,236 Z"></path>
+                      <path d="M386,272 q3,4 1,10 q-4,2 -5,-4 q-1,-5 4,-6 Z"></path>
+                      <path d="M252,232 q4,8 3,18 q-3,8 -8,6 q-4,-9 -3,-19 q3,-7 8,-5 Z"></path>
+                      <path d="M170,86 q5,-2 8,1 q0,4 -4,4 q-5,0 -4,-5 Z"></path>
+                      <path d="M30,360 Q120,378 200,376 Q280,378 372,358"></path>
+                      <path d="M108,172 q3,-2 5,0 q0,3 -3,3 q-3,0 -2,-3 Z"></path>
+                      <path d="M118,168 q3,-2 5,0 q0,3 -3,3 q-3,0 -2,-3 Z"></path>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </div>
+
+          <!-- ===== decorative circuit pattern (top-left) ===== -->
+          <div aria-hidden="true" style="position: absolute; top: 22px; left: 0; width: 150px; height: 96px; pointer-events: none; z-index: 2; opacity: 0.55;">
+            <svg viewBox="0 0 150 96" style="width: 100%; height: 100%; display: block;">
+              <g stroke="#aaffd6" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M0 16 L18 16 L18 32 L46 32"></path>
+                <path d="M46 32 L46 14 L72 14"></path>
+                <path d="M46 32 L46 52"></path>
+                <path d="M46 52 L22 52 L22 68 L0 68"></path>
+                <path d="M46 52 L74 52 L74 36 L100 36"></path>
+                <path d="M74 36 L74 14"></path>
+                <path d="M100 36 L100 60 L132 60"></path>
+                <path d="M100 36 L120 36 L120 10"></path>
+                <path d="M0 84 L34 84 L34 70"></path>
+                <path d="M84 78 L108 78 L108 90"></path>
+              </g>
+              <g fill="#aaffd6">
+                <circle cx="18" cy="16" r="2"></circle>
+                <circle cx="46" cy="32" r="2.6"></circle>
+                <circle cx="46" cy="52" r="2"></circle>
+                <circle cx="74" cy="36" r="2"></circle>
+                <circle cx="100" cy="36" r="2.6"></circle>
+                <circle cx="120" cy="10" r="2"></circle>
+                <circle cx="34" cy="70" r="2"></circle>
+                <circle cx="84" cy="78" r="2"></circle>
+                <circle cx="132" cy="60" r="2"></circle>
+              </g>
+              <g fill="none" stroke="#aaffd6" stroke-width="1">
+                <rect x="68" y="62" width="14" height="14" rx="2"></rect>
+                <rect x="124" y="22" width="10" height="10" rx="1.5"></rect>
+              </g>
+            </svg>
+          </div>
+
+          <!-- ===== A background: drifting Taiwan-photo cards + dust ===== -->
+          <div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; z-index: 1;">
+            <!-- (Card 0 removed — it was overlapping the title.) -->
+
+            <!-- top-right medium (Taipei sunset highrise) -->
+            <div style="position: absolute; top: 232px; right: -4px; width: 78px; aspect-ratio: 9/16; border-radius: 12px; border: 2px solid rgba(255,255,255,0.85); box-shadow: 0 16px 32px rgba(0,0,0,0.32); animation: ad-driftB 8s ease-in-out infinite; overflow: hidden;">
+              <img src="https://images.unsplash.com/photo-1621584728858-616080e4bd01?w=200&amp;h=360&amp;fit=crop&amp;crop=entropy&amp;auto=format&amp;q=70&amp;fm=jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+              <span style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.4));"></span>
+              <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 18px; height: 18px; border-radius: 50%; background: rgba(255,255,255,0.95); display: flex; align-items: center; justify-content: center; animation: ad-pulse 2.4s ease-out infinite;"><span style="width: 0; height: 0; border-style: solid; border-width: 4px 0 4px 7px; border-color: transparent transparent transparent #ff5c7a; margin-left: 2px;"></span></span>
+            </div>
+
+            <!-- mid-left small (green Taiwan) -->
+            <div style="position: absolute; top: 348px; left: -8px; width: 64px; aspect-ratio: 9/16; border-radius: 10px; border: 2px solid rgba(255,255,255,0.85); box-shadow: 0 12px 26px rgba(0,0,0,0.26); animation: ad-driftC 9s ease-in-out infinite; overflow: hidden;">
+              <img src="https://images.unsplash.com/photo-1583395201959-d2de287f8045?w=160&amp;h=280&amp;fit=crop&amp;crop=entropy&amp;auto=format&amp;q=70&amp;fm=jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+              <span style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.35));"></span>
+              <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 14px; height: 14px; border-radius: 50%; background: rgba(255,255,255,0.92); display: flex; align-items: center; justify-content: center;"><span style="width: 0; height: 0; border-style: solid; border-width: 3px 0 3px 5px; border-color: transparent transparent transparent #1aa15c; margin-left: 1px;"></span></span>
+            </div>
+
+            <!-- mid-right medium (yellow train) -->
+            <div style="position: absolute; top: 388px; right: -10px; width: 68px; aspect-ratio: 9/16; border-radius: 10px; border: 2px solid rgba(255,255,255,0.85); box-shadow: 0 12px 26px rgba(0,0,0,0.26); animation: ad-driftD 7.5s ease-in-out infinite; overflow: hidden;">
+              <img src="https://images.unsplash.com/photo-1526682847805-721837c3f83b?w=200&amp;h=360&amp;fit=crop&amp;crop=entropy&amp;auto=format&amp;q=70&amp;fm=jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+              <span style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.4));"></span>
+              <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 16px; height: 16px; border-radius: 50%; background: rgba(255,255,255,0.95); display: flex; align-items: center; justify-content: center;"><span style="width: 0; height: 0; border-style: solid; border-width: 3px 0 3px 6px; border-color: transparent transparent transparent #ff9f43; margin-left: 1px;"></span></span>
+            </div>
+
+            <!-- bottom-left small (motorcycle street) -->
+            <div style="position: absolute; top: 490px; left: 4px; width: 54px; aspect-ratio: 9/16; border-radius: 9px; border: 1.5px solid rgba(255,255,255,0.55); box-shadow: 0 8px 18px rgba(0,0,0,0.25); opacity: 0.78; animation: ad-driftE 10s ease-in-out infinite; overflow: hidden;">
+              <img src="https://images.unsplash.com/photo-1530324652194-d78318776d5c?w=140&amp;h=260&amp;fit=crop&amp;crop=entropy&amp;auto=format&amp;q=70&amp;fm=jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+              <span style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.35));"></span>
+              <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.88); display: flex; align-items: center; justify-content: center;"><span style="width: 0; height: 0; border-style: solid; border-width: 3px 0 3px 4px; border-color: transparent transparent transparent #7a5cff; margin-left: 1px;"></span></span>
+            </div>
+
+            <!-- bottom-right tiny (blue orange building) -->
+            <div style="position: absolute; top: 522px; right: 8px; width: 50px; aspect-ratio: 9/16; border-radius: 9px; border: 1.5px solid rgba(255,255,255,0.55); box-shadow: 0 8px 18px rgba(0,0,0,0.25); opacity: 0.78; animation: ad-driftA 8.5s ease-in-out infinite 0.4s; overflow: hidden;">
+              <img src="https://images.unsplash.com/photo-1571474004502-c1def214ac6d?w=140&amp;h=260&amp;fit=crop&amp;crop=entropy&amp;auto=format&amp;q=70&amp;fm=jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+              <span style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.35));"></span>
+              <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.88); display: flex; align-items: center; justify-content: center;"><span style="width: 0; height: 0; border-style: solid; border-width: 2.5px 0 2.5px 4px; border-color: transparent transparent transparent #1aa15c; margin-left: 1px;"></span></span>
+            </div>
+
+            <!-- floating dust motes rising -->
+            <span style="position: absolute; left: 72px; top: 380px; width: 6px; height: 6px; border-radius: 50%; background: #38e58c; animation: ad-rise 6s linear infinite;"></span>
+            <span style="position: absolute; right: 96px; top: 460px; width: 4px; height: 4px; border-radius: 50%; background: #38e58c; opacity: 0.55; animation: ad-rise 7.5s linear infinite 1.2s;"></span>
+            <span style="position: absolute; left: 180px; top: 540px; width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.6); animation: ad-rise 8s linear infinite 0.6s;"></span>
+            <span style="position: absolute; left: 130px; top: 420px; width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.5); animation: ad-rise 9s linear infinite 2s;"></span>
+            <span style="position: absolute; right: 60px; top: 500px; width: 5px; height: 5px; border-radius: 50%; background: #38e58c; opacity: 0.5; animation: ad-rise 7s linear infinite 3.4s;"></span>
+          <span id="mh-tagline" style="font-family: 'Noto Sans TC'; font-weight: 700; font-style: italic; font-size: 16px; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.22); position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; top: 647px">用鏡頭說出你和台灣的故事!</span></div>
+
+          <!-- ===== copy block: white tagline + green banner ===== -->
+          <div style="position: relative; z-index: 4; padding-top: 62px;">
+            <!-- top tagline row -->
+            
+            <!-- v2-style heading: eyebrow chip + 3-line title -->
+            <div style="padding: 10px 22px 0; display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; position: relative">
+              
+              <span style="display: inline-flex; align-items: baseline; gap: 5px; font-family: 'Montserrat'; font-weight: 800; font-style: italic; font-size: 15px; color: #fff; white-space: nowrap; text-shadow: 0 2px 6px rgba(0,0,0,0.22);">
+                
+                
+                
+              </span>
+            </div><div style="padding: 16px 22px 0; position: relative">
+              <div id="mh-chip" style="display: inline-block; background: #38e58c; color: #0d3b80; font-family: 'Noto Sans TC'; font-weight: 900; font-style: italic; font-size: 11px; padding: 6px 22px 6px 14px; clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%); box-shadow: 0 4px 10px rgba(0,0,0,0.12);">2026 即日起報名</div>
+              <h1 id="mh-title" style="font-family: 'Noto Serif TC','Noto Sans TC'; font-weight: 900; font-style: italic; font-size: 30px; line-height: 1.1; color: #fff; margin: 12px 0 0; letter-spacing: 0; text-shadow: 0 3px 10px rgba(0,0,0,0.28); position: relative">尋找台灣 2.0<br><span style="color:#38e58c; font-family:'Montserrat'; font-style: italic; font-weight: 900; font-size: 22px; letter-spacing: 0.01em;">#FindingTAIWAN</span><br>全球徵片競賽</h1>
+            <img src="assets/logo.png" alt="FindingTAIWAN eye" style="position: absolute; top: 8px; width: 130px; height: auto; z-index: 4; pointer-events: none; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3)); right: 8px"></div>
+          </div>
+
+          <!-- ===== event eye logo (brand mark) ===== -->
+          
+
+          <!-- ===== inner phone (D centerpiece) ===== -->
+          <div style="position: relative; z-index: 5; margin: 56px auto 0; width: 200px; height: 356px; border-radius: 30px; background: #0d2747; padding: 6px; box-shadow: 0 28px 58px rgba(0,0,0,0.42), 0 0 0 4px rgba(255,255,255,0.08);">
+            <div style="position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 64px; height: 14px; background: #0d2747; border-radius: 0 0 9px 9px; z-index: 6;"></div>
+
+            <div style="position: relative; width: 100%; height: 100%; border-radius: 24px; overflow: hidden; background: #000;">
+              <!-- reel 1 NIGHT MARKET (Taipei) -->
+              <div style="position: absolute; inset: 0; animation: ad-reel1 16s ease-in-out infinite; overflow: hidden;">
+                <img src="https://images.unsplash.com/photo-1552993873-0dd1110e025f?w=500&amp;h=900&amp;fit=crop&amp;crop=entropy&amp;auto=format&amp;q=75&amp;fm=jpg" alt="台北夜市" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: center; animation: ad-kb1 16s ease-out infinite;">
+                <span style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, transparent 28%, transparent 55%, rgba(0,0,0,0.78) 100%);"></span>
+                <span style="position: absolute; top: 12px; left: 12px; padding: 4px 8px; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); font-family: 'Space Grotesk'; font-size: 9px; font-weight: 700; color: #fff; border-radius: 4px; letter-spacing: 0.08em;">01 / 04</span>
+                <div style="position: absolute; left: 10px; right: 50px; bottom: 28px; color: #fff;">
+                  <div style="font-family: 'Noto Sans TC'; font-weight: 900; font-size: 13px; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">@chenyuwei</div>
+                  <div style="font-family: 'Noto Sans TC'; font-weight: 500; font-size: 11px; opacity: 0.95; line-height: 1.4; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">夜市的光,是台灣的呼吸 ✨</div>
+                  <div style="font-family: 'Space Grotesk'; font-size: 9px; color: #ffd36b; margin-top: 4px; letter-spacing: 0.06em; text-shadow: 0 2px 6px rgba(0,0,0,0.6);">#FindingTaiwan · TAIPEI</div>
+                </div>
+              </div>
+
+              <!-- reel 2 MOUNTAIN / GREEN -->
+              <div style="position: absolute; inset: 0; animation: ad-reel2 16s ease-in-out infinite; overflow: hidden;">
+                <img src="https://images.unsplash.com/photo-1583395145517-1e3177037600?w=500&amp;h=900&amp;fit=crop&amp;crop=entropy&amp;auto=format&amp;q=75&amp;fm=jpg" alt="台灣山林" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: center; animation: ad-kb2 16s ease-out infinite;">
+                <span style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 28%, transparent 55%, rgba(0,0,0,0.78) 100%);"></span>
+                <span style="position: absolute; top: 12px; left: 12px; padding: 4px 8px; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); font-family: 'Space Grotesk'; font-size: 9px; font-weight: 700; color: #fff; border-radius: 4px; letter-spacing: 0.08em;">02 / 04</span>
+                <div style="position: absolute; left: 10px; right: 50px; bottom: 28px; color: #fff;">
+                  <div style="font-family: 'Noto Sans TC'; font-weight: 900; font-size: 13px; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">@mountain.diary</div>
+                  <div style="font-family: 'Noto Sans TC'; font-weight: 500; font-size: 11px; opacity: 0.95; line-height: 1.4; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">山風吹過的整片綠 ⛰️</div>
+                  <div style="font-family: 'Space Grotesk'; font-size: 9px; color: #aaffd6; margin-top: 4px; letter-spacing: 0.06em; text-shadow: 0 2px 6px rgba(0,0,0,0.6);">#FindingTaiwan · TAITUNG</div>
+                </div>
+              </div>
+
+              <!-- reel 3 CITY / SKYLINE -->
+              <div style="position: absolute; inset: 0; animation: ad-reel3 16s ease-in-out infinite; overflow: hidden;">
+                <img src="https://images.unsplash.com/photo-1598935898639-81586f7d2129?w=500&amp;h=900&amp;fit=crop&amp;crop=entropy&amp;auto=format&amp;q=75&amp;fm=jpg" alt="台北夜景" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: center; animation: ad-kb3 16s ease-out infinite;">
+                <span style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 28%, transparent 55%, rgba(0,0,0,0.78) 100%);"></span>
+                <span style="position: absolute; top: 12px; left: 12px; padding: 4px 8px; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); font-family: 'Space Grotesk'; font-size: 9px; font-weight: 700; color: #fff; border-radius: 4px; letter-spacing: 0.08em;">03 / 04</span>
+                <div style="position: absolute; left: 10px; right: 50px; bottom: 28px; color: #fff;">
+                  <div style="font-family: 'Noto Sans TC'; font-weight: 900; font-size: 13px; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">@taipei.skyview</div>
+                  <div style="font-family: 'Noto Sans TC'; font-weight: 500; font-size: 11px; opacity: 0.95; line-height: 1.4; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">這座城市每晚都在發光 🌃</div>
+                  <div style="font-family: 'Space Grotesk'; font-size: 9px; color: #aaffd6; margin-top: 4px; letter-spacing: 0.06em; text-shadow: 0 2px 6px rgba(0,0,0,0.6);">#FindingTaiwan · TAIPEI</div>
+                </div>
+              </div>
+
+              <!-- reel 4 LANTERNS / TEMPLE -->
+              <div style="position: absolute; inset: 0; animation: ad-reel4 16s ease-in-out infinite; overflow: hidden;">
+                <img src="https://images.unsplash.com/photo-1591962176551-cb2d2febb7be?w=500&amp;h=900&amp;fit=crop&amp;crop=entropy&amp;auto=format&amp;q=75&amp;fm=jpg" alt="台灣廟宇燈籠" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: center; animation: ad-kb4 16s ease-out infinite;">
+                <span style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 28%, transparent 55%, rgba(0,0,0,0.78) 100%);"></span>
+                <span style="position: absolute; top: 12px; left: 12px; padding: 4px 8px; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); font-family: 'Space Grotesk'; font-size: 9px; font-weight: 700; color: #fff; border-radius: 4px; letter-spacing: 0.08em;">04 / 04</span>
+                <div style="position: absolute; left: 10px; right: 50px; bottom: 28px; color: #fff;">
+                  <div style="font-family: 'Noto Sans TC'; font-weight: 900; font-size: 13px; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">@lantern.tw</div>
+                  <div style="font-family: 'Noto Sans TC'; font-weight: 500; font-size: 11px; opacity: 0.95; line-height: 1.4; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">紅燈籠下的祈願 🏮</div>
+                  <div style="font-family: 'Space Grotesk'; font-size: 9px; color: #ffd36b; margin-top: 4px; letter-spacing: 0.06em; text-shadow: 0 2px 6px rgba(0,0,0,0.6);">#FindingTaiwan · NEW TAIPEI</div>
+                </div>
+              </div>
+
+              <!-- shimmer sweep -->
+              <span style="position: absolute; top: 0; bottom: 0; width: 60%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent); animation: ad-shimmer 4.6s ease-in-out infinite; pointer-events: none;"></span>
+
+              <!-- right reactions -->
+              <div style="position: absolute; right: 8px; bottom: 32px; display: flex; flex-direction: column; gap: 14px; align-items: center;">
+                <span style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+                  <span style="display: inline-block; font-size: 20px; color: #ff3355; animation: ad-heart 1.6s ease-in-out infinite; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));">❤</span>
+                  <span style="font-family: 'Space Grotesk'; font-size: 9px; color: #fff; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.7);">12.4K</span>
+                </span>
+                <span style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+                  <span style="display: inline-block; width: 16px; height: 16px; border: 1.6px solid #fff; border-radius: 50%; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));"></span>
+                  <span style="font-family: 'Space Grotesk'; font-size: 9px; color: #fff; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.7);">328</span>
+                </span>
+                <span style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+                  <span style="display: inline-block; width: 0; height: 0; border-style: solid; border-width: 7px 0 7px 12px; border-color: transparent transparent transparent #fff; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));"></span>
+                  <span style="font-family: 'Space Grotesk'; font-size: 9px; color: #fff; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.7);">分享</span>
+                </span>
+              </div>
+
+              <!-- progress bar -->
+              <span style="position: absolute; left: 6px; right: 6px; bottom: 8px; height: 2.5px; background: rgba(255,255,255,0.25); border-radius: 2px; overflow: hidden;">
+                <span style="display: block; height: 100%; background: #fff; width: 0; animation: ad-progress 4s linear infinite;"></span>
+              </span>
+            </div>
+          </div>
+
+          <!-- ===== bottom prize chip + CTAs (pinned) ===== -->
+          <div style="position: absolute; z-index: 5; left: 18px; right: 18px; bottom: 24px;">
+            <!-- Total Prize ticket stub -->
+            
+            <div style="display: flex; gap: 9px;">
+              <a id="mh-cta" href="#participate" onclick="openApplyModal(event)" style="flex: 1; text-decoration: none; text-align: center; font-family: 'Noto Sans TC'; font-weight: 800; font-size: 14.5px; padding: 16px 0; background: linear-gradient(180deg,#5af2a4 0%,#38e58c 50%,#22c97a 100%); color: #0d3b80; border-radius: 999px; box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset, 0 8px 28px rgba(56,229,140,0.45), 0 0 30px rgba(56,229,140,0.4); animation: ad-pulse 2.6s ease-out infinite;">立即報名 →</a>
+              
+            </div>
+          </div>
 </div>
-<div id="hm-phone" aria-hidden="true">
-  <div id="hm-pf">
-    <div id="hm-ps">
-  <div class="hm-slide hm-s1"><img src="https://images.unsplash.com/photo-1583395145517-1e3177037600?w=400&h=860&fit=crop&q=78&auto=format" alt="" loading="lazy"><div class="hm-lbl"><span class="hm-lbl-zh">夜市</span><span class="hm-lbl-en">Night Market</span></div></div>
-  <div class="hm-slide hm-s2"><img src="https://images.unsplash.com/photo-1549042609-e0ed62b6d1c3?w=400&h=860&fit=crop&q=78&auto=format" alt="" loading="lazy"><div class="hm-lbl"><span class="hm-lbl-zh">山林</span><span class="hm-lbl-en">Highlands</span></div></div>
-  <div class="hm-slide hm-s3"><img src="https://images.unsplash.com/photo-1591356442491-99d7775bc7b1?w=400&h=860&fit=crop&q=78&auto=format" alt="" loading="lazy"><div class="hm-lbl"><span class="hm-lbl-zh">海邊</span><span class="hm-lbl-en">Coastline</span></div></div>
-  <div class="hm-slide hm-s4"><img src="https://images.unsplash.com/photo-1720918496270-1acc2e4d2435?w=400&h=860&fit=crop&q=78&auto=format" alt="" loading="lazy"><div class="hm-lbl"><span class="hm-lbl-zh">天燈</span><span class="hm-lbl-en">Sky Lanterns</span></div></div>
-    </div>
-    <div id="hm-notch"></div>
-    <div id="hm-dots"><span class="hm-dot hm-d1"></span><span class="hm-dot hm-d2"></span><span class="hm-dot hm-d3"></span><span class="hm-dot hm-d4"></span></div>
-  </div>
-</div>
-<div id="hm-ticker" aria-hidden="true">
-  <div class="hm-ticker-inner"><span>尋找台灣 2.0</span><span class="hm-sep"> · </span><span>#FindingTAIWAN</span><span class="hm-sep"> · </span><span>NT$1,000,000</span><span class="hm-sep"> · </span><span>外交部主辦</span><span class="hm-sep"> · </span><span>全球徵片競賽</span><span class="hm-sep"> · </span><span>尋找台灣 2.0</span><span class="hm-sep"> · </span><span>#FindingTAIWAN</span><span class="hm-sep"> · </span><span>NT$1,000,000</span><span class="hm-sep"> · </span><span>外交部主辦</span><span class="hm-sep"> · </span><span>全球徵片競賽</span><span class="hm-sep"> · </span></div>
-</div>
+
 </section>
 
 <!-- 1. ABOUT -->
@@ -701,6 +926,7 @@ const C = {
     brochure: '下載活動簡章',
     heroKicker: '外交部全球徵片競賽 ‧ 2026 即日起開放報名',
     heroT1: '尋找台灣 2.0', heroT2: '#FindingTAIWAN', heroT3: '全球徵片競賽',
+    mhChip: '2026 即日起報名', mhTagline: '用鏡頭說出你和台灣的故事!',
     prizeTotal: '總獎金 新台幣 100 萬元',
     prizeSub: '首獎 20 萬 · 貳獎 各 10 萬 · 參獎 各 8 萬 · 佳作 各 5 萬 · 每月人氣獎',
     aboutTag: '關於 #FindingTAIWAN2.0',
@@ -790,6 +1016,7 @@ const C = {
     brochure: 'Download Brochure',
     heroKicker: 'MOFA Global Video Open Call — 2026 entries now open',
     heroT1: 'Finding Taiwan 2.0', heroT2: '#FindingTAIWAN', heroT3: 'Global Video Open Call',
+    mhChip: 'Entries open 2026', mhTagline: 'Tell your Taiwan story through your lens.',
     prizeTotal: 'Total Prize: NT$1,000,000',
     prizeSub: '1st NT$200K · 2nd NT$100K ea · 3rd NT$80K ea · Merit NT$50K ea · Monthly Popularity',
     aboutTag: 'About #FindingTAIWAN2.0',
@@ -968,6 +1195,17 @@ function render() {
   txt('hero-brochure', t.brochure);
   txt('hero-prize-total', t.prizeTotal);
   txt('hero-prize-sub', t.prizeSub);
+
+  // mobile hero (#mh)
+  const mhChip = document.getElementById('mh-chip');
+  if (mhChip) mhChip.textContent = t.mhChip;
+  const mhTitle = document.getElementById('mh-title');
+  if (mhTitle) mhTitle.innerHTML =
+    t.heroT1 + '<br><span style="color:#38e58c; font-family:\'Montserrat\'; font-style:italic; font-weight:900; font-size:22px; letter-spacing:0.01em;">' + t.heroT2 + '</span><br>' + t.heroT3;
+  const mhTagline = document.getElementById('mh-tagline');
+  if (mhTagline) mhTagline.textContent = t.mhTagline;
+  const mhCta = document.getElementById('mh-cta');
+  if (mhCta) mhCta.textContent = t.apply + ' →';
 
   // about
   txt('about-tag', t.aboutTag);
