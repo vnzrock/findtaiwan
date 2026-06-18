@@ -201,6 +201,37 @@
   .award-card .aw-m { font-family:'Montserrat'; font-weight:800; font-size:clamp(20px,2.4vw,26px); color:#1574e6; margin-top:18px; }
   .award-card.feat .aw-m { color:#dba000; }
   .award-card.feat .aw-r::after { content:"★"; color:#FFC400; margin-left:8px; font-size:17px; vertical-align:1px; }
+
+  /* === fixed transparent header === */
+  #site-header{position:fixed;top:0;left:0;right:0;z-index:50;background:transparent;transition:background .35s ease,box-shadow .35s ease;}
+  #site-header.nav-solid{background:rgba(21,116,230,0.96);backdrop-filter:blur(8px);box-shadow:0 2px 18px rgba(13,59,128,0.18);}
+  #nav-burger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;border:none;background:transparent;cursor:pointer;padding:0;border-radius:10px;transition:background .2s;}
+  #nav-burger:hover{background:rgba(255,255,255,0.1);}
+  #nav-burger span{display:block;width:22px;height:2.5px;background:#fff;border-radius:2px;transition:transform .28s ease,opacity .28s ease;transform-origin:center;}
+  #nav-burger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+  #nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+  #nav-burger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+  #nav-mobile-menu{position:fixed;top:0;left:0;right:0;bottom:0;z-index:49;background:rgba(9,28,80,0.97);backdrop-filter:blur(14px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 0 40px;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease;overflow-y:auto;}
+  #nav-mobile-menu.open{opacity:1;visibility:visible;}
+  #nav-mobile-links{display:flex;flex-direction:column;align-items:stretch;width:100%;max-width:340px;}
+  #nav-mobile-links a{font-family:'Noto Sans TC';font-weight:700;font-size:22px;color:rgba(255,255,255,0.88);text-decoration:none;padding:18px 32px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.08);transition:background .2s,color .2s;}
+  #nav-mobile-links a:last-child{border-bottom:none;}
+  #nav-mobile-links a:hover{background:rgba(255,255,255,0.06);color:#fff;}
+  .nm-apply-btn{display:inline-block;font-family:'Noto Sans TC';font-weight:900;font-size:17px;color:#fff;text-decoration:none;padding:15px 52px;background:#FF5A4F;border-radius:999px;box-shadow:0 10px 26px rgba(255,90,79,0.45);margin-top:32px;transition:transform .2s,box-shadow .2s;}
+  .nm-apply-btn:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(255,90,79,0.55);}
+  @media(max-width:640px){
+    #nav-burger{display:flex;}
+    #nav-desktop-items{display:none!important;}
+    #top{min-height:100dvh;display:flex;flex-direction:column;}
+    #hero-thumbs{display:none!important;}
+    #hero-inner{flex:1;display:flex;flex-direction:column;justify-content:center;padding-top:90px!important;padding-bottom:48px!important;}
+    #hero-logo-img{display:none!important;}
+    #hero-title-row{flex-direction:column!important;gap:12px!important;}
+    #hero-prize-box{flex-direction:column!important;gap:4px!important;align-items:flex-start!important;}
+    #hero-prize-sep{display:none!important;}
+    #hero-blob{width:140px!important;height:140px!important;bottom:-36px!important;right:-28px!important;}
+    section{scroll-margin-top:66px;}
+  }
 </style>
 </head>
 <body>
@@ -216,29 +247,37 @@
 <div id="sc-progress" style="position:fixed;top:0;left:0;right:0;height:3px;background:#38e58c;transform:scaleX(0);transform-origin:left;z-index:60;"></div>
 
 <!-- STICKY NAV -->
-<header style="position:sticky;top:0;z-index:50;background:rgba(21,116,230,0.96);backdrop-filter:blur(8px);box-shadow:0 2px 18px rgba(13,59,128,0.18);">
-  <nav style="max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px clamp(18px,4vw,40px);">
+<header id="site-header">
+  <nav style="max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(18px,4vw,40px);">
     <a href="#top" style="display:inline-flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;">
       <img src="assets/logo.png" alt="尋找台灣 2.0 #FindingTAIWAN" style="height:38px;width:auto;display:block;">
       <span style="font-family:'Montserrat';font-weight:800;font-size:11px;letter-spacing:0.12em;color:#fff;white-space:nowrap;">#FindingTAIWAN</span>
     </a>
-    <div style="display:flex;align-items:center;gap:clamp(12px,2vw,24px);flex-wrap:wrap;">
+    <div id="nav-desktop-items" style="display:flex;align-items:center;gap:clamp(12px,2vw,24px);flex-wrap:wrap;">
       <div id="nav-links" style="display:contents;"></div>
+      <a id="nav-apply" href="#participate" onclick="openApplyModal(event)" style="text-decoration:none;padding:9px 20px;background:#FF5A4F;color:#fff;border-radius:999px;font-family:'Noto Sans TC';font-weight:700;font-size:14px;box-shadow:0 4px 16px rgba(255,90,79,0.45);"></a>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
       <div style="display:flex;align-items:center;border:1.5px solid rgba(255,255,255,0.45);border-radius:999px;padding:2px;">
         <span id="btn-en" onclick="setLang('en')" style="display:inline-block;padding:5px 13px;color:#fff;font-weight:600;border-radius:999px;cursor:pointer;font-family:'Montserrat';font-size:12px;opacity:0.65;">EN</span>
         <span id="btn-zh" onclick="setLang('zh')" style="display:inline-block;padding:5px 13px;background:#ffffff;color:#111111;font-weight:800;border-radius:999px;cursor:pointer;font-family:'Montserrat';font-size:12px;">中</span>
       </div>
-      <a id="nav-apply" href="#participate" onclick="openApplyModal(event)" style="text-decoration:none;padding:9px 20px;background:#FF5A4F;color:#fff;border-radius:999px;font-family:'Noto Sans TC';font-weight:700;font-size:14px;box-shadow:0 4px 16px rgba(255,90,79,0.45);"></a>
+      <button id="nav-burger" aria-label="選單" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </nav>
 </header>
+<!-- mobile fullscreen menu -->
+<div id="nav-mobile-menu" role="dialog" aria-modal="true" aria-label="選單">
+  <div id="nav-mobile-links"></div>
+  <a class="nm-apply-btn" href="#participate" id="nm-apply" onclick="openApplyModal(event);closeMobileMenu();"></a>
+</div>
 
 <!-- HERO -->
 <section id="top" style="position:relative;background:linear-gradient(135deg,#2f93f5 0%,#1574e6 60%,#0f63cf 100%);overflow:hidden;">
   <canvas id="hero-particles" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></canvas>
 
   <!-- floating video thumbnails -->
-  <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;">
+  <div id="hero-thumbs" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;">
     <div style="position:absolute;top:12%;right:34%;width:clamp(72px,8vw,108px);aspect-ratio:16/10;border-radius:11px;overflow:hidden;background:#1574e6 url('https://images.unsplash.com/photo-1583395145517-1e3177037600?w=340&q=60&auto=format&fit=crop') center/cover;box-shadow:0 14px 30px rgba(0,0,0,0.25);border:2px solid rgba(255,255,255,0.85);animation:scvA 7s ease-in-out infinite;display:flex;align-items:center;justify-content:center;"><span style="position:absolute;inset:0;background:rgba(13,40,71,0.28);"></span><div style="position:relative;width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;"><div style="width:0;height:0;border-style:solid;border-width:5px 0 5px 9px;border-color:transparent transparent transparent #1574e6;margin-left:2px;"></div></div></div>
     <div style="position:absolute;top:9%;right:6%;width:clamp(66px,7.5vw,98px);aspect-ratio:16/10;border-radius:11px;overflow:hidden;background:#1574e6 url('https://images.unsplash.com/photo-1674920831578-8de40a5bcff0?w=320&q=60&auto=format&fit=crop') center/cover;box-shadow:0 14px 30px rgba(0,0,0,0.25);border:2px solid rgba(255,255,255,0.85);animation:scvB 8.5s ease-in-out infinite 0.6s;display:flex;align-items:center;justify-content:center;"><span style="position:absolute;inset:0;background:rgba(13,40,71,0.28);"></span><div style="position:relative;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;"><div style="width:0;height:0;border-style:solid;border-width:5px 0 5px 9px;border-color:transparent transparent transparent #1574e6;margin-left:2px;"></div></div></div>
     <div style="position:absolute;top:50%;right:3%;width:clamp(64px,7vw,94px);aspect-ratio:16/10;border-radius:10px;overflow:hidden;background:#1574e6 url('https://images.unsplash.com/photo-1720918496270-1acc2e4d2435?w=320&q=60&auto=format&fit=crop') center/cover;box-shadow:0 12px 26px rgba(0,0,0,0.22);border:2px solid rgba(255,255,255,0.85);animation:scvC 9s ease-in-out infinite 0.3s;display:flex;align-items:center;justify-content:center;"><span style="position:absolute;inset:0;background:rgba(13,40,71,0.28);"></span><div style="position:relative;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;"><div style="width:0;height:0;border-style:solid;border-width:4px 0 4px 7px;border-color:transparent transparent transparent #1574e6;margin-left:2px;"></div></div></div>
@@ -250,12 +289,12 @@
   <div style="position:absolute;top:80px;left:90px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.3);"></div>
   <div style="position:absolute;top:280px;left:40px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.3);"></div>
 
-  <div style="position:relative;max-width:1180px;margin:0 auto;padding:clamp(36px,6vw,72px) clamp(18px,4vw,40px) clamp(28px,4vw,48px);">
+  <div id="hero-inner" style="position:relative;max-width:1180px;margin:0 auto;padding:clamp(36px,6vw,72px) clamp(18px,4vw,40px) clamp(28px,4vw,48px);">
     <div id="hero-kicker" class="hero-anim" style="--d:0.95s;display:inline-block;background:#38e58c;color:#0d3b80;font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(13px,1.6vw,18px);padding:9px 34px 9px 22px;clip-path:polygon(0 0,100% 0,calc(100% - 18px) 100%,0 100%);box-shadow:0 8px 20px rgba(0,0,0,0.12);"></div>
 
-    <div class="hero-anim" style="--d:1.08s;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-top:clamp(20px,3vw,30px);">
+    <div id="hero-title-row" class="hero-anim" style="--d:1.08s;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-top:clamp(20px,3vw,30px);">
       <h1 id="hero-title" style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(40px,7vw,80px);line-height:1.04;color:#fff;margin:0;text-shadow:0 4px 14px rgba(0,0,0,0.14);"></h1>
-      <img src="assets/logo.png" alt="FindingTAIWAN" style="flex:none;width:clamp(190px,23vw,330px);height:auto;margin-top:26px;">
+      <img id="hero-logo-img" src="assets/logo.png" alt="FindingTAIWAN" style="flex:none;width:clamp(190px,23vw,330px);height:auto;margin-top:26px;">
     </div>
 
     <div class="hero-anim" style="--d:1.22s;display:flex;gap:14px;flex-wrap:wrap;margin-top:clamp(28px,4vw,40px);">
@@ -263,9 +302,9 @@
       <a id="hero-brochure" href="#participate" style="text-decoration:none;font-family:'Noto Sans TC';font-weight:700;font-size:16px;padding:15px 30px;background:rgba(255,255,255,0.12);color:#fff;border:1.5px solid rgba(255,255,255,0.6);border-radius:10px;"></a>
     </div>
 
-    <div class="hero-anim" style="--d:1.36s;display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:clamp(28px,4vw,40px);padding:16px 24px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:14px;">
+    <div id="hero-prize-box" class="hero-anim" style="--d:1.36s;display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:clamp(28px,4vw,40px);padding:16px 24px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:14px;">
       <span id="hero-prize-total" style="font-family:'Noto Sans TC';font-weight:900;font-size:clamp(18px,2.4vw,24px);color:#ffffff;"></span>
-      <span style="width:1px;height:26px;background:rgba(255,255,255,0.3);"></span>
+      <span id="hero-prize-sep" style="width:1px;height:26px;background:rgba(255,255,255,0.3);"></span>
       <span id="hero-prize-sub" style="font-family:'Noto Sans TC';font-weight:500;font-size:14px;color:rgba(255,255,255,0.92);"></span>
     </div>
   </div>
@@ -752,6 +791,19 @@ function render() {
   });
 
   txt('nav-apply', t.apply);
+  txt('nm-apply', t.apply);
+  // populate mobile menu links
+  const mobileLinks = document.getElementById('nav-mobile-links');
+  if (mobileLinks) {
+    mobileLinks.innerHTML = '';
+    t.nav.forEach((label, i) => {
+      const ma = document.createElement('a');
+      ma.href = NAV_HREFS[i];
+      ma.textContent = label;
+      ma.addEventListener('click', () => { if (typeof closeMobileMenu === 'function') closeMobileMenu(); });
+      mobileLinks.appendChild(ma);
+    });
+  }
   txt('sticky-apply-text', t.apply);
 
   // registration form
@@ -1244,6 +1296,41 @@ function teardownCineIntro() {
   setTimeout(() => { cine.remove(); }, reduce ? 0 : 1700);
 }
 
+function setupHeaderScroll() {
+  const hdr = document.getElementById('site-header');
+  const hero = document.getElementById('top');
+  if (!hdr || !hero) return;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    hdr.classList.toggle('nav-solid', window.scrollY >= (hero.offsetTop + hero.offsetHeight) - 80);
+  };
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive:true });
+  window.addEventListener('resize', update);
+  update();
+}
+
+function closeMobileMenu() {
+  const menu = document.getElementById('nav-mobile-menu');
+  const burger = document.getElementById('nav-burger');
+  if (menu) menu.classList.remove('open');
+  if (burger) { burger.classList.remove('open'); burger.setAttribute('aria-expanded','false'); }
+  document.body.style.overflow = '';
+}
+
+function setupMobileMenu() {
+  const burger = document.getElementById('nav-burger');
+  const menu = document.getElementById('nav-mobile-menu');
+  if (!burger || !menu) return;
+  burger.addEventListener('click', () => {
+    const isOpen = menu.classList.toggle('open');
+    burger.classList.toggle('open', isOpen);
+    burger.setAttribute('aria-expanded', String(isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileMenu(); });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   render();
   initParticles();
@@ -1251,6 +1338,8 @@ document.addEventListener('DOMContentLoaded', () => {
   setupStickyApply();
   setupApplyForm();
   teardownCineIntro();
+  setupHeaderScroll();
+  setupMobileMenu();
 });
 </script>
 </body>
