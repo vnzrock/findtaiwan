@@ -24,6 +24,18 @@
   [data-reveal="right"] { transform: translateX(64px); }
   [data-reveal][data-inview] { opacity: 1; transform: none; }
 
+  /* footer */
+  .foot-h { font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:700; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:15px; }
+  footer .foot-link { font-family:'Noto Sans TC',sans-serif; font-weight:500; font-size:14px; color:rgba(255,255,255,0.82); text-decoration:none; display:inline-flex; align-items:center; gap:6px; transition:color .2s ease; }
+  footer .foot-link::after { content:"↗"; font-size:12px; opacity:0.6; }
+  footer .foot-link[download]::after { content:"↓"; }
+  footer .foot-link:hover { color:#38e58c; }
+  #footer-links a:hover { color:#fff !important; }
+
+  /* timeline: items reveal one-by-one when the section scrolls into view */
+  #timeline-list .tl-item { opacity: 0; transform: translateY(26px); transition: opacity 0.6s cubic-bezier(0.2,0.7,0.2,1), transform 0.6s cubic-bezier(0.2,0.7,0.2,1); transition-delay: calc(var(--i,0) * 0.13s); }
+  #timeline-list.tl-in .tl-item { opacity: 1; transform: none; }
+
   /* animations */
   @keyframes scFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-18px)} }
   @keyframes scvA { 0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-22px) rotate(-4deg)} }
@@ -40,6 +52,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     [data-reveal] { opacity:1!important; transform:none!important; transition:none!important; }
+    #timeline-list .tl-item { opacity:1!important; transform:none!important; transition:none!important; }
     #hero-blob, .sc-float { animation:none!important; }
   }
 
@@ -872,20 +885,44 @@
 </section>
 
 <!-- FOOTER -->
-<footer style="position:relative;background:#0d3b80;padding:clamp(48px,6vw,72px) clamp(18px,4vw,40px) clamp(28px,4vw,40px);overflow:hidden;">
+<footer style="position:relative;background:#0d3b80;padding:clamp(48px,6vw,72px) clamp(18px,4vw,40px) clamp(24px,3vw,32px);overflow:hidden;">
   <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.04) 0 1px,transparent 1px 66px),repeating-linear-gradient(90deg,rgba(255,255,255,0.04) 0 1px,transparent 1px 66px);"></div>
-  <div style="position:relative;max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start;justify-content:space-between;">
-    <div style="max-width:420px;">
+  <div style="position:relative;max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:clamp(28px,5vw,56px);align-items:flex-start;justify-content:space-between;">
+    <!-- brand + organizer -->
+    <div style="max-width:430px;min-width:260px;">
       <div style="display:flex;align-items:center;gap:11px;">
-        <img src="assets/logo.png" alt="FindingTAIWAN" style="height:36px;width:auto;display:block;">
+        <img src="assets/logo.png" alt="FindingTAIWAN" style="height:38px;width:auto;display:block;">
         <span style="font-family:'Noto Sans TC';font-weight:900;font-size:18px;color:#fff;">尋找台灣 2.0 <span style="font-family:'Montserrat';font-size:11px;color:#38e58c;letter-spacing:0.08em;">#FindingTAIWAN2.0</span></span>
       </div>
-      <p id="foot-tagline" style="font-family:'Noto Sans TC';font-style:italic;font-weight:700;font-size:16px;color:rgba(255,255,255,0.9);margin:18px 0 0;"></p>
+      <!-- verified official-organizer badge -->
+      <div style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:8px 15px;background:rgba(56,229,140,0.12);border:1px solid rgba(56,229,140,0.42);border-radius:999px;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="#38e58c" aria-hidden="true"><path d="M12 1.6l2.7 1.95 3.32-.05 1.02 3.16 2.7 1.94-1.05 3.15 1.05 3.15-2.7 1.94-1.02 3.16-3.32-.05L12 22.4l-2.7-1.95-3.32.05-1.02-3.16-2.7-1.94 1.05-3.15L2.26 9.1l2.7-1.94L5.98 4l3.32.05L12 1.6z"></path><path d="M10.6 14.6l-2.3-2.3-1.3 1.3 3.6 3.6 6.4-6.4-1.3-1.3z" fill="#0d3b80"></path></svg>
+        <span id="foot-org" style="font-family:'Noto Sans TC';font-weight:700;font-size:12.5px;color:#fff;letter-spacing:0.01em;"></span>
+      </div>
+      <p id="foot-tagline" style="font-family:'Noto Sans TC';font-style:italic;font-weight:700;font-size:15.5px;line-height:1.7;color:rgba(255,255,255,0.9);margin:16px 0 0;"></p>
     </div>
-    <div id="footer-links" style="display:flex;flex-wrap:wrap;gap:12px 26px;"></div>
+
+    <!-- site nav -->
+    <div style="min-width:130px;">
+      <div class="foot-h" id="foot-links-title"></div>
+      <div id="footer-links" style="display:flex;flex-direction:column;gap:11px;"></div>
+    </div>
+
+    <!-- official resources -->
+    <div style="min-width:190px;">
+      <div class="foot-h" id="foot-official-title"></div>
+      <div style="display:flex;flex-direction:column;gap:11px;">
+        <a class="foot-link" id="foot-site" href="https://www.mofa.gov.tw/" target="_blank" rel="noopener"></a>
+        <a class="foot-link" id="foot-fb" href="https://www.facebook.com/Taiwan.MOFA" target="_blank" rel="noopener"></a>
+        <a class="foot-link" id="foot-brochure" href="活動簡章.pdf" download="FindingTAIWAN2.0_活動簡章.pdf"></a>
+      </div>
+    </div>
   </div>
-  <div style="position:relative;max-width:1180px;margin:clamp(32px,4vw,44px) auto 0;padding-top:22px;border-top:1px solid rgba(255,255,255,0.15);font-family:'Noto Sans TC';font-size:13px;color:rgba(255,255,255,0.6);">
-    © 2026 <span id="foot-rights"></span>
+
+  <!-- bottom bar -->
+  <div style="position:relative;max-width:1180px;margin:clamp(32px,4vw,44px) auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,0.15);display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;justify-content:space-between;font-family:'Noto Sans TC';font-size:12.5px;color:rgba(255,255,255,0.6);">
+    <span>© 2026 <span id="foot-rights"></span>　All rights reserved.</span>
+    <span id="foot-note" style="color:rgba(255,255,255,0.5);"></span>
   </div>
 </footer>
 
@@ -1040,6 +1077,13 @@ const C = {
     showTag: '參加作品 / Video Showcase', showTitle: '作品展示專區', showBody: '作品展示平台建置中，後續將開放瀏覽參賽作品。',
     footTagline: '以影像述說台灣，讓世界看見。',
     footRights: '中華民國外交部 Ministry of Foreign Affairs, Taiwan (R.O.C.)',
+    footOrg: '主辦單位 · 中華民國外交部',
+    footLinksTitle: '網站導覽',
+    footOfficialTitle: '官方資源',
+    footSite: '外交部官方網站',
+    footFb: '外交部官方臉書',
+    footBrochure: '下載活動簡章',
+    footNote: '本網站為「尋找台灣 2.0 #FindingTAIWAN」官方活動網站',
     marqueeItems: ['用鏡頭說出你和台灣的故事', '#FindingTAIWAN2.0', '全球徵片競賽', '總獎金 新台幣 100 萬元', '報名即日起'],
     videoTag: '主視覺影片 / Campaign Film',
     videoLabel: '主視覺影片即將上線',
@@ -1132,6 +1176,13 @@ const C = {
     showTag: 'Video Showcase', showTitle: 'Entry showcase', showBody: 'The showcase platform is under development; entries will be available to view here.',
     footTagline: 'Telling Taiwan\'s story to the world, through film.',
     footRights: 'Ministry of Foreign Affairs, Taiwan (R.O.C.)',
+    footOrg: 'Organized by the Ministry of Foreign Affairs (Taiwan, R.O.C.)',
+    footLinksTitle: 'Explore',
+    footOfficialTitle: 'Official Resources',
+    footSite: 'MOFA Official Website',
+    footFb: 'MOFA Official Facebook',
+    footBrochure: 'Download Guidelines',
+    footNote: 'The official website of Finding Taiwan 2.0 #FindingTAIWAN',
     marqueeItems: ['Tell your Taiwan story', '#FindingTAIWAN2.0', 'Global Video Open Call', 'Total Prize NT\$1,000,000', 'Now Open'],
     videoTag: 'Campaign Film',
     videoLabel: 'Campaign film coming soon',
@@ -1329,14 +1380,22 @@ function render() {
 
   const tlList = document.getElementById('timeline-list');
   tlList.innerHTML = '';
-  t.timeline.forEach(item => {
+  t.timeline.forEach((item, i) => {
     const div = document.createElement('div');
-    div.setAttribute('data-reveal', '');
-    div.setAttribute('data-inview', '');
-    div.style.cssText = "display:grid;grid-template-columns:92px 1fr;gap:clamp(14px,3vw,28px);";
+    div.className = 'tl-item';
+    div.style.cssText = "display:grid;grid-template-columns:92px 1fr;gap:clamp(14px,3vw,28px);--i:" + i + ";";
     div.innerHTML = '<div style="font-family:\'Montserrat\';font-weight:700;font-size:clamp(15px,1.8vw,18px);color:#1574e6;text-align:right;padding-top:1px;">' + item.d + '</div><div style="position:relative;border-left:2px solid #d7e6fb;padding:0 0 34px 28px;"><span style="position:absolute;left:-8px;top:3px;width:14px;height:14px;border-radius:50%;background:#38e58c;border:3px solid #fff;box-shadow:0 0 0 2px #38e58c;"></span><h3 style="font-family:\'Noto Sans TC\';font-weight:900;font-size:19px;color:#0d2747;margin:0 0 5px;">' + item.t + '</h3><p style="font-family:\'Noto Sans TC\';font-size:14.5px;color:#5a6a82;margin:0;line-height:1.6;">' + item.s + '</p></div>';
     tlList.appendChild(div);
   });
+  // reveal the timeline entries one-by-one when the list scrolls into view
+  if (!tlList.classList.contains('tl-in')) {
+    if ('IntersectionObserver' in window) {
+      const tio = new IntersectionObserver((es) => {
+        if (es.some(e => e.isIntersecting)) { tlList.classList.add('tl-in'); tio.disconnect(); }
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+      tio.observe(tlList);
+    } else { tlList.classList.add('tl-in'); }
+  }
   txt('tl-note', t.tlNote);
 
   // rules
@@ -1411,13 +1470,20 @@ function render() {
   // footer
   txt('foot-tagline', t.footTagline);
   txt('foot-rights', t.footRights);
+  txt('foot-org', t.footOrg);
+  txt('foot-links-title', t.footLinksTitle);
+  txt('foot-official-title', t.footOfficialTitle);
+  txt('foot-site', t.footSite);
+  txt('foot-fb', t.footFb);
+  txt('foot-brochure', t.footBrochure);
+  txt('foot-note', t.footNote);
   const footerLinks = document.getElementById('footer-links');
   footerLinks.innerHTML = '';
   t.nav.forEach((label, i) => {
     const a = document.createElement('a');
     a.href = NAV_HREFS[i];
     a.textContent = label;
-    a.style.cssText = "text-decoration:none;font-family:'Noto Sans TC';font-weight:500;font-size:14px;color:rgba(255,255,255,0.78);white-space:nowrap;";
+    a.style.cssText = "text-decoration:none;font-family:'Noto Sans TC';font-weight:500;font-size:14px;color:rgba(255,255,255,0.82);white-space:nowrap;transition:color .2s ease;";
     footerLinks.appendChild(a);
   });
 
