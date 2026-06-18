@@ -224,7 +224,9 @@
     #nav-desktop-items{display:none!important;}
     #top{min-height:100dvh;display:flex;flex-direction:column;}
     #hero-thumbs{display:none!important;}
-    #hero-inner{flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding-top:100px!important;padding-bottom:48px!important;}
+    #hero-mobile-cards{display:block;}
+    #hero-filmstrip{display:block;}
+    #hero-inner{flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding-top:100px!important;padding-bottom:96px!important;}
     #hero-logo-img{display:none!important;}
     #hero-kicker{margin-bottom:4px;}
     #hero-title-row{flex-direction:column!important;gap:10px!important;margin-top:24px!important;}
@@ -232,12 +234,28 @@
     #hero-cta{margin-top:28px!important;gap:10px!important;}
     #hero-prize-box{flex-direction:column!important;gap:8px!important;align-items:flex-start!important;margin-top:28px!important;padding:14px 18px!important;}
     #hero-prize-sep{display:none!important;}
-    #hero-blob{width:140px!important;height:140px!important;bottom:-36px!important;right:-28px!important;}
+    #hero-blob{width:120px!important;height:120px!important;bottom:-28px!important;right:-20px!important;opacity:0.5!important;}
     section{scroll-margin-top:66px;}
     .about-gallery{grid-template-columns:repeat(2,1fr)!important;}
     .about-gallery .ag-wide{grid-column:span 2!important;}
     .about-gallery .ag-cell{grid-column:span 1!important;}
   }
+
+  /* === mobile hero: floating video cards + filmstrip === */
+  #hero-mobile-cards{display:none;position:absolute;inset:0;pointer-events:none;z-index:2;}
+  .hmc{position:absolute;width:78px;aspect-ratio:16/10;border-radius:10px;overflow:hidden;border:2px solid rgba(255,255,255,0.8);box-shadow:0 10px 24px rgba(0,0,0,0.32);}
+  .hmc img{width:100%;height:100%;object-fit:cover;display:block;}
+  .hmc-ov{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(13,40,71,0.2);}
+  .hmc-btn{width:21px;height:21px;border-radius:50%;background:rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;}
+  .hmc-btn::after{content:'';display:block;width:0;height:0;border-style:solid;border-width:4px 0 4px 7px;border-color:transparent transparent transparent #1574e6;margin-left:2px;}
+  #hero-filmstrip{display:none;position:absolute;bottom:0;left:0;right:0;height:78px;overflow:hidden;pointer-events:none;z-index:2;}
+  #hero-filmstrip::before,#hero-filmstrip::after{content:'';position:absolute;top:0;bottom:0;width:40px;z-index:3;}
+  #hero-filmstrip::before{left:0;background:linear-gradient(to right,#0f63cf,transparent);}
+  #hero-filmstrip::after{right:0;background:linear-gradient(to left,#0f63cf,transparent);}
+  #hero-fs-inner{display:flex;gap:8px;animation:scMarquee 22s linear infinite;width:max-content;padding:7px 0 9px;}
+  .hfs-frame{flex:none;width:116px;height:64px;border-radius:8px;overflow:hidden;border:2px solid rgba(255,255,255,0.48);box-shadow:0 4px 14px rgba(0,0,0,0.26);position:relative;}
+  .hfs-frame img{width:100%;height:100%;object-fit:cover;display:block;}
+  .hfs-frame::after{content:'';position:absolute;inset:0;background:rgba(13,40,71,0.14);}
 </style>
 </head>
 <body>
@@ -314,6 +332,14 @@
       <span id="hero-prize-sub" style="font-family:'Noto Sans TC';font-weight:500;font-size:14px;color:rgba(255,255,255,0.92);"></span>
     </div>
   </div>
+<div id="hero-mobile-cards" aria-hidden="true">
+  <div class="hmc" style="top:82px;right:-18px;animation:scvA 7s ease-in-out infinite;"><img src="https://ws.mofa.gov.tw/001/Upload/402/relpic/76/120778/575a2e89-867a-40f7-8db2-6e9f46949222.jpg" alt="" loading="lazy"><div class="hmc-ov"><div class="hmc-btn"></div></div></div>
+  <div class="hmc" style="top:188px;right:-14px;animation:scvB 8.5s ease-in-out infinite 0.7s;"><img src="https://ws.mofa.gov.tw/001/Upload/402/relpic/76/120778/ffced11b-7179-442b-8904-08da44ae7103.jpg" alt="" loading="lazy"><div class="hmc-ov"><div class="hmc-btn"></div></div></div>
+  <div class="hmc" style="top:300px;right:-20px;animation:scvC 9.2s ease-in-out infinite 0.3s;"><img src="https://ws.mofa.gov.tw/001/Upload/402/relpic/76/120778/329f2e40-f692-4c37-a094-5f46769d8bab.jpg" alt="" loading="lazy"><div class="hmc-ov"><div class="hmc-btn"></div></div></div>
+</div>
+<div id="hero-filmstrip" aria-hidden="true">
+  <div id="hero-fs-inner"><div class="hfs-frame"><img src="https://images.unsplash.com/photo-1583395145517-1e3177037600?w=220&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><div class="hfs-frame"><img src="https://images.unsplash.com/photo-1674920831578-8de40a5bcff0?w=220&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><div class="hfs-frame"><img src="https://images.unsplash.com/photo-1720918496270-1acc2e4d2435?w=220&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><div class="hfs-frame"><img src="https://images.unsplash.com/photo-1610616677799-56d88bd29358?w=220&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><div class="hfs-frame"><img src="https://images.unsplash.com/photo-1591356442491-99d7775bc7b1?w=220&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><div class="hfs-frame"><img src="https://ws.mofa.gov.tw/001/Upload/402/relpic/76/120778/087c04fc-2729-47e1-b5bc-1baace4f2bb3.jpg" alt="" loading="lazy"></div><div class="hfs-frame"><img src="https://ws.mofa.gov.tw/001/Upload/402/relpic/76/120778/99366ed4-2400-4b28-ba4b-4bcf425f30fc.jpg" alt="" loading="lazy"></div><div class="hfs-frame"><img src="https://images.unsplash.com/photo-1583395145517-1e3177037600?w=220&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><div class="hfs-frame"><img src="https://images.unsplash.com/photo-1674920831578-8de40a5bcff0?w=220&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><div class="hfs-frame"><img src="https://images.unsplash.com/photo-1720918496270-1acc2e4d2435?w=220&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><div class="hfs-frame"><img src="https://images.unsplash.com/photo-1610616677799-56d88bd29358?w=220&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><div class="hfs-frame"><img src="https://images.unsplash.com/photo-1591356442491-99d7775bc7b1?w=220&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><div class="hfs-frame"><img src="https://ws.mofa.gov.tw/001/Upload/402/relpic/76/120778/087c04fc-2729-47e1-b5bc-1baace4f2bb3.jpg" alt="" loading="lazy"></div><div class="hfs-frame"><img src="https://ws.mofa.gov.tw/001/Upload/402/relpic/76/120778/99366ed4-2400-4b28-ba4b-4bcf425f30fc.jpg" alt="" loading="lazy"></div></div>
+</div>
 </section>
 
 <!-- 1. ABOUT -->
@@ -332,7 +358,7 @@
           <p id="about-p2" style="font-family:'Noto Sans TC';font-size:16px;line-height:1.9;color:#3a4a63;margin:0;"></p>
         </div>
       </div>
-      <div class="about-photos" data-reveal="right">
+      <div class="about-photos" data-reveal="right" data-inview>
         <div class="ap ap-back"><figure><img src="https://ws.mofa.gov.tw/001/Upload/402/relpic/76/120778/575a2e89-867a-40f7-8db2-6e9f46949222.jpg" alt="2025 尋找台灣頒獎典禮貴賓合影" loading="lazy"></figure></div>
         <div class="ap ap-front"><figure><img src="https://ws.mofa.gov.tw/001/Upload/402/relpic/76/120778/99366ed4-2400-4b28-ba4b-4bcf425f30fc.jpg" alt="2025 尋找台灣頒獎典禮入圍者合影" loading="lazy"></figure></div>
         <span class="ap-tag" id="about-feature-cap"></span>
