@@ -44,7 +44,7 @@
   }
 
   /* step cards */
-  .step-card { background:#fff; border:1px solid #e2ecfb; border-radius:20px; overflow:hidden; box-shadow:0 10px 30px rgba(13,59,128,0.06); display:flex; flex-direction:column; transition:transform .32s cubic-bezier(.2,.7,.2,1), box-shadow .32s ease; }
+  .step-card { background:#fff; border:1px solid #e2ecfb; border-radius:20px; overflow:hidden; box-shadow:0 10px 30px rgba(13,59,128,0.06); display:flex; flex-direction:column; transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1), box-shadow .32s ease; }
   .step-card:hover { transform:translateY(-7px); box-shadow:0 24px 50px rgba(13,59,128,0.15); }
   .step-art { position:relative; height:196px; display:flex; align-items:flex-end; justify-content:center; overflow:hidden; }
   .step-art img { height:178px; width:auto; max-width:92%; object-fit:contain; object-position:bottom center; display:block; filter:drop-shadow(0 10px 16px rgba(13,59,128,0.14)); transition:transform .45s cubic-bezier(.2,.7,.2,1); }
@@ -252,6 +252,8 @@
     section{scroll-margin-top:66px;}
     #stats-grid{display:none!important;}
     #video{padding-left:0!important;padding-right:0!important;}
+    /* each step reveals on its own as it scrolls in (drop the grid stagger that made it flash by) */
+    .step-card{transition-delay:0s!important;transition-duration:1s,.7s,.32s!important;}
     /* labelled green pill on mobile, slightly more compact */
     #sticky-apply{padding:13px 22px;font-size:14px;}
     .about-gallery{grid-template-columns:repeat(2,1fr)!important;}
