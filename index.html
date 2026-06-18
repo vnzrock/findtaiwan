@@ -107,18 +107,23 @@
   @keyframes heroIn { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:none} }
 
   /* sticky apply button */
-  #sticky-apply { position:fixed; right:clamp(14px,3vw,30px); bottom:clamp(14px,3vw,30px); z-index:55; display:inline-flex; align-items:center; gap:9px; padding:14px 26px; background:#FF5A4F; color:#fff; font-family:'Noto Sans TC',sans-serif; font-weight:900; font-size:15px; border-radius:999px; text-decoration:none; box-shadow:0 12px 34px rgba(255,90,79,0.55),0 4px 14px rgba(13,59,128,0.2); opacity:0; transform:translateY(22px) scale(0.9); pointer-events:none; transition:opacity .4s ease, transform .4s cubic-bezier(.34,1.56,.64,1); }
+  #sticky-apply { position:fixed; right:clamp(14px,3vw,30px); bottom:clamp(14px,3vw,30px); z-index:55; display:inline-flex; align-items:center; gap:9px; padding:14px 26px; background:#38e58c; color:#0d3b80; font-family:'Noto Sans TC',sans-serif; font-weight:900; font-size:15px; border-radius:999px; text-decoration:none; box-shadow:0 12px 34px rgba(56,229,140,0.5),0 4px 14px rgba(13,59,128,0.22); opacity:0; transform:translateY(22px) scale(0.9); pointer-events:none; transition:opacity .4s ease, transform .4s cubic-bezier(.34,1.56,.64,1); }
   #sticky-apply.show { opacity:1; transform:none; pointer-events:auto; }
-  #sticky-apply:hover { transform:translateY(-3px) scale(1.05); box-shadow:0 18px 44px rgba(255,90,79,0.68),0 6px 16px rgba(13,59,128,0.24); }
+  #sticky-apply:hover { transform:translateY(-3px) scale(1.05); box-shadow:0 18px 44px rgba(56,229,140,0.62),0 6px 16px rgba(13,59,128,0.24); }
   #sticky-apply .sa-pulse { position:relative; display:inline-flex; width:9px; height:9px; }
-  #sticky-apply .sa-pulse::before { content:""; position:absolute; inset:0; border-radius:50%; background:#fff; }
-  #sticky-apply .sa-pulse::after { content:""; position:absolute; inset:0; border-radius:50%; background:#fff; animation:saPulse 1.8s ease-out infinite; }
+  #sticky-apply .sa-pulse::before { content:""; position:absolute; inset:0; border-radius:50%; background:#0d3b80; }
+  #sticky-apply .sa-pulse::after { content:""; position:absolute; inset:0; border-radius:50%; background:#0d3b80; animation:saPulse 1.8s ease-out infinite; }
+  #sticky-apply .sa-icon { display:none; }
+  #sticky-apply .sa-icon svg { width:24px; height:24px; display:block; }
+  @keyframes saRing { 0%{transform:scale(1);opacity:.55} 100%{transform:scale(1.7);opacity:0} }
   @keyframes saPulse { 0%{transform:scale(1);opacity:.6} 100%{transform:scale(3.2);opacity:0} }
 
   @media (prefers-reduced-motion: reduce) {
     #cine-intro { display:none !important; }
     .hero-anim { opacity:1 !important; animation:none !important; }
     #sticky-apply .sa-pulse::after { animation:none !important; }
+    #sticky-apply::after { animation:none !important; }
+    .win-track { animation:none !important; }
   }
 
   /* ===== English typography layer =====
@@ -214,6 +219,12 @@
     .rule-v { font-size:15px; line-height:1.9; }
   }
 
+  /* 2025 winners — slow auto-scrolling reel, pauses on hover / touch */
+  #winners-grid { overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent); mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent); }
+  .win-track { display:flex; gap:16px; width:max-content; padding-bottom:8px; animation:winMarquee 55s linear infinite; will-change:transform; }
+  #winners-grid:hover .win-track, .win-track.paused { animation-play-state:paused; }
+  @keyframes winMarquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+
   /* === fixed transparent header === */
   #site-header{position:fixed;top:0;left:0;right:0;z-index:50;background:transparent;transition:background .35s ease,box-shadow .35s ease;}
   #site-header.nav-solid{background:rgba(21,116,230,0.96);backdrop-filter:blur(8px);box-shadow:0 2px 18px rgba(13,59,128,0.18);}
@@ -240,6 +251,12 @@
     section{scroll-margin-top:66px;}
     #stats-grid{display:none!important;}
     #video{padding-left:0!important;padding-right:0!important;}
+    /* circular icon-only apply FAB on mobile */
+    #sticky-apply{width:58px;height:58px;padding:0;gap:0;justify-content:center;border-radius:50%;}
+    #sticky-apply #sticky-apply-text{display:none;}
+    #sticky-apply .sa-pulse{display:none;}
+    #sticky-apply .sa-icon{display:flex;}
+    #sticky-apply::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #38e58c;animation:saRing 1.9s ease-out infinite;pointer-events:none;}
     .about-gallery{grid-template-columns:repeat(2,1fr)!important;}
     .about-gallery .ag-wide{grid-column:span 2!important;}
     .about-gallery .ag-cell{grid-column:span 1!important;}
@@ -746,8 +763,8 @@
 <!-- VIDEO (Campaign Film) -->
 <section id="video" style="background:#fff;padding:clamp(40px,6vw,84px) clamp(18px,4vw,40px) 0;">
   <div style="max-width:1180px;margin:0 auto;">
-    <div data-reveal style="position:relative;width:100%;margin:0 auto;aspect-ratio:16/9;overflow:hidden;">
-      <iframe src="https://www.youtube-nocookie.com/embed/_koDf0NAnRY?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=_koDf0NAnRY" title="FindingTAIWAN 2.0 Campaign Film" style="position:absolute;inset:0;width:100%;height:100%;border:0;display:block;" allow="autoplay;encrypted-media;picture-in-picture" allowfullscreen></iframe>
+    <div data-reveal style="position:relative;width:100%;margin:0 auto;aspect-ratio:16/9;overflow:hidden;background:#0d2747;">
+      <iframe id="campaign-iframe" data-src="https://www.youtube-nocookie.com/embed/_koDf0NAnRY?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=_koDf0NAnRY" title="FindingTAIWAN 2.0 Campaign Film" style="position:absolute;inset:0;width:100%;height:100%;border:0;display:block;" allow="autoplay;encrypted-media;picture-in-picture" allowfullscreen loading="lazy"></iframe>
     </div>
   </div>
 </section>
@@ -794,7 +811,7 @@
         <span style="font-family:'Montserrat';font-weight:700;">f</span><span id="win-btn-text"></span> ↗
       </a>
     </div>
-    <div id="winners-grid" style="display:flex;gap:16px;margin-top:clamp(30px,4vw,48px);overflow-x:auto;padding-bottom:16px;scrollbar-width:none;-ms-overflow-style:none;"></div>
+    <div id="winners-grid" style="margin-top:clamp(30px,4vw,48px);"></div>
 
     <!-- 2025 event photo gallery -->
     <div data-reveal data-inview style="margin-top:clamp(44px,6vw,72px);">
@@ -872,7 +889,7 @@
 </footer>
 
 <!-- sticky apply button -->
-<a id="sticky-apply" href="#participate" onclick="openApplyModal(event)"><span class="sa-pulse"></span><span id="sticky-apply-text"></span></a>
+<a id="sticky-apply" href="#participate" onclick="openApplyModal(event)" aria-label="立即報名"><span class="sa-pulse"></span><span class="sa-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#0d3b80" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"></path><path d="M12 5l7 7-7 7"></path></svg></span><span id="sticky-apply-text"></span></a>
 
 <!-- REGISTRATION MODAL -->
 <div id="apply-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="form-title" onclick="if(event.target===this)closeApplyModal()">
@@ -1335,16 +1352,15 @@ function render() {
 
   const wGrid = document.getElementById('winners-grid');
   wGrid.innerHTML = '';
-  const PICSUM_SEEDS = ['taipei', 'taiwan', 'alishan', 'taroko', 'sunmoon'];
-  WINNERS_VIDEOS.forEach((vid, i) => {
-    const no = String(i + 1).padStart(2, '0');
-    const seed = PICSUM_SEEDS[i] || ('winner' + i);
+  const WIN_IMGS = ['photo-1583395145517-1e3177037600','photo-1591962176551-cb2d2febb7be','photo-1598935898639-81586f7d2129','photo-1552993873-0dd1110e025f','photo-1591356442491-99d7775bc7b1'];
+  const makeWinnerCard = (i) => {
+    const img = WIN_IMGS[i % WIN_IMGS.length];
     const card = document.createElement('div');
     card.style.cssText = 'position:relative;flex:none;width:clamp(150px,20vw,220px);aspect-ratio:9/16;border-radius:14px;overflow:hidden;box-shadow:0 12px 30px rgba(13,59,128,0.18);cursor:pointer;transition:transform 0.32s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.32s ease;';
-    card.onmouseenter = () => { card.style.transform = 'scale(1.08) translateY(-4px)'; card.style.boxShadow = '0 28px 56px rgba(13,59,128,0.32)'; };
+    card.onmouseenter = () => { card.style.transform = 'scale(1.06) translateY(-4px)'; card.style.boxShadow = '0 28px 56px rgba(13,59,128,0.32)'; };
     card.onmouseleave = () => { card.style.transform = ''; card.style.boxShadow = '0 12px 30px rgba(13,59,128,0.18)'; };
     card.innerHTML =
-      '<img src="https://picsum.photos/seed/' + seed + '/450/800" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">' +
+      '<img src="assets/img/' + img + '.jpg" alt="" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">' +
       '<span style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.18) 0%,transparent 35%,transparent 55%,rgba(13,40,71,0.90) 100%);"></span>' +
       '<span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">' +
         '<span style="width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.18);backdrop-filter:blur(6px);border:2px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;">' +
@@ -1355,8 +1371,21 @@ function render() {
         '<span style="font-family:\'Noto Sans TC\';font-weight:700;font-size:13px;color:#fff;display:block;line-height:1.4;">' + t.winClipLabel + '</span>' +
         '<span style="font-family:\'Montserrat\';font-size:10px;color:rgba(255,255,255,0.6);margin-top:3px;display:block;">#FindingTAIWAN2.0</span>' +
       '</span>';
-    wGrid.appendChild(card);
-  });
+    return card;
+  };
+  const track = document.createElement('div');
+  track.className = 'win-track';
+  // two identical sets so the -50% marquee loops seamlessly
+  for (let pass = 0; pass < 2; pass++) {
+    WINNERS_VIDEOS.forEach((vid, i) => track.appendChild(makeWinnerCard(i)));
+  }
+  wGrid.appendChild(track);
+  // pause while touched (mobile equivalent of hover)
+  const pause = () => track.classList.add('paused');
+  const resume = () => track.classList.remove('paused');
+  wGrid.addEventListener('touchstart', pause, { passive: true });
+  wGrid.addEventListener('touchend', resume);
+  wGrid.addEventListener('touchcancel', resume);
 
   // coming soon
   const sl = t.soonLabel;
@@ -1520,6 +1549,8 @@ function setupReveal() {
 function initParticles() {
   const canvas = document.getElementById('hero-particles');
   if (!canvas) return;
+  // The hero canvas is hidden on phones/touch — skip the heavy render loop entirely there.
+  if (window.matchMedia('(max-width:768px)').matches || window.matchMedia('(pointer:coarse)').matches) return;
   const ctx = canvas.getContext('2d');
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   let W = 0, H = 0;
@@ -1650,26 +1681,40 @@ function initParticles() {
       ctx.fillStyle = 'rgba(' + col + ',' + p.a + ')'; ctx.fill();
     }
 
-    if (!reduce) requestAnimationFrame(step);
+    // keep animating, but pause while the tab is hidden to save CPU/battery
+    if (!reduce) {
+      if (!document.hidden) {
+        requestAnimationFrame(step);
+      } else {
+        const resume = () => { document.removeEventListener('visibilitychange', resume); requestAnimationFrame(step); };
+        document.addEventListener('visibilitychange', resume);
+      }
+    }
   };
   step();
 }
 
-// sticky apply button: show after hero, hide while the signup section is on screen
+// defer the YouTube embed until the video section is near the viewport (faster first load)
+function setupLazyVideo() {
+  const iframe = document.getElementById('campaign-iframe');
+  if (!iframe || !iframe.dataset.src) return;
+  const load = () => { if (iframe.dataset.src) { iframe.src = iframe.dataset.src; delete iframe.dataset.src; } };
+  if (!('IntersectionObserver' in window)) { load(); return; }
+  const io = new IntersectionObserver((entries) => {
+    if (entries.some(e => e.isIntersecting)) { load(); io.disconnect(); }
+  }, { rootMargin: '400px 0px' });
+  io.observe(iframe);
+}
+
+// sticky apply button: show once the hero is scrolled past
 function setupStickyApply() {
   const fab = document.getElementById('sticky-apply');
-  const part = document.getElementById('participate');
   if (!fab) return;
   let ticking = false;
   const update = () => {
     ticking = false;
-    const pastHero = window.scrollY > window.innerHeight * 0.6;
-    let targetVisible = false;
-    if (part) {
-      const r = part.getBoundingClientRect();
-      targetVisible = r.top < window.innerHeight * 0.65 && r.bottom > 0;
-    }
-    fab.classList.toggle('show', pastHero && !targetVisible);
+    // always visible once the hero is scrolled past
+    fab.classList.toggle('show', window.scrollY > window.innerHeight * 0.6);
   };
   window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   window.addEventListener('resize', update);
@@ -1740,6 +1785,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initParticles();
   buildAwardsCollage();
   setupStickyApply();
+  setupLazyVideo();
   setupApplyForm();
   teardownCineIntro();
   setupHeaderScroll();
