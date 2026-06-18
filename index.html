@@ -100,24 +100,20 @@
     .about-gallery .ag-cell { grid-column:span 1; }
   }
 
-  /* cinematic hero intro */
+  /* modern loading entry */
   html.intro-lock, html.intro-lock body { overflow:hidden !important; height:100%; overscroll-behavior:none; }
-  #cine-intro { position:fixed; inset:0; z-index:9999; pointer-events:none; }
-  /* two curtain panels that part to the sides (布幕打開) */
-  #cine-intro .cine-bar { position:absolute; top:0; bottom:0; width:50.6%; background:repeating-linear-gradient(90deg,rgba(255,255,255,0.018) 0 16px,rgba(0,0,0,0.10) 16px 32px),linear-gradient(180deg,#0a1226,#070d1e); will-change:transform; }
-  #cine-intro .cine-left { left:0; box-shadow:inset -3px 0 22px rgba(0,0,0,0.55); animation:cineLeft 1.25s cubic-bezier(.76,0,.24,1) 2.05s forwards; }
-  #cine-intro .cine-right { right:0; box-shadow:inset 3px 0 22px rgba(0,0,0,0.55); animation:cineRight 1.25s cubic-bezier(.76,0,.24,1) 2.05s forwards; }
-  /* glowing seam down the middle where the curtains meet */
-  #cine-intro .cine-seam { position:absolute; top:0; bottom:0; left:50%; width:2px; transform:translateX(-50%); background:linear-gradient(180deg,transparent,#38e58c,transparent); opacity:0.85; animation:cineSeam 2.05s ease forwards; }
-  #cine-intro .cine-stack { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(14px,2.6vw,22px); padding:0 24px; }
-  #cine-intro .cine-logo { width:clamp(104px,24vw,156px); height:auto; opacity:0; filter:drop-shadow(0 10px 28px rgba(0,0,0,0.5)); animation:cineLogo 2.9s ease forwards; }
-  #cine-intro .cine-title { text-align:center; color:#fff; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:800; font-style:italic; letter-spacing:0.1em; font-size:clamp(20px,4.4vw,46px); opacity:0; animation:cineTitle 2.9s ease forwards; }
+  #cine-intro { position:fixed; inset:0; z-index:9999; pointer-events:none; background:radial-gradient(125% 90% at 50% 42%,#15264e 0%,#0b1430 55%,#070d1e 100%); animation:cineOut 0.8s cubic-bezier(.7,0,.2,1) 2.15s forwards; }
+  #cine-intro .cine-stack { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(13px,2.4vw,20px); padding:0 24px; }
+  #cine-intro .cine-logo { width:clamp(104px,24vw,150px); height:auto; opacity:0; filter:drop-shadow(0 10px 30px rgba(0,0,0,0.45)); animation:cineLogo 1.7s cubic-bezier(.2,.7,.2,1) forwards; }
+  #cine-intro .cine-title { text-align:center; color:#fff; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:800; font-style:italic; letter-spacing:0.1em; font-size:clamp(19px,4.4vw,44px); opacity:0; animation:cineTitle 1.7s cubic-bezier(.2,.7,.2,1) .18s forwards; }
   #cine-intro .cine-title b { color:#38e58c; }
-  @keyframes cineLeft { to { transform:translateX(-100%); } }
-  @keyframes cineRight { to { transform:translateX(100%); } }
-  @keyframes cineSeam { 0%{opacity:0} 30%{opacity:0.9} 92%{opacity:0.9} 100%{opacity:0} }
-  @keyframes cineLogo { 0%{opacity:0;transform:translateY(12px) scale(0.84)} 14%{opacity:1;transform:none} 70%{opacity:1;transform:none} 82%{opacity:0;transform:scale(0.98)} 100%{opacity:0} }
-  @keyframes cineTitle { 0%{opacity:0;transform:scale(1.07);letter-spacing:0.28em} 18%{opacity:1;transform:scale(1);letter-spacing:0.1em} 70%{opacity:1} 82%{opacity:0;transform:scale(0.99)} 100%{opacity:0} }
+  #cine-intro .cine-bar2 { margin-top:8px; width:120px; height:2px; border-radius:2px; background:rgba(255,255,255,0.16); overflow:hidden; opacity:0; animation:cineBarIn .4s ease .35s forwards; }
+  #cine-intro .cine-bar2::after { content:""; display:block; height:100%; width:100%; background:#38e58c; transform-origin:left; transform:scaleX(0); animation:cineBar 1.85s cubic-bezier(.45,0,.2,1) .4s forwards; }
+  @keyframes cineOut { to { opacity:0; transform:scale(1.05); visibility:hidden; } }
+  @keyframes cineLogo { 0%{opacity:0;filter:blur(9px);transform:translateY(10px) scale(.9)} 38%{opacity:1;filter:blur(0);transform:none} 100%{opacity:1;filter:blur(0);transform:none} }
+  @keyframes cineTitle { 0%{opacity:0;transform:translateY(8px);letter-spacing:.26em} 50%{opacity:1;transform:none;letter-spacing:.1em} 100%{opacity:1;letter-spacing:.1em} }
+  @keyframes cineBarIn { to { opacity:1; } }
+  @keyframes cineBar { to { transform:scaleX(1); } }
 
   /* hero staggered entrance */
   .hero-anim { opacity:0; animation:heroIn 0.95s cubic-bezier(.2,.7,.2,1) forwards; animation-delay:var(--d,0s); }
@@ -327,12 +323,10 @@
 
 <!-- cinematic intro -->
 <div id="cine-intro" aria-hidden="true">
-  <div class="cine-bar cine-left"></div>
-  <div class="cine-bar cine-right"></div>
-  <div class="cine-seam"></div>
   <div class="cine-stack">
     <img class="cine-logo" src="assets/logo.png" alt="">
     <div class="cine-title">尋找台灣 2.0 <b>#FindingTAIWAN</b></div>
+    <div class="cine-bar2"></div>
   </div>
 </div>
 
@@ -1890,7 +1884,7 @@ function teardownCineIntro() {
     if (!location.hash) window.scrollTo(0, 0);
     document.documentElement.classList.remove('intro-lock');
     cine.remove();
-  }, reduce ? 0 : 3500);
+  }, reduce ? 0 : 3050);
 }
 
 function setupHeaderScroll() {
