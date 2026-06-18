@@ -1,0 +1,8 @@
+# Local tooling only — used for screenshots/preview, not part of the site
+node_modules/
+package.json
+package-lock.json
+
+# Local artifacts
+*.log
+.DS_Store
