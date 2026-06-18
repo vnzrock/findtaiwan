@@ -226,17 +226,17 @@
     #hero-thumbs{display:none!important;}
     #hero-mobile-cards{display:none!important;}
     #hero-filmstrip{display:none!important;}
-    #hm-orbs{display:block;}
-    #hm-lens{display:block;}
+    #hm-cards{display:block;}
     #hm-ticker{display:flex;}
-    #hero-blob{display:none!important;}
-    #hero-inner{flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding-top:175px!important;padding-bottom:52px!important;padding-right:76px!important;}
+    #hero-blob{width:160px!important;height:160px!important;bottom:-40px!important;right:-40px!important;opacity:0.55!important;}
+    #hero-inner{flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding-top:96px!important;padding-bottom:50px!important;padding-right:38%!important;}
     #hero-logo-img{display:none!important;}
     #hero-kicker{margin-bottom:4px;}
-    #hero-title-row{flex-direction:column!important;gap:10px!important;margin-top:22px!important;}
-    #hero-title{font-size:clamp(34px,10vw,48px)!important;line-height:1.1!important;}
-    #hero-cta{margin-top:24px!important;gap:10px!important;}
-    #hero-prize-box{flex-direction:column!important;gap:8px!important;align-items:flex-start!important;margin-top:24px!important;padding:12px 16px!important;}
+    #hero-title-row{flex-direction:column!important;gap:10px!important;margin-top:20px!important;}
+    #hero-title{font-size:clamp(30px,9vw,44px)!important;line-height:1.12!important;}
+    #hero-cta{margin-top:22px!important;gap:10px!important;flex-direction:column!important;}
+    #hero-cta a{text-align:center!important;}
+    #hero-prize-box{flex-direction:column!important;gap:6px!important;align-items:flex-start!important;margin-top:20px!important;padding:12px 16px!important;}
     #hero-prize-sep{display:none!important;}
     section{scroll-margin-top:66px;}
     .about-gallery{grid-template-columns:repeat(2,1fr)!important;}
@@ -244,46 +244,33 @@
     .about-gallery .ag-cell{grid-column:span 1!important;}
   }
 
-  /* === mobile hero v2: cinema lens + colour orbs + ticker === */
-  #hm-orbs,#hm-lens,#hm-ticker{display:none;}
-  #hm-orbs{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-  .hm-orb{position:absolute;border-radius:50%;filter:blur(55px);}
-  .hm-orb1{width:240px;height:240px;background:#38e58c;opacity:0.38;top:-80px;right:-90px;animation:hmOrb1 9s ease-in-out infinite;}
-  .hm-orb2{width:200px;height:200px;background:#60baff;opacity:0.3;bottom:50px;right:-55px;animation:hmOrb2 12s ease-in-out infinite 1.5s;}
-  .hm-orb3{width:160px;height:160px;background:#0a1240;opacity:0.2;top:42%;left:-75px;animation:hmOrb1 15s ease-in-out infinite 3.5s;}
-  #hm-lens{position:absolute;top:62px;right:-14px;width:158px;height:158px;pointer-events:none;z-index:2;animation:hmFloat 6s ease-in-out infinite;}
-  .hm-ring{position:absolute;border-radius:50%;border-style:dashed;}
-  .hm-ring-outer{inset:-22px;border-width:2px;border-color:rgba(255,255,255,0.32);animation:hmRing 22s linear infinite;}
-  .hm-ring-mid{inset:-11px;border-width:1.5px;border-color:rgba(56,229,140,0.48);animation:hmRing 14s linear infinite reverse;}
-  .hm-img-wrap{position:absolute;inset:0;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,0.72);box-shadow:0 18px 44px rgba(0,0,0,0.36);}
-  .hm-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
-  .hm-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(13,40,71,0.22);}
-  .hm-play::after{content:'';width:0;height:0;border-style:solid;border-width:13px 0 13px 22px;border-color:transparent transparent transparent rgba(255,255,255,0.92);margin-left:5px;}
-  .hm-rec{position:absolute;top:-9px;left:4px;display:flex;align-items:center;gap:4px;background:rgba(8,15,45,0.84);color:#fff;font-family:'Montserrat';font-weight:700;font-size:10px;letter-spacing:0.1em;padding:3px 8px;border-radius:999px;backdrop-filter:blur(6px);white-space:nowrap;}
-  .hm-rec-dot{width:6px;height:6px;flex:none;border-radius:50%;background:#FF5A4F;animation:hmBlink 1.4s ease-in-out infinite;}
-  .hm-hash{position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);white-space:nowrap;background:#38e58c;color:#0d3b80;font-family:'Montserrat';font-weight:800;font-size:9px;letter-spacing:0.06em;padding:3px 10px;border-radius:999px;box-shadow:0 3px 10px rgba(56,229,140,0.42);}
-  #hm-ticker{position:absolute;bottom:0;left:0;right:0;height:32px;overflow:hidden;pointer-events:none;z-index:3;background:rgba(8,24,72,0.6);backdrop-filter:blur(6px);align-items:center;}
+  /* === mobile hero v3: floating stock-photo cards + ticker === */
+  #hm-cards,#hm-ticker{display:none;}
+  #hm-cards{position:absolute;inset:0;pointer-events:none;z-index:2;}
+  .hmc3{position:absolute;border-radius:14px;overflow:hidden;border:2.5px solid rgba(255,255,255,0.88);box-shadow:0 14px 32px rgba(0,0,0,0.3);}
+  .hmc3 img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;}
+  .hmc3-ov{position:absolute;inset:0;background:rgba(13,40,71,0.2);display:flex;align-items:center;justify-content:center;}
+  .hmc3-btn{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.22);}
+  .hmc3-btn::after{content:'';display:block;width:0;height:0;border-style:solid;border-width:5px 0 5px 9px;border-color:transparent transparent transparent #1574e6;margin-left:2px;}
+  #hm-ticker{position:absolute;bottom:0;left:0;right:0;height:34px;overflow:hidden;pointer-events:none;z-index:3;background:rgba(8,24,72,0.58);backdrop-filter:blur(6px);align-items:center;}
   #hm-ticker::before,#hm-ticker::after{content:'';position:absolute;top:0;bottom:0;width:28px;z-index:4;}
-  #hm-ticker::before{left:0;background:linear-gradient(to right,rgba(15,99,207,0.9),transparent);}
-  #hm-ticker::after{right:0;background:linear-gradient(to left,rgba(15,99,207,0.9),transparent);}
-  .hm-ticker-inner{display:flex;align-items:center;gap:14px;animation:hmTicker 20s linear infinite;width:max-content;white-space:nowrap;font-family:'Montserrat','Noto Sans TC';font-size:11px;font-weight:700;color:rgba(255,255,255,0.9);letter-spacing:0.05em;padding:0 16px;}
-  .hm-sep{color:#38e58c;font-size:13px;}
-  @keyframes hmRing{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-  @keyframes hmFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-  @keyframes hmOrb1{0%,100%{transform:translate(0,0)}33%{transform:translate(-16px,14px)}66%{transform:translate(12px,-10px)}}
-  @keyframes hmOrb2{0%,100%{transform:translate(0,0)}40%{transform:translate(13px,-17px)}70%{transform:translate(-9px,8px)}}
-  @keyframes hmBlink{0%,100%{opacity:1}50%{opacity:0.1}}
+  #hm-ticker::before{left:0;background:linear-gradient(to right,rgba(15,99,207,0.92),transparent);}
+  #hm-ticker::after{right:0;background:linear-gradient(to left,rgba(15,99,207,0.92),transparent);}
+  .hm-ticker-inner{display:flex;align-items:center;gap:14px;animation:hmTicker 22s linear infinite;width:max-content;white-space:nowrap;font-family:'Montserrat','Noto Sans TC';font-size:11px;font-weight:700;color:rgba(255,255,255,0.92);letter-spacing:0.05em;padding:0 16px;}
+  .hm-sep{color:#38e58c;font-size:13px;font-weight:900;}
   @keyframes hmTicker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  /* touch devices (phones in landscape, pointer:coarse) — show mobile hero */
+
+  /* landscape phones & touch devices wider than 768px */
   @media(pointer:coarse){
+    #hm-cards{display:block;}
+    #hm-ticker{display:flex;}
     #hero-thumbs{display:none!important;}
-    #hero-blob{display:none!important;}
     #hero-mobile-cards{display:none!important;}
     #hero-filmstrip{display:none!important;}
-    #hm-orbs{display:block;}
-    #hm-lens{display:block;}
-    #hm-ticker{display:flex;}
-    #hero-inner{padding-right:90px!important;padding-top:175px!important;padding-bottom:52px!important;}
+    #hero-inner{padding-right:38%!important;padding-top:96px!important;padding-bottom:50px!important;}
+    #hero-cta{flex-direction:column!important;}
+    #hero-cta a{text-align:center!important;}
+    #hero-blob{width:160px!important;height:160px!important;bottom:-40px!important;right:-40px!important;opacity:0.55!important;}
   }
 </style>
 </head>
@@ -361,20 +348,10 @@
       <span id="hero-prize-sub" style="font-family:'Noto Sans TC';font-weight:500;font-size:14px;color:rgba(255,255,255,0.92);"></span>
     </div>
   </div>
-<div id="hm-orbs" aria-hidden="true">
-  <div class="hm-orb hm-orb1"></div>
-  <div class="hm-orb hm-orb2"></div>
-  <div class="hm-orb hm-orb3"></div>
-</div>
-<div id="hm-lens" aria-hidden="true">
-  <div class="hm-ring hm-ring-outer"></div>
-  <div class="hm-ring hm-ring-mid"></div>
-  <div class="hm-img-wrap">
-    <img src="https://ws.mofa.gov.tw/001/Upload/402/relpic/76/120778/575a2e89-867a-40f7-8db2-6e9f46949222.jpg" alt="" loading="lazy">
-    <div class="hm-play"></div>
-  </div>
-  <div class="hm-rec"><span class="hm-rec-dot"></span>REC</div>
-  <div class="hm-hash">#FindingTAIWAN</div>
+<div id="hm-cards" aria-hidden="true">
+  <div class="hmc3" style="top:18%;right:3%;width:26vw;animation:scvA 7s ease-in-out infinite;"><img src="https://images.unsplash.com/photo-1583395145517-1e3177037600?w=360&q=72&auto=format&fit=crop" alt="" loading="lazy"><div class="hmc3-ov"><div class="hmc3-btn"></div></div></div>
+  <div class="hmc3" style="top:50%;right:1%;width:23vw;animation:scvB 8.5s ease-in-out infinite 0.7s;"><img src="https://images.unsplash.com/photo-1720918496270-1acc2e4d2435?w=320&q=72&auto=format&fit=crop" alt="" loading="lazy"><div class="hmc3-ov"><div class="hmc3-btn"></div></div></div>
+  <div class="hmc3" style="bottom:18%;right:22%;width:20vw;animation:scvC 9.2s ease-in-out infinite 0.4s;"><img src="https://images.unsplash.com/photo-1591356442491-99d7775bc7b1?w=300&q=72&auto=format&fit=crop" alt="" loading="lazy"><div class="hmc3-ov"><div class="hmc3-btn"></div></div></div>
 </div>
 <div id="hm-ticker" aria-hidden="true">
   <div class="hm-ticker-inner"><span>尋找台灣 2.0</span><span class="hm-sep"> · </span><span>#FindingTAIWAN</span><span class="hm-sep"> · </span><span>NT$1,000,000</span><span class="hm-sep"> · </span><span>外交部主辦</span><span class="hm-sep"> · </span><span>全球徵片競賽</span><span class="hm-sep"> · </span><span>尋找台灣 2.0</span><span class="hm-sep"> · </span><span>#FindingTAIWAN</span><span class="hm-sep"> · </span><span>NT$1,000,000</span><span class="hm-sep"> · </span><span>外交部主辦</span><span class="hm-sep"> · </span><span>全球徵片競賽</span><span class="hm-sep"> · </span></div>
