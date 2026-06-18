@@ -91,13 +91,16 @@
   /* cinematic hero intro */
   #cine-intro { position:fixed; inset:0; z-index:9999; pointer-events:none; }
   #cine-intro .cine-bar { position:absolute; left:0; right:0; height:50.5%; background:#081226; }
-  #cine-intro .cine-top { top:0; animation:cineTop 1.15s cubic-bezier(.76,0,.24,1) 0.35s forwards; }
-  #cine-intro .cine-bottom { bottom:0; animation:cineBottom 1.15s cubic-bezier(.76,0,.24,1) 0.35s forwards; }
-  #cine-intro .cine-title { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; color:#fff; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:800; font-style:italic; letter-spacing:0.1em; font-size:clamp(20px,4.4vw,46px); opacity:0; animation:cineTitle 1.5s ease forwards; }
+  #cine-intro .cine-top { top:0; animation:cineTop 1.1s cubic-bezier(.76,0,.24,1) 2.15s forwards; }
+  #cine-intro .cine-bottom { bottom:0; animation:cineBottom 1.1s cubic-bezier(.76,0,.24,1) 2.15s forwards; }
+  #cine-intro .cine-stack { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(14px,2.6vw,22px); padding:0 24px; }
+  #cine-intro .cine-logo { width:clamp(104px,24vw,156px); height:auto; opacity:0; filter:drop-shadow(0 10px 28px rgba(0,0,0,0.5)); animation:cineLogo 2.9s ease forwards; }
+  #cine-intro .cine-title { text-align:center; color:#fff; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:800; font-style:italic; letter-spacing:0.1em; font-size:clamp(20px,4.4vw,46px); opacity:0; animation:cineTitle 2.9s ease forwards; }
   #cine-intro .cine-title b { color:#38e58c; }
   @keyframes cineTop { to { transform:translateY(-100%); } }
   @keyframes cineBottom { to { transform:translateY(100%); } }
-  @keyframes cineTitle { 0%{opacity:0;transform:scale(1.07);letter-spacing:0.28em} 22%{opacity:1;transform:scale(1);letter-spacing:0.1em} 52%{opacity:1} 72%{opacity:0;transform:scale(0.99)} 100%{opacity:0} }
+  @keyframes cineLogo { 0%{opacity:0;transform:translateY(12px) scale(0.84)} 14%{opacity:1;transform:none} 70%{opacity:1;transform:none} 82%{opacity:0;transform:scale(0.98)} 100%{opacity:0} }
+  @keyframes cineTitle { 0%{opacity:0;transform:scale(1.07);letter-spacing:0.28em} 18%{opacity:1;transform:scale(1);letter-spacing:0.1em} 70%{opacity:1} 82%{opacity:0;transform:scale(0.99)} 100%{opacity:0} }
 
   /* hero staggered entrance */
   .hero-anim { opacity:0; animation:heroIn 0.95s cubic-bezier(.2,.7,.2,1) forwards; animation-delay:var(--d,0s); }
@@ -140,11 +143,6 @@
   html.lang-en #about-p1, html.lang-en #about-p2 { line-height: 1.75 !important; }
   /* Section headlines: a touch tighter so longer English titles hold together */
   html.lang-en h2 { letter-spacing: -0.01em !important; line-height: 1.1 !important; }
-  /* Awards amount: keep each prize on one line */
-  html.lang-en #awards-grid > div > div:last-child {
-    font-size: clamp(18px, 2vw, 23px) !important;
-    letter-spacing: -0.01em !important;
-  }
 
   /* ===== Registration modal ===== */
   #apply-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:flex-start; justify-content:center; padding:clamp(16px,5vh,56px) 16px; background:rgba(8,28,60,0.62); backdrop-filter:blur(6px); opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s ease; overflow-y:auto; }
@@ -204,6 +202,18 @@
   .award-card.feat .aw-m { color:#dba000; }
   .award-card.feat .aw-r::after { content:"★"; color:#FFC400; margin-left:8px; font-size:17px; vertical-align:1px; }
 
+  /* rules — clean readable text card */
+  .rules-card { background:#fff; border-radius:20px; padding:clamp(22px,4vw,40px); box-shadow:0 30px 64px rgba(8,30,80,0.30); margin-top:clamp(28px,4vw,40px); }
+  .rule-row { display:grid; grid-template-columns:148px 1fr; gap:20px; padding:18px 0; border-top:1px solid #eef1f6; }
+  .rule-row:first-child { border-top:0; padding-top:4px; }
+  .rule-k { font-family:'Noto Sans TC','Montserrat',sans-serif; font-weight:900; font-size:16px; color:#0d3b80; }
+  .rule-v { font-family:'Noto Sans TC',sans-serif; font-size:15.5px; line-height:1.95; color:#3a4a63; }
+  @media (max-width:600px) {
+    .rule-row { grid-template-columns:1fr; gap:6px; padding:15px 0; }
+    .rule-k { font-size:15px; }
+    .rule-v { font-size:15px; line-height:1.9; }
+  }
+
   /* === fixed transparent header === */
   #site-header{position:fixed;top:0;left:0;right:0;z-index:50;background:transparent;transition:background .35s ease,box-shadow .35s ease;}
   #site-header.nav-solid{background:rgba(21,116,230,0.96);backdrop-filter:blur(8px);box-shadow:0 2px 18px rgba(13,59,128,0.18);}
@@ -229,6 +239,7 @@
     #hero-filmstrip{display:none!important;}
     section{scroll-margin-top:66px;}
     #stats-grid{display:none!important;}
+    #video{padding-left:0!important;padding-right:0!important;}
     .about-gallery{grid-template-columns:repeat(2,1fr)!important;}
     .about-gallery .ag-wide{grid-column:span 2!important;}
     .about-gallery .ag-cell{grid-column:span 1!important;}
@@ -284,7 +295,10 @@
 <div id="cine-intro" aria-hidden="true">
   <div class="cine-bar cine-top"></div>
   <div class="cine-bar cine-bottom"></div>
-  <div class="cine-title">尋找台灣 2.0 <b>#FindingTAIWAN</b></div>
+  <div class="cine-stack">
+    <img class="cine-logo" src="assets/logo.png" alt="">
+    <div class="cine-title">尋找台灣 2.0 <b>#FindingTAIWAN</b></div>
+  </div>
 </div>
 
 <!-- progress bar -->
@@ -750,20 +764,18 @@
   </div>
 </section>
 
-<!-- 4. AWARDS -->
+<!-- 4. RULES -->
 <section id="awards" style="position:relative;background:#0f63cf;padding:clamp(56px,8vw,104px) clamp(18px,4vw,40px);overflow:hidden;">
-  <!-- Taiwan photo collage backdrop -->
-  <div aria-hidden="true" id="awards-collage" style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:1fr;"></div>
-  <!-- translucent blue tint so photos read softly behind the cards -->
-  <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,55,140,0.52) 0%,rgba(15,99,207,0.48) 60%,rgba(10,63,135,0.58) 100%);"></div>
-  <div style="position:relative;max-width:1180px;margin:0 auto;">
+  <div style="position:relative;max-width:880px;margin:0 auto;">
     <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#38e58c;">
       <span style="width:22px;height:2px;background:#38e58c;"></span><span id="aw-tag"></span>
     </div>
     <h2 id="aw-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(28px,4.4vw,50px);color:#fff;margin:18px 0 6px;"></h2>
-    <p id="aw-sub" style="font-family:'Noto Sans TC';font-size:16px;color:rgba(255,255,255,0.8);margin:0;"></p>
-    <div id="awards-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:clamp(32px,5vw,48px);"></div>
-    <p id="aw-note" style="font-family:'Noto Sans TC';font-size:14px;color:rgba(255,255,255,0.7);margin:22px 0 0;"></p>
+    <p id="aw-sub" style="font-family:'Noto Sans TC';font-size:16px;line-height:1.7;color:rgba(255,255,255,0.85);margin:0;max-width:640px;"></p>
+    <div class="rules-card" data-reveal data-inview>
+      <div id="rules-list"></div>
+      <p id="aw-note" style="font-family:'Noto Sans TC';font-size:13.5px;line-height:1.8;color:#8a97aa;margin:20px 0 0;"></p>
+    </div>
   </div>
 </section>
 
@@ -924,12 +936,16 @@
 </div>
 
 <script>
+// Always open at the top on (re)load — don't restore the previous scroll position
+if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+if (!location.hash) { window.scrollTo(0, 0); }
+
 const NAV_HREFS = ['#about','#participate','#timeline','#awards','#winners','#judges','#news'];
 const VIDEO_ID = '_koDf0NAnRY'; // 2024 Trending Taiwan Short Film Competition (MoFA)
 
 const C = {
   zh: {
-    nav: ['關於','參加方式','時程','獎項','精選作品','評審','最新消息'],
+    nav: ['關於','參加方式','時程','競賽規則','精選作品','評審','最新消息'],
     apply: '立即報名',
     brochure: '下載活動簡章',
     heroKicker: '外交部全球徵片競賽 ‧ 2026 即日起開放報名',
@@ -971,17 +987,19 @@ const C = {
       { d: '2026.11', t: '頒獎典禮', s: '公布得獎名單(日期另行公布)' }
     ],
     tlNote: '※ 實際日期以官方公告為準。',
-    awTag: '獎項 / Awards',
-    awTitle: '總獎金 新台幣 100 萬元',
-    awSub: '設置多元獎項，獎勵以鏡頭述說台灣故事的每一件作品。',
-    awards: [
-      { r: '首獎', n: '1 名', m: 'NT$200,000', feat: true },
-      { r: '貳獎', n: '2 名', m: '各 NT$100,000' },
-      { r: '參獎', n: '3 名', m: '各 NT$80,000' },
-      { r: '佳作', n: '5 名', m: '各 NT$50,000' },
-      { r: '人氣獎', n: '每月各 5 名', m: '網路票選產生' }
+    awTag: '競賽規則 / Rules',
+    awTitle: '競賽規則',
+    awSub: '以下為「尋找台灣 2.0 #FindingTAIWAN」全球徵片競賽參賽辦法摘要，方便快速閱讀。',
+    rules: [
+      { k: '主辦單位', v: '中華民國（台灣）外交部。' },
+      { k: '徵件主題', v: '以「台灣」為主題之原創短影音，不限子題與形式——自然地景、人文風情、常民生活、多元文化皆可。' },
+      { k: '參賽資格', v: '不限國籍與年齡，全球創作者皆可報名；個人或團隊參賽均可。' },
+      { k: '作品規格', v: '須為本人原創且擁有完整權利之作品，拍攝裝置與長度不限；須完成線上報名，並於指定影音平台公開發布、標註 #FindingTAIWAN2.0。' },
+      { k: '報名與截止', v: '2026 年即日起開放報名，徵件截止日期請參見「活動時程」。' },
+      { k: '獎項與獎金', v: '總獎金新台幣 100 萬元——首獎 1 名 20 萬、貳獎 2 名各 10 萬、參獎 3 名各 8 萬、佳作 5 名各 5 萬，另設每月人氣獎（網路票選產生）。' },
+      { k: '著作權與授權', v: '參賽者保有作品著作權，並同意主辦單位於本活動宣傳推廣範圍內無償使用；完整授權條款以官方活動簡章為準。' }
     ],
-    awNote: '頒獎典禮日期另行公布。',
+    awNote: '※ 以上為摘要說明。完整參賽辦法、作品規格與授權條款，請以官方「活動簡章」為準。',
     winTag: '2025 精選作品 / 2025 Winners',
     winTitle: '2025 首屆得獎作品',
     winBody: '首屆競賽得獎作品已於外交部臉書專區完整收錄，呈現世界各地創作者鏡頭下的台灣風貌。',
@@ -1019,7 +1037,7 @@ const C = {
     }
   },
   en: {
-    nav: ['About','Participate','Timeline','Awards','Winners','Judges','News'],
+    nav: ['About','Participate','Timeline','Rules','Winners','Judges','News'],
     apply: 'Apply Now',
     brochure: 'Download Brochure',
     heroKicker: 'MOFA Global Video Open Call — 2026 entries now open',
@@ -1061,17 +1079,19 @@ const C = {
       { d: '2026.11', t: 'Awards ceremony', s: 'Winners announced (date TBA)' }
     ],
     tlNote: '※ Dates are subject to official announcements.',
-    awTag: 'Awards',
-    awTitle: 'Total Prize NT$1,000,000',
-    awSub: 'A range of prizes recognizing every work that tells Taiwan\'s story.',
-    awards: [
-      { r: 'First Prize', n: '1 winner', m: 'NT$200,000', feat: true },
-      { r: 'Second Prize', n: '2 winners', m: 'NT$100,000 ea' },
-      { r: 'Third Prize', n: '3 winners', m: 'NT$80,000 ea' },
-      { r: 'Merit', n: '5 winners', m: 'NT$50,000 ea' },
-      { r: 'Popularity', n: '5 / month', m: 'By public vote' }
+    awTag: 'Rules',
+    awTitle: 'Competition Rules',
+    awSub: 'A quick-read summary of the entry rules for the Finding Taiwan 2.0 #FindingTAIWAN global video open call.',
+    rules: [
+      { k: 'Organizer', v: 'Ministry of Foreign Affairs, Republic of China (Taiwan).' },
+      { k: 'Theme', v: 'Original short videos on the theme of "Taiwan" — landscapes, culture, everyday life or diversity; any sub-theme and format are welcome.' },
+      { k: 'Eligibility', v: 'Open to creators of any nationality and age worldwide; individual or team entries are both accepted.' },
+      { k: 'Submission', v: 'Works must be your own original with full rights, filmed on any device and of any length; complete the online entry form and publish the work publicly with the tag #FindingTAIWAN2.0.' },
+      { k: 'Entry period', v: 'Entries open from 2026; please see the Timeline for the submission deadline.' },
+      { k: 'Prizes', v: 'Total prize pool NT$1,000,000 — 1st prize NT$200,000 (×1), 2nd NT$100,000 (×2), 3rd NT$80,000 (×3), Merit NT$50,000 (×5), plus monthly Popularity Awards by public vote.' },
+      { k: 'Rights & licensing', v: 'Entrants retain copyright and grant the organizer royalty-free use for promotion of this event; full licensing terms follow the official guidelines.' }
     ],
-    awNote: 'Awards ceremony date to be announced.',
+    awNote: '* This is a summary. The official event guidelines (活動簡章) govern the full rules, work specifications and licensing terms.',
     winTag: '2025 Winners',
     winTitle: '2025 Inaugural Award Winners',
     winBody: 'Winning works from the inaugural competition are archived on the MOFA Facebook hub, showcasing Taiwan as seen by creators around the world.',
@@ -1290,20 +1310,20 @@ function render() {
   });
   txt('tl-note', t.tlNote);
 
-  // awards
+  // rules
   txt('aw-tag', t.awTag);
   txt('aw-title', t.awTitle);
   txt('aw-sub', t.awSub);
 
-  const awGrid = document.getElementById('awards-grid');
-  awGrid.innerHTML = '';
-  t.awards.forEach((aw, i) => {
-    const div = document.createElement('div');
-    div.className = 'award-card' + (aw.feat ? ' feat' : '');
-    div.setAttribute('data-reveal', 'scale');
-    div.style.transitionDelay = (i * 0.12) + 's';
-    div.innerHTML = '<div class="aw-r">' + aw.r + '</div><div class="aw-n">' + aw.n + '</div><div class="aw-m">' + aw.m + '</div>';
-    awGrid.appendChild(div);
+  const rulesList = document.getElementById('rules-list');
+  rulesList.innerHTML = '';
+  t.rules.forEach((r) => {
+    const row = document.createElement('div');
+    row.className = 'rule-row';
+    row.innerHTML = '<div class="rule-k"></div><div class="rule-v"></div>';
+    row.querySelector('.rule-k').textContent = r.k;
+    row.querySelector('.rule-v').textContent = r.v;
+    rulesList.appendChild(row);
   });
   txt('aw-note', t.awNote);
 
@@ -1676,7 +1696,7 @@ function teardownCineIntro() {
   const cine = document.getElementById('cine-intro');
   if (!cine) return;
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  setTimeout(() => { cine.remove(); }, reduce ? 0 : 1700);
+  setTimeout(() => { cine.remove(); }, reduce ? 0 : 3300);
 }
 
 function setupHeaderScroll() {
@@ -1715,6 +1735,7 @@ function setupMobileMenu() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  if (!location.hash) { window.scrollTo(0, 0); }
   render();
   initParticles();
   buildAwardsCollage();
