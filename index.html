@@ -274,6 +274,17 @@
   @keyframes hmOrb2{0%,100%{transform:translate(0,0)}40%{transform:translate(13px,-17px)}70%{transform:translate(-9px,8px)}}
   @keyframes hmBlink{0%,100%{opacity:1}50%{opacity:0.1}}
   @keyframes hmTicker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  /* touch devices (phones in landscape, pointer:coarse) — show mobile hero */
+  @media(pointer:coarse){
+    #hero-thumbs{display:none!important;}
+    #hero-blob{display:none!important;}
+    #hero-mobile-cards{display:none!important;}
+    #hero-filmstrip{display:none!important;}
+    #hm-orbs{display:block;}
+    #hm-lens{display:block;}
+    #hm-ticker{display:flex;}
+    #hero-inner{padding-right:90px!important;padding-top:175px!important;padding-bottom:52px!important;}
+  }
 </style>
 </head>
 <body>
