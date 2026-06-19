@@ -2119,9 +2119,16 @@ function setupLazyVideo() {
     // reveal the film only once it is actually playing — no YouTube chrome flash
     loadYouTubeAPI().then(() => {
       try {
-        new YT.Player(iframe, {
+        const player = new YT.Player(iframe, {
           events: { onStateChange: (e) => { if (e.data === YT.PlayerState.PLAYING) hidePoster(); } }
         });
+        // battery/heat: only let the film play while it's actually on-screen and the tab is visible
+        let onScreen = true;
+        const sync = () => { try { (onScreen && !document.hidden) ? player.playVideo() : player.pauseVideo(); } catch (e) {} };
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver((es) => { onScreen = es.some(e => e.isIntersecting); sync(); }, { threshold: 0.01 }).observe(iframe);
+        }
+        document.addEventListener('visibilitychange', sync);
       } catch (err) { hidePoster(); }
     });
     // safety net in case the API never reports playback
