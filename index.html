@@ -19,10 +19,15 @@
   ::selection { background: #38e58c; color: #0d3b80; }
 
   /* scroll reveal */
-  [data-reveal] { opacity: 0; transform: translateY(38px); transition: opacity 0.8s cubic-bezier(0.2,0.7,0.2,1), transform 0.8s cubic-bezier(0.2,0.7,0.2,1); will-change: opacity,transform; }
+  [data-reveal] { opacity: 0; transform: translateY(38px); transition: opacity 0.8s cubic-bezier(0.2,0.7,0.2,1), transform 0.8s cubic-bezier(0.2,0.7,0.2,1); }
   [data-reveal="scale"] { transform: translateY(34px) scale(0.95); }
   [data-reveal="right"] { transform: translateX(64px); }
   [data-reveal][data-inview] { opacity: 1; transform: none; }
+
+  /* perf (mobile): backdrop blur is the most expensive mobile GPU op; drop it on phones (near-invisible here) */
+  @media (max-width:768px) {
+    *, *::before, *::after { -webkit-backdrop-filter:none !important; backdrop-filter:none !important; }
+  }
 
   /* campaign video loader cover */
   #campaign-poster.hide { opacity:0; pointer-events:none; }
@@ -284,6 +289,9 @@
   @keyframes ad-driftD { 0%,100% { transform: translate(0,0) rotate(5deg); } 50% { transform: translate(10px,-24px) rotate(8deg); } }
   @keyframes ad-driftE { 0%,100% { transform: translate(0,0) rotate(-4deg); } 50% { transform: translate(5px,-16px) rotate(-2deg); } }
   @keyframes ad-pulse  { 0%,100% { box-shadow: 0 0 0 0 rgba(56,229,140,0.55); } 60% { box-shadow: 0 0 0 12px rgba(56,229,140,0); } }
+  /* composited pulse ring for the mobile CTA (cheaper than animating box-shadow) */
+  #mh-cta::after { content:""; position:absolute; inset:0; border-radius:999px; border:2px solid rgba(56,229,140,0.55); opacity:0; animation:mhRing 2.6s ease-out infinite; pointer-events:none; }
+  @keyframes mhRing { 0%{transform:scale(1);opacity:.5} 70%,100%{transform:scale(1.13);opacity:0} }
   @keyframes ad-rise   { 0% { transform: translateY(100%); opacity: 0; } 12%,88% { opacity: 0.55; } 100% { transform: translateY(-180%); opacity: 0; } }
   @keyframes ad-globe  { from { transform: translateX(0); } to { transform: translateX(-400px); } }
 
@@ -416,7 +424,7 @@
               <g fill="#ffffff" opacity="0.6"><circle cx="200" cy="22" r="1.6"></circle><circle cx="200" cy="378" r="1.6"></circle></g>
               <!-- rotating continents + meridians -->
               <g clip-path="url(#ad-globe-clip)">
-                <g style="animation: ad-globe 60s linear infinite;">
+                <g style="animation: ad-globe 60s linear infinite; will-change: transform;">
                   <g transform="translate(0 0)">
                     <!-- meridians -->
                     <g fill="none" stroke="#ffffff" stroke-width="0.6" opacity="0.18">
@@ -715,7 +723,7 @@
             <!-- Total Prize ticket stub -->
             
             <div style="display: flex; gap: 9px;">
-              <a id="mh-cta" href="#participate" onclick="openApplyModal(event)" style="flex: 1; text-decoration: none; text-align: center; font-family: 'Noto Sans TC'; font-weight: 800; font-size: 14.5px; padding: 16px 0; background: linear-gradient(180deg,#5af2a4 0%,#38e58c 50%,#22c97a 100%); color: #0d3b80; border-radius: 999px; box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset, 0 8px 28px rgba(56,229,140,0.45), 0 0 30px rgba(56,229,140,0.4); animation: ad-pulse 2.6s ease-out infinite;">立即報名 →</a>
+              <a id="mh-cta" href="#participate" onclick="openApplyModal(event)" style="position: relative; flex: 1; text-decoration: none; text-align: center; font-family: 'Noto Sans TC'; font-weight: 800; font-size: 14.5px; padding: 16px 0; background: linear-gradient(180deg,#5af2a4 0%,#38e58c 50%,#22c97a 100%); color: #0d3b80; border-radius: 999px; box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset, 0 8px 28px rgba(56,229,140,0.45), 0 0 30px rgba(56,229,140,0.4);">立即報名 →</a>
               
             </div>
           </div>
