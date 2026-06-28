@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>尋找台灣 2.0 #FindingTAIWAN2.0 — 外交部全球徵片競賽</title>
-<meta name="description" content="外交部主辦全球短片徵件競賽，總獎金新台幣 100 萬元，即日起開放報名。Ministry of Foreign Affairs global video open call.">
+<meta name="description" content="外交部主辦全球短片徵件競賽，總獎金新台幣 80 萬元，即日起開放報名。Ministry of Foreign Affairs global video open call.">
 <meta property="og:title" content="尋找台灣 2.0 #FindingTAIWAN2.0">
-<meta property="og:description" content="總獎金新台幣 100 萬元 · Global Video Open Call · 即日起報名">
+<meta property="og:description" content="總獎金新台幣 80 萬元 · Global Video Open Call · 即日起報名">
 <meta property="og:image" content="assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -235,6 +235,38 @@
     .rule-row { grid-template-columns:1fr; gap:6px; padding:15px 0; }
     .rule-k { font-size:15px; }
     .rule-v { font-size:15px; line-height:1.9; }
+  }
+
+  /* awards — premium prize cards on deep navy */
+  .awards-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(14px,1.6vw,20px); }
+  .award-card { position:relative; background:linear-gradient(165deg,rgba(255,255,255,0.10),rgba(255,255,255,0.04)); border:1px solid rgba(255,255,255,0.14); border-radius:18px; padding:clamp(22px,2.4vw,30px) clamp(18px,2vw,24px); display:flex; flex-direction:column; gap:8px; overflow:hidden; transition:transform 0.32s cubic-bezier(0.34,1.4,0.64,1), border-color 0.32s ease, box-shadow 0.32s ease; }
+  .award-card:hover { transform:translateY(-6px); border-color:rgba(255,214,0,0.5); box-shadow:0 22px 48px rgba(0,0,0,0.34); }
+  .award-card.is-top { background:linear-gradient(165deg,rgba(255,214,0,0.18),rgba(255,214,0,0.05)); border-color:rgba(255,214,0,0.55); }
+  .award-card .ac-rank { position:absolute; top:14px; right:16px; font-family:'Montserrat',sans-serif; font-weight:800; font-size:34px; line-height:1; color:rgba(255,255,255,0.08); }
+  .award-card.is-top .ac-rank { color:rgba(255,214,0,0.22); }
+  .award-card .ac-place { font-family:'Noto Sans TC','Montserrat',sans-serif; font-weight:900; font-size:clamp(17px,1.9vw,20px); color:#fff; }
+  .award-card .ac-count { display:inline-flex; align-self:flex-start; font-family:'Noto Sans TC',sans-serif; font-weight:700; font-size:12px; letter-spacing:0.02em; color:#0d2747; background:#FFD600; padding:3px 11px; border-radius:999px; }
+  .award-card.is-top .ac-count { background:#FFD600; }
+  .award-card .ac-amount { margin-top:auto; padding-top:6px; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:800; font-size:clamp(19px,2.2vw,24px); color:#FFD600; letter-spacing:-0.01em; }
+  .awards-special { margin-top:clamp(20px,2.6vw,28px); background:rgba(255,255,255,0.05); border:1px dashed rgba(255,255,255,0.22); border-radius:18px; padding:clamp(22px,3vw,32px); }
+  .awards-special-head { display:flex; align-items:center; gap:12px; margin-bottom:clamp(16px,2.2vw,22px); }
+  .awards-special-badge { display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:50%; background:#FFD600; color:#0d2747; font-size:18px; line-height:1; flex:none; }
+  .awards-special-head h3 { font-family:'Noto Sans TC',sans-serif; font-weight:900; font-style:italic; font-size:clamp(20px,2.6vw,28px); color:#fff; margin:0; }
+  .awards-special-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(12px,1.4vw,18px); }
+  .award-srow { display:flex; align-items:center; justify-content:space-between; gap:10px; background:rgba(13,39,71,0.5); border:1px solid rgba(255,255,255,0.1); border-radius:13px; padding:14px 18px; }
+  .award-srow .as-left { display:flex; flex-direction:column; gap:5px; }
+  .award-srow .as-place { font-family:'Noto Sans TC',sans-serif; font-weight:900; font-size:16px; color:#fff; }
+  .award-srow .as-count { font-family:'Noto Sans TC',sans-serif; font-size:12px; color:rgba(255,255,255,0.6); }
+  .award-srow .as-amount { font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:800; font-size:clamp(15px,1.7vw,18px); color:#FFD600; white-space:nowrap; }
+  @media (max-width:880px) {
+    .awards-grid { grid-template-columns:repeat(2,1fr); }
+    .awards-special-grid { grid-template-columns:1fr; }
+    .award-srow { padding:13px 16px; }
+  }
+  @media (max-width:480px) {
+    .awards-grid { grid-template-columns:1fr; }
+    .award-card { flex-direction:row; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+    .award-card .ac-amount { margin-top:0; padding-top:0; }
   }
 
   /* 2025 winners — slow auto-scrolling reel, pauses on hover / touch */
@@ -1077,8 +1109,33 @@
   </div>
 </section>
 
-<!-- 4. RULES -->
-<section id="awards" style="position:relative;background:#0f63cf;padding:clamp(56px,8vw,104px) clamp(18px,4vw,40px);overflow:hidden;">
+<!-- 4. AWARDS -->
+<section id="awards" style="position:relative;background:#0d2747;padding:clamp(56px,8vw,104px) clamp(18px,4vw,40px);overflow:hidden;">
+  <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.035) 0 1px,transparent 1px 64px),repeating-linear-gradient(90deg,rgba(255,255,255,0.035) 0 1px,transparent 1px 64px);"></div>
+  <div style="position:absolute;top:-130px;right:-90px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(255,214,0,0.16),transparent 70%);pointer-events:none;"></div>
+  <div style="position:relative;max-width:1080px;margin:0 auto;">
+    <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#FFD600;">
+      <span style="width:22px;height:2px;background:#FFD600;"></span><span id="awards-tag"></span>
+    </div>
+    <h2 id="awards-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(28px,4.4vw,50px);color:#fff;margin:18px 0 10px;"></h2>
+    <p id="awards-sub" style="font-family:'Noto Sans TC';font-weight:900;font-size:clamp(18px,2.6vw,28px);color:#FFD600;margin:0 0 clamp(30px,4vw,44px);"></p>
+
+    <div id="awards-main" class="awards-grid" data-reveal data-inview></div>
+
+    <div class="awards-special" data-reveal data-inview>
+      <div class="awards-special-head">
+        <span class="awards-special-badge">★</span>
+        <h3 id="awards-special-label"></h3>
+      </div>
+      <div id="awards-special" class="awards-special-grid"></div>
+    </div>
+
+    <p id="awards-note" style="font-family:'Noto Sans TC';font-size:13px;color:rgba(255,255,255,0.55);margin:clamp(24px,3vw,32px) 0 0;"></p>
+  </div>
+</section>
+
+<!-- 5. RULES -->
+<section id="rules" style="position:relative;background:#0f63cf;padding:clamp(56px,8vw,104px) clamp(18px,4vw,40px);overflow:hidden;">
   <div style="position:relative;max-width:880px;margin:0 auto;">
     <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#38e58c;">
       <span style="width:22px;height:2px;background:#38e58c;"></span><span id="aw-tag"></span>
@@ -1092,7 +1149,7 @@
   </div>
 </section>
 
-<!-- 5. 2025 WINNERS -->
+<!-- 6. 2025 WINNERS -->
 <section id="winners" style="background:#f3f8ff;padding:clamp(56px,8vw,104px) clamp(18px,4vw,40px);">
   <div style="max-width:1180px;margin:0 auto;">
     <div style="display:flex;flex-wrap:wrap;gap:22px;align-items:flex-end;justify-content:space-between;">
@@ -1126,7 +1183,7 @@
   </div>
 </section>
 
-<!-- 6-8. COMING SOON -->
+<!-- 7-9. COMING SOON -->
 <section id="judges" style="background:#fff;padding:clamp(56px,8vw,96px) clamp(18px,4vw,40px) clamp(24px,4vw,40px);">
   <div style="max-width:1180px;margin:0 auto;">
     <div data-reveal style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
@@ -1288,30 +1345,30 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
   window.addEventListener('load', toTop);
 })();
 
-const NAV_HREFS = ['#about','#participate','#timeline','#awards','#winners','#judges','#news'];
+const NAV_HREFS = ['#about','#participate','#timeline','#awards','#rules','#winners','#judges','#news'];
 const VIDEO_ID = '_koDf0NAnRY'; // 2024 Trending Taiwan Short Film Competition (MoFA)
 
 const C = {
   zh: {
-    nav: ['關於','參加方式','時程','競賽規則','精選作品','評審','最新消息'],
+    nav: ['關於','參加方式','時程','獎項獎金','競賽規則','精選作品','評審','最新消息'],
     apply: '立即報名',
     brochure: '下載活動簡章',
     heroKicker: '外交部全球徵片競賽 ‧ 2026 即日起開放報名',
     heroT1: '尋找台灣 2.0', heroT2: '#FindingTAIWAN', heroT3: '全球徵片競賽',
     mhChip: '2026 即日起報名', mhTagline: '用鏡頭說出你和台灣的故事!',
     heroLive: '2026 全球徵片競賽・即日起開放報名', heroPhoneLabel: '即時投稿', heroScroll: '↓ 向下捲動・了解活動介紹',
-    prizeTotal: '總獎金 新台幣 100 萬元',
-    prizeSub: '首獎 20 萬 · 貳獎 各 10 萬 · 參獎 各 8 萬 · 佳作 各 5 萬 · 每月人氣獎',
+    prizeTotal: '總獎金 新台幣 80 萬元',
+    prizeSub: '首獎 20 萬 · 二獎 各 8 萬 · 三獎 各 5 萬 · 佳作 各 3 萬 · 光華特別獎',
     aboutTag: '關於 #FindingTAIWAN2.0',
     aboutTitle: '以影像為橋梁，邀請世界看見台灣',
     aboutLead: '',
     aboutFeatureCap: '2025 首屆活動現場',
     aboutP1: '「尋找台灣 #FindingTAIWAN 2.0」全球徵片競賽由中華民國外交部主辦。延續首屆活動的熱烈迴響，本屆誠摯邀請國內外創作者以影像記錄心目中的台灣——無論是自然地景、人文風情、常民生活或多元文化，皆是世界認識台灣的重要窗口。',
-    aboutP2: '本競賽不限主題與形式，凡與台灣相關之作品皆歡迎參加。完成線上報名並標註 #FindingTAIWAN2.0，即有機會角逐總獎金新台幣 100 萬元，讓台灣的故事躍上國際舞台，與世界產生深刻連結。',
+    aboutP2: '本競賽不限主題與形式，凡與台灣相關之作品皆歡迎參加。完成線上報名並標註 #FindingTAIWAN2.0，即有機會角逐總獎金新台幣 80 萬元，讓台灣的故事躍上國際舞台，與世界產生深刻連結。',
     aboutGalleryCap: '2025 首屆活動現場',
     aboutGalleryCredit: '2025 首屆「尋找台灣 #FindingTAIWAN」全球徵片競賽頒獎典禮，吸引逾 20 國、283 件作品參賽。照片提供／中華民國外交部。',
     stats: [
-      { n: '100 萬', l: '總獎金(新台幣)' },
+      { n: '80 萬', l: '總獎金(新台幣)' },
       { n: '全球', l: '開放報名' },
       { n: '#FindingTAIWAN', l: '指定主題標籤' }
     ],
@@ -1336,6 +1393,22 @@ const C = {
       { d: '2026.11', t: '頒獎典禮', s: '公布得獎名單(日期另行公布)' }
     ],
     tlNote: '※ 實際日期以官方公告為準。',
+    awardsTag: '獎項與獎金 / Awards',
+    awardsTitle: '獎項與獎金',
+    awardsSub: '總獎金高達新台幣 80 萬元！',
+    awardsMain: [
+      { p: '首獎', c: '1 名', a: '新台幣 20 萬元', top: true },
+      { p: '二獎', c: '2 名', a: '每名 8 萬元' },
+      { p: '三獎', c: '3 名', a: '每名 5 萬元' },
+      { p: '佳作', c: '4 名', a: '每名 3 萬元' }
+    ],
+    awardsSpecialLabel: '光華特別獎',
+    awardsSpecial: [
+      { p: '一獎', c: '1 名', a: '新台幣 10 萬元' },
+      { p: '二獎', c: '1 名', a: '新台幣 5 萬元' },
+      { p: '三獎', c: '1 名', a: '新台幣 2 萬元' }
+    ],
+    awardsNote: '※ 各獎項名額與金額以官方活動簡章公告為準。',
     awTag: '競賽規則 / Rules',
     awTitle: '競賽規則',
     awSub: '以下為「尋找台灣 2.0 #FindingTAIWAN」全球徵片競賽參賽辦法摘要，方便快速閱讀。',
@@ -1345,7 +1418,7 @@ const C = {
       { k: '參賽資格', v: '不限國籍與年齡，全球創作者皆可報名；個人或團隊參賽均可。' },
       { k: '作品規格', v: '須為本人原創且擁有完整權利之作品，拍攝裝置與長度不限；須完成線上報名，並於指定影音平台公開發布、標註 #FindingTAIWAN2.0。' },
       { k: '報名與截止', v: '2026 年即日起開放報名，徵件截止日期請參見「活動時程」。' },
-      { k: '獎項與獎金', v: '總獎金新台幣 100 萬元——首獎 1 名 20 萬、貳獎 2 名各 10 萬、參獎 3 名各 8 萬、佳作 5 名各 5 萬，另設每月人氣獎（網路票選產生）。' },
+      { k: '獎項與獎金', v: '總獎金新台幣 80 萬元——首獎 1 名 20 萬、二獎 2 名各 8 萬、三獎 3 名各 5 萬、佳作 4 名各 3 萬；另設「光華特別獎」——一獎 10 萬、二獎 5 萬、三獎 2 萬。' },
       { k: '著作權與授權', v: '參賽者保有作品著作權，並同意主辦單位於本活動宣傳推廣範圍內無償使用；完整授權條款以官方活動簡章為準。' }
     ],
     awNote: '※ 以上為摘要說明。完整參賽辦法、作品規格與授權條款，請以官方「活動簡章」為準。',
@@ -1367,7 +1440,7 @@ const C = {
     footFb: '外交部官方臉書',
     footBrochure: '下載活動簡章',
     footNote: '本網站為「尋找台灣 2.0 #FindingTAIWAN」官方活動網站',
-    marqueeItems: ['用鏡頭說出你和台灣的故事', '#FindingTAIWAN2.0', '全球徵片競賽', '總獎金 新台幣 100 萬元', '報名即日起'],
+    marqueeItems: ['用鏡頭說出你和台灣的故事', '#FindingTAIWAN2.0', '全球徵片競賽', '總獎金 新台幣 80 萬元', '報名即日起'],
     videoTag: '主視覺影片 / Campaign Film',
     videoLabel: '主視覺影片即將上線',
     form: {
@@ -1393,25 +1466,25 @@ const C = {
     }
   },
   en: {
-    nav: ['About','Participate','Timeline','Rules','Winners','Judges','News'],
+    nav: ['About','Participate','Timeline','Awards','Rules','Winners','Judges','News'],
     apply: 'Apply Now',
     brochure: 'Download Brochure',
     heroKicker: 'MOFA Global Video Open Call — 2026 entries now open',
     heroT1: 'Finding Taiwan 2.0', heroT2: '#FindingTAIWAN', heroT3: 'Global Video Open Call',
     mhChip: 'Entries open 2026', mhTagline: 'Tell your Taiwan story through your lens.',
     heroLive: 'Global open call — entries now open for 2026', heroPhoneLabel: 'Live submissions', heroScroll: '↓ Scroll · About the event',
-    prizeTotal: 'Total Prize: NT$1,000,000',
-    prizeSub: '1st NT$200K · 2nd NT$100K ea · 3rd NT$80K ea · Merit NT$50K ea · Monthly Popularity',
+    prizeTotal: 'Total Prize: NT$800,000',
+    prizeSub: '1st NT$200K · 2nd NT$80K ea · 3rd NT$50K ea · Merit NT$30K ea · Taiwan Panorama Special Award',
     aboutTag: 'About #FindingTAIWAN2.0',
     aboutTitle: 'Film as a bridge — inviting the world to see Taiwan',
     aboutLead: '',
     aboutFeatureCap: '2025 Inaugural Ceremony',
     aboutP1: 'The "Finding Taiwan #FindingTAIWAN 2.0" global video open call is organized by the Ministry of Foreign Affairs, Republic of China (Taiwan). Building on the enthusiastic response to its inaugural edition, we sincerely invite creators at home and abroad to capture the Taiwan they envision — its landscapes, culture, everyday life and diversity, each a window for the world.',
-    aboutP2: 'Open to all themes and formats, the competition welcomes any work related to Taiwan. Complete the online registration and tag your entry #FindingTAIWAN2.0 for a chance to compete for a total prize of NT$1,000,000 — bringing Taiwan\'s stories to the global stage and connecting them with the world.',
+    aboutP2: 'Open to all themes and formats, the competition welcomes any work related to Taiwan. Complete the online registration and tag your entry #FindingTAIWAN2.0 for a chance to compete for a total prize of NT$800,000 — bringing Taiwan\'s stories to the global stage and connecting them with the world.',
     aboutGalleryCap: '2025 Inaugural Ceremony',
     aboutGalleryCredit: 'The 2025 inaugural "Finding Taiwan #FindingTAIWAN" global open call drew 283 entries from 20+ countries. Photos courtesy of the Ministry of Foreign Affairs, Taiwan (R.O.C.).',
     stats: [
-      { n: 'NT$1M', l: 'Total prize pool' },
+      { n: 'NT$800K', l: 'Total prize pool' },
       { n: 'Global', l: 'Open to all' },
       { n: '#FindingTAIWAN', l: 'Official hashtag' }
     ],
@@ -1436,6 +1509,22 @@ const C = {
       { d: '2026.11', t: 'Awards ceremony', s: 'Winners announced (date TBA)' }
     ],
     tlNote: '※ Dates are subject to official announcements.',
+    awardsTag: 'Awards',
+    awardsTitle: 'Awards & Prizes',
+    awardsSub: 'Total Prize Pool: NT$800,000!',
+    awardsMain: [
+      { p: 'Grand Prize', c: '1 Winner', a: 'NT$200,000', top: true },
+      { p: 'Second Prize', c: '2 Winners', a: 'NT$80,000 each' },
+      { p: 'Third Prize', c: '3 Winners', a: 'NT$50,000 each' },
+      { p: 'Honorable Mention', c: '4 Winners', a: 'NT$30,000 each' }
+    ],
+    awardsSpecialLabel: 'Taiwan Panorama Special Award',
+    awardsSpecial: [
+      { p: 'Grand Prize', c: '1 Winner', a: 'NT$100,000' },
+      { p: 'Second Prize', c: '1 Winner', a: 'NT$50,000' },
+      { p: 'Third Prize', c: '1 Winner', a: 'NT$20,000' }
+    ],
+    awardsNote: '※ Final award categories and amounts follow the official guidelines.',
     awTag: 'Rules',
     awTitle: 'Competition Rules',
     awSub: 'A quick-read summary of the entry rules for the Finding Taiwan 2.0 #FindingTAIWAN global video open call.',
@@ -1445,7 +1534,7 @@ const C = {
       { k: 'Eligibility', v: 'Open to creators of any nationality and age worldwide; individual or team entries are both accepted.' },
       { k: 'Submission', v: 'Works must be your own original with full rights, filmed on any device and of any length; complete the online entry form and publish the work publicly with the tag #FindingTAIWAN2.0.' },
       { k: 'Entry period', v: 'Entries open from 2026; please see the Timeline for the submission deadline.' },
-      { k: 'Prizes', v: 'Total prize pool NT$1,000,000 — 1st prize NT$200,000 (×1), 2nd NT$100,000 (×2), 3rd NT$80,000 (×3), Merit NT$50,000 (×5), plus monthly Popularity Awards by public vote.' },
+      { k: 'Prizes', v: 'Total prize pool NT$800,000 — 1st prize NT$200,000 (×1), 2nd NT$80,000 (×2), 3rd NT$50,000 (×3), Merit NT$30,000 (×4); plus the Taiwan Panorama Special Award — 1st NT$100,000, 2nd NT$50,000, 3rd NT$20,000.' },
       { k: 'Rights & licensing', v: 'Entrants retain copyright and grant the organizer royalty-free use for promotion of this event; full licensing terms follow the official guidelines.' }
     ],
     awNote: '* This is a summary. The official event guidelines (活動簡章) govern the full rules, work specifications and licensing terms.',
@@ -1467,7 +1556,7 @@ const C = {
     footFb: 'MOFA Official Facebook',
     footBrochure: 'Download Guidelines',
     footNote: 'The official website of Finding Taiwan 2.0 #FindingTAIWAN',
-    marqueeItems: ['Tell your Taiwan story', '#FindingTAIWAN2.0', 'Global Video Open Call', 'Total Prize NT\$1,000,000', 'Now Open'],
+    marqueeItems: ['Tell your Taiwan story', '#FindingTAIWAN2.0', 'Global Video Open Call', 'Total Prize NT\$800,000', 'Now Open'],
     videoTag: 'Campaign Film',
     videoLabel: 'Campaign film coming soon',
     form: {
@@ -1678,6 +1767,43 @@ function render() {
     tlList.appendChild(div);
   });
   txt('tl-note', t.tlNote);
+
+  // awards
+  txt('awards-tag', t.awardsTag);
+  txt('awards-title', t.awardsTitle);
+  txt('awards-sub', t.awardsSub);
+
+  const awMain = document.getElementById('awards-main');
+  awMain.innerHTML = '';
+  t.awardsMain.forEach((a, i) => {
+    const card = document.createElement('div');
+    card.className = 'award-card' + (a.top ? ' is-top' : '');
+    card.innerHTML =
+      '<span class="ac-rank">' + (i + 1) + '</span>' +
+      '<span class="ac-place"></span>' +
+      '<span class="ac-count"></span>' +
+      '<span class="ac-amount"></span>';
+    card.querySelector('.ac-place').textContent = a.p;
+    card.querySelector('.ac-count').textContent = a.c;
+    card.querySelector('.ac-amount').textContent = a.a;
+    awMain.appendChild(card);
+  });
+
+  txt('awards-special-label', t.awardsSpecialLabel);
+  const awSpecial = document.getElementById('awards-special');
+  awSpecial.innerHTML = '';
+  t.awardsSpecial.forEach((a) => {
+    const row = document.createElement('div');
+    row.className = 'award-srow';
+    row.innerHTML =
+      '<span class="as-left"><span class="as-place"></span><span class="as-count"></span></span>' +
+      '<span class="as-amount"></span>';
+    row.querySelector('.as-place').textContent = a.p;
+    row.querySelector('.as-count').textContent = a.c;
+    row.querySelector('.as-amount').textContent = a.a;
+    awSpecial.appendChild(row);
+  });
+  txt('awards-note', t.awardsNote);
 
   // rules
   txt('aw-tag', t.awTag);
