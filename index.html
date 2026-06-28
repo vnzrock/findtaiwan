@@ -6,7 +6,7 @@
 <title>尋找台灣 2.0 #FindingTAIWAN2.0 — 外交部全球徵片競賽</title>
 <meta name="description" content="外交部主辦全球短片徵件競賽，總獎金新台幣 80 萬元，即日起開放報名。Ministry of Foreign Affairs global video open call.">
 <meta property="og:title" content="尋找台灣 2.0 #FindingTAIWAN2.0">
-<meta property="og:description" content="總獎金新台幣 80 萬元 · Global Video Open Call · 即日起報名">
+<meta property="og:description" content="Where We Connect · 總獎金新台幣 80 萬元 · 報名 2026/7/1–8/31">
 <meta property="og:image" content="assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -252,7 +252,11 @@
   .awards-special-head { display:flex; align-items:center; gap:12px; margin-bottom:clamp(16px,2.2vw,22px); }
   .awards-special-badge { display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:50%; background:#FFD600; color:#0d2747; font-size:18px; line-height:1; flex:none; }
   .awards-special-head h3 { font-family:'Noto Sans TC',sans-serif; font-weight:900; font-style:italic; font-size:clamp(20px,2.6vw,28px); color:#fff; margin:0; }
+  .awards-special-intro { font-family:'Noto Sans TC',sans-serif; font-weight:700; font-size:clamp(15px,1.7vw,17px); line-height:1.7; color:#FFD600; margin:0 0 10px; }
+  .awards-special-desc { font-family:'Noto Sans TC',sans-serif; font-size:14.5px; line-height:1.9; color:rgba(255,255,255,0.78); margin:0 0 clamp(18px,2.2vw,24px); max-width:760px; }
   .awards-special-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(12px,1.4vw,18px); }
+  .awards-special-link { display:inline-flex; align-items:center; gap:6px; margin-top:clamp(16px,2vw,22px); font-family:'Noto Sans TC',sans-serif; font-weight:700; font-size:14px; color:#0d2747; background:#FFD600; padding:11px 22px; border-radius:999px; text-decoration:none; transition:transform .25s ease, box-shadow .25s ease; }
+  .awards-special-link:hover { transform:translateY(-2px); box-shadow:0 12px 26px rgba(255,214,0,0.28); }
   .award-srow { display:flex; align-items:center; justify-content:space-between; gap:10px; background:rgba(13,39,71,0.5); border:1px solid rgba(255,255,255,0.1); border-radius:13px; padding:14px 18px; }
   .award-srow .as-left { display:flex; flex-direction:column; gap:5px; }
   .award-srow .as-place { font-family:'Noto Sans TC',sans-serif; font-weight:900; font-size:16px; color:#fff; }
@@ -274,6 +278,21 @@
   .win-track { display:flex; gap:16px; width:max-content; padding-bottom:8px; animation:winMarquee 55s linear infinite; will-change:transform; }
   #winners-grid:hover .win-track, .win-track.paused { animation-play-state:paused; }
   @keyframes winMarquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+
+  /* 2025 winners — real entries, each links to its Facebook video */
+  .win2-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(232px,1fr)); gap:clamp(14px,1.8vw,20px); }
+  .win2-card { display:flex; flex-direction:column; border-radius:16px; overflow:hidden; background:#fff; border:1px solid #e7eef9; box-shadow:0 12px 30px rgba(13,59,128,0.12); text-decoration:none; transition:transform .3s cubic-bezier(0.34,1.4,0.64,1), box-shadow .3s ease; }
+  .win2-card:hover { transform:translateY(-6px); box-shadow:0 26px 50px rgba(13,59,128,0.24); }
+  .win2-top { position:relative; aspect-ratio:16/10; display:flex; align-items:center; justify-content:center; }
+  .win2-tier { position:absolute; top:12px; left:12px; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:700; font-size:11px; letter-spacing:0.06em; color:#0d2747; background:rgba(255,255,255,0.94); padding:4px 11px; border-radius:999px; }
+  .win2-play { width:46px; height:46px; border-radius:50%; background:rgba(255,255,255,0.22); backdrop-filter:blur(6px); border:2px solid rgba(255,255,255,0.6); display:flex; align-items:center; justify-content:center; transition:transform .3s ease; }
+  .win2-card:hover .win2-play { transform:scale(1.12); }
+  .win2-tri { width:0; height:0; border-style:solid; border-width:8px 0 8px 14px; border-color:transparent transparent transparent #fff; margin-left:3px; }
+  .win2-body { padding:14px 16px 16px; display:flex; flex-direction:column; gap:7px; }
+  .win2-name { font-family:'Noto Sans TC',sans-serif; font-weight:900; font-size:16px; color:#0d2747; line-height:1.35; }
+  .win2-meta { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .win2-country { font-family:'Noto Sans TC',sans-serif; font-weight:500; font-size:13px; color:#5a6a82; }
+  .win2-fb { font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:700; font-size:11.5px; color:#1877f2; white-space:nowrap; }
 
   /* === fixed transparent header === */
   #site-header{position:fixed;top:0;left:0;right:0;z-index:50;background:transparent;transition:background .35s ease,box-shadow .35s ease;}
@@ -930,7 +949,7 @@
                 
               </span>
             </div><div style="padding: 16px 22px 0; position: relative">
-              <div id="mh-chip" style="display: inline-block; background: #38e58c; color: #0d3b80; font-family: 'Noto Sans TC'; font-weight: 900; font-style: italic; font-size: 11px; padding: 6px 22px 6px 14px; clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%); box-shadow: 0 4px 10px rgba(0,0,0,0.12);">2026 即日起報名</div>
+              <div id="mh-chip" style="display: inline-block; background: #38e58c; color: #0d3b80; font-family: 'Noto Sans TC'; font-weight: 900; font-style: italic; font-size: 11px; padding: 6px 22px 6px 14px; clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%); box-shadow: 0 4px 10px rgba(0,0,0,0.12);">報名 7/1–8/31</div>
               <h1 id="mh-title" style="font-family: 'Noto Serif TC','Noto Sans TC'; font-weight: 900; font-style: italic; font-size: 30px; line-height: 1.1; color: #fff; margin: 12px 0 0; letter-spacing: 0; text-shadow: 0 3px 10px rgba(0,0,0,0.28); position: relative">尋找台灣 2.0<br><span style="color:#38e58c; font-family:'Montserrat'; font-style: italic; font-weight: 900; font-size: 22px; letter-spacing: 0.01em;">#FindingTAIWAN</span><br>全球徵片競賽</h1>
             </div>
           </div>
@@ -1127,7 +1146,10 @@
         <span class="awards-special-badge">★</span>
         <h3 id="awards-special-label"></h3>
       </div>
+      <p id="awards-special-intro" class="awards-special-intro"></p>
+      <p id="awards-special-desc" class="awards-special-desc"></p>
       <div id="awards-special" class="awards-special-grid"></div>
+      <a id="awards-special-link" class="awards-special-link" href="#" target="_blank" rel="noopener"><span></span> ↗</a>
     </div>
 
     <p id="awards-note" style="font-family:'Noto Sans TC';font-size:13px;color:rgba(255,255,255,0.55);margin:clamp(24px,3vw,32px) 0 0;"></p>
@@ -1353,46 +1375,45 @@ const C = {
     nav: ['關於','參加方式','時程','獎項獎金','競賽規則','精選作品','評審','最新消息'],
     apply: '立即報名',
     brochure: '下載活動簡章',
-    heroKicker: '外交部全球徵片競賽 ‧ 2026 即日起開放報名',
-    heroT1: '尋找台灣 2.0', heroT2: '#FindingTAIWAN', heroT3: '全球徵片競賽',
-    mhChip: '2026 即日起報名', mhTagline: '用鏡頭說出你和台灣的故事!',
-    heroLive: '2026 全球徵片競賽・即日起開放報名', heroPhoneLabel: '即時投稿', heroScroll: '↓ 向下捲動・了解活動介紹',
+    heroKicker: '外交部全球徵片競賽 · 報名 7/1–8/31',
+    heroT1: '尋找台灣 2.0', heroT2: 'Where We Connect', heroT3: '全球徵片競賽',
+    mhChip: '報名 7/1–8/31', mhTagline: '用鏡頭說出你和台灣的故事！',
+    heroLive: '報名期間 2026/7/1–8/31 · 即刻參賽', heroPhoneLabel: '即時投稿', heroScroll: '↓ 向下捲動・了解活動介紹',
     prizeTotal: '總獎金 新台幣 80 萬元',
     prizeSub: '首獎 20 萬 · 二獎 各 8 萬 · 三獎 各 5 萬 · 佳作 各 3 萬 · 光華特別獎',
-    aboutTag: '關於 #FindingTAIWAN2.0',
-    aboutTitle: '以影像為橋梁，邀請世界看見台灣',
+    aboutTag: '關於 #FindingTAIWAN_2.0',
+    aboutTitle: '以影像為橋梁，勾勒台灣與世界的連結',
     aboutLead: '',
     aboutFeatureCap: '2025 首屆活動現場',
-    aboutP1: '「尋找台灣 #FindingTAIWAN 2.0」全球徵片競賽由中華民國外交部主辦。延續首屆活動的熱烈迴響，本屆誠摯邀請國內外創作者以影像記錄心目中的台灣——無論是自然地景、人文風情、常民生活或多元文化，皆是世界認識台灣的重要窗口。',
-    aboutP2: '本競賽不限主題與形式，凡與台灣相關之作品皆歡迎參加。完成線上報名並標註 #FindingTAIWAN2.0，即有機會角逐總獎金新台幣 80 萬元，讓台灣的故事躍上國際舞台，與世界產生深刻連結。',
+    aboutP1: '外交部於 2025 年首次舉辦「尋找台灣 #FindingTAIWAN」全球徵片活動，獲得國內外創作者熱烈響應，共徵集來自 23 個國家的 283 件作品參賽，透過不同文化背景創作者的鏡頭與視角，看見許多動人的台灣故事。',
+    aboutP2: '今年「#FindingTAIWAN_2.0」全球徵片競賽再度盛大起跑，聚焦「Where We Connect 台灣與世界的連結」，鼓勵創作者從民主、創新、文化、科技及人與人交流等不同面向出發，以自身觀察與創意視角，呈現台灣與世界相互連結的故事，讓國際社會從更多元的角度認識台灣。',
     aboutGalleryCap: '2025 首屆活動現場',
-    aboutGalleryCredit: '2025 首屆「尋找台灣 #FindingTAIWAN」全球徵片競賽頒獎典禮，吸引逾 20 國、283 件作品參賽。照片提供／中華民國外交部。',
+    aboutGalleryCredit: '2025 首屆「尋找台灣 #FindingTAIWAN」全球徵片競賽頒獎典禮，吸引來自 23 個國家、283 件作品參賽。照片提供／中華民國外交部。',
     stats: [
       { n: '80 萬', l: '總獎金(新台幣)' },
-      { n: '全球', l: '開放報名' },
-      { n: '#FindingTAIWAN', l: '指定主題標籤' }
+      { n: '23 國', l: '首屆參賽國家' },
+      { n: '#FindingTAIWAN2026', l: '指定主題標籤' }
     ],
     partTag: '參加方式 / How to Participate',
     partTitle: '參賽流程，四個步驟',
-    partLead: '自拍攝至報名，僅需完成以下四個步驟。',
+    partLead: '從拍攝到報名，僅需完成以下四個步驟。',
     steps: [
-      { no: '01', t: '拍攝你的台灣故事', d: '以任何裝置拍攝與台灣相關之短影音，長度與形式不限。' },
-      { no: '02', t: '上傳並標註標籤', d: '將作品上傳至指定影音平台，並標註 #FindingTAIWAN2.0 主題標籤。' },
-      { no: '03', t: '填寫線上報名表', d: '填寫線上報名表單，提供作品連結與聯絡資訊。' },
-      { no: '04', t: '評選與名單公布', d: '作品通過資格審查後進入評選，得獎名單將於官方網站及粉絲專頁公布。' }
+      { no: '01', t: '拍攝你的台灣故事', d: '以原創視角拍攝與台灣相關之 1 分鐘以內短影音，不限直式或橫式。' },
+      { no: '02', t: '上傳並標註標籤', d: '將作品公開發布於 YouTube 或 Instagram，並標註 #FindingTAIWAN2026。' },
+      { no: '03', t: '填寫文件並線上報名', d: '至 Google 表單填寫報名資訊，並上傳作品與相關文件。' },
+      { no: '04', t: '入圍公告與頒獎', d: '作品通過資格審查後進入評選，入圍名單將於官網公布，最終優勝者於頒獎典禮揭曉。' }
     ],
-    brochureBtn: '下載活動簡章（PDF）',
+    brochureBtn: '下載活動簡章與文件',
     brochureNote: '※ 活動簡章載明完整參賽辦法、作品規格與授權條款。',
     tlTag: '活動時程 / Timeline',
     tlTitle: '重要時程',
     timeline: [
-      { d: '2026.04', t: '報名開始', s: '線上報名與作品上傳開放' },
-      { d: '2026.08', t: '徵件截止', s: '作品收件最後期限' },
-      { d: '2026.09', t: '資格與初審', s: '作品資格審查與初步評選' },
-      { d: '2026.10', t: '人氣獎投票', s: '入圍作品開放網路票選' },
-      { d: '2026.11', t: '頒獎典禮', s: '公布得獎名單(日期另行公布)' }
+      { d: '2026.07.01', t: '徵件起跑', s: '線上報名與作品上傳開放' },
+      { d: '2026.08.31', t: '徵件截止', s: '作品收件最後期限（23:59 GMT+8）' },
+      { d: '2026.09', t: '入圍名單公告', s: '入圍名單於官方網站公布' },
+      { d: '2026.09', t: '頒獎典禮', s: '舉行頒獎典禮並公告得獎者' }
     ],
-    tlNote: '※ 實際日期以官方公告為準。',
+    tlNote: '※ 實際日期以主辦單位正式公告為準。',
     awardsTag: '獎項與獎金 / Awards',
     awardsTitle: '獎項與獎金',
     awardsSub: '總獎金高達新台幣 80 萬元！',
@@ -1403,6 +1424,10 @@ const C = {
       { p: '佳作', c: '4 名', a: '每名 3 萬元' }
     ],
     awardsSpecialLabel: '光華特別獎',
+    awardsSpecialIntro: '#FindingTAIWAN_2.0 響應《台灣光華雜誌》創刊 50 週年，特別增設【光華特別獎】！',
+    awardsSpecialDesc: '《台灣光華雜誌》長年透過文字與影像向國際社會介紹台灣，累積豐富而珍貴的內容資產。本次競賽特別開放創作者以《台灣光華雜誌》作為靈感來源，鼓勵以影像敘事重新詮釋與再創作，讓珍貴的歷史影像與報導以全新形式再次被看見。詳細參賽辦法請詳見簡章。',
+    awardsSpecialLink: '前往光華雜誌',
+    awardsSpecialUrl: 'https://www.taiwan-panorama.com/',
     awardsSpecial: [
       { p: '一獎', c: '1 名', a: '新台幣 10 萬元' },
       { p: '二獎', c: '1 名', a: '新台幣 5 萬元' },
@@ -1416,21 +1441,23 @@ const C = {
       { k: '主辦單位', v: '中華民國（台灣）外交部。' },
       { k: '徵件主題', v: '以「台灣」為主題之原創短影音，不限子題與形式——自然地景、人文風情、常民生活、多元文化皆可。' },
       { k: '參賽資格', v: '不限國籍與年齡，全球創作者皆可報名；個人或團隊參賽均可。' },
-      { k: '作品規格', v: '須為本人原創且擁有完整權利之作品，拍攝裝置與長度不限；須完成線上報名，並於指定影音平台公開發布、標註 #FindingTAIWAN2.0。' },
-      { k: '報名與截止', v: '2026 年即日起開放報名，徵件截止日期請參見「活動時程」。' },
+      { k: '作品規格', v: '須為本人原創且擁有完整權利之作品，影片長度 1 分鐘以內，不限直式或橫式；須完成線上報名，並於 YouTube 或 Instagram 公開發布、標註 #FindingTAIWAN2026。' },
+      { k: '報名與截止', v: '報名期間自 2026 年 7 月 1 日起至 8 月 31 日 23:59（GMT+8）止。' },
       { k: '獎項與獎金', v: '總獎金新台幣 80 萬元——首獎 1 名 20 萬、二獎 2 名各 8 萬、三獎 3 名各 5 萬、佳作 4 名各 3 萬；另設「光華特別獎」——一獎 10 萬、二獎 5 萬、三獎 2 萬。' },
       { k: '著作權與授權', v: '參賽者保有作品著作權，並同意主辦單位於本活動宣傳推廣範圍內無償使用；完整授權條款以官方活動簡章為準。' }
     ],
     awNote: '※ 以上為摘要說明。完整參賽辦法、作品規格與授權條款，請以官方「活動簡章」為準。',
     winTag: '2025 精選作品 / 2025 Winners',
     winTitle: '2025 首屆得獎作品',
-    winBody: '首屆競賽得獎作品已於外交部臉書專區完整收錄，呈現世界各地創作者鏡頭下的台灣風貌。',
+    winBody: '首屆競賽得獎作品已於外交部臉書專區完整收錄，呈現世界各地創作者鏡頭下的台灣風貌！點擊任一作品即可前往觀賞。',
     winBtn: '前往外交部 Facebook 專區',
     winClipLabel: '得獎短片',
+    winTierLabels: { grand: '首獎', second: '二獎', third: '三獎', merit: '佳作' },
+    winWatch: '前往 Facebook 觀賞',
     soonLabel: 'Coming Soon',
     judgeTag: '評審 / Judges', judgeTitle: '專業評審陣容', judgeBody: '評審名單刻正籌組中，將於近期正式公布，敬請期待。',
     newsTag: '最新消息 / News', newsTitle: '最新消息', newsBody: '最新公告與新聞訊息將於近期更新發布。',
-    showTag: '參加作品 / Video Showcase', showTitle: '作品展示專區', showBody: '作品展示平台建置中，後續將開放瀏覽參賽作品。',
+    showTag: '參賽作品 / Video Showcase', showTitle: '本屆精彩作品', showBody: '徵件期間將開放瀏覽參賽作品。',
     footTagline: '以影像述說台灣，讓世界看見。',
     footRights: '中華民國外交部 Ministry of Foreign Affairs, Taiwan (R.O.C.)',
     footOrg: '主辦單位 · 中華民國外交部',
@@ -1440,7 +1467,7 @@ const C = {
     footFb: '外交部官方臉書',
     footBrochure: '下載活動簡章',
     footNote: '本網站為「尋找台灣 2.0 #FindingTAIWAN」官方活動網站',
-    marqueeItems: ['用鏡頭說出你和台灣的故事', '#FindingTAIWAN2.0', '全球徵片競賽', '總獎金 新台幣 80 萬元', '報名即日起'],
+    marqueeItems: ['用鏡頭說出你和台灣的故事', 'Where We Connect', '#FindingTAIWAN2026', '全球徵片競賽', '總獎金 新台幣 80 萬元', '報名 7/1 開跑'],
     videoTag: '主視覺影片 / Campaign Film',
     videoLabel: '主視覺影片即將上線',
     form: {
@@ -1469,46 +1496,45 @@ const C = {
     nav: ['About','Participate','Timeline','Awards','Rules','Winners','Judges','News'],
     apply: 'Apply Now',
     brochure: 'Download Brochure',
-    heroKicker: 'MOFA Global Video Open Call — 2026 entries now open',
-    heroT1: 'Finding Taiwan 2.0', heroT2: '#FindingTAIWAN', heroT3: 'Global Video Open Call',
-    mhChip: 'Entries open 2026', mhTagline: 'Tell your Taiwan story through your lens.',
-    heroLive: 'Global open call — entries now open for 2026', heroPhoneLabel: 'Live submissions', heroScroll: '↓ Scroll · About the event',
+    heroKicker: 'MOFA Global Short Film Competition · Where We Connect',
+    heroT1: 'Finding Taiwan 2.0', heroT2: 'Where We Connect', heroT3: 'International Short Film Competition',
+    mhChip: 'Entries Jul 1–Aug 31', mhTagline: 'Tell your Taiwan story through your lens.',
+    heroLive: 'Submissions open Jul 1 – Aug 31, 2026', heroPhoneLabel: 'Live submissions', heroScroll: '↓ Scroll · About the event',
     prizeTotal: 'Total Prize: NT$800,000',
     prizeSub: '1st NT$200K · 2nd NT$80K ea · 3rd NT$50K ea · Merit NT$30K ea · Taiwan Panorama Special Award',
-    aboutTag: 'About #FindingTAIWAN2.0',
-    aboutTitle: 'Film as a bridge — inviting the world to see Taiwan',
+    aboutTag: 'About #FindingTAIWAN_2.0',
+    aboutTitle: 'Connecting Taiwan with the world through film',
     aboutLead: '',
     aboutFeatureCap: '2025 Inaugural Ceremony',
-    aboutP1: 'The "Finding Taiwan #FindingTAIWAN 2.0" global video open call is organized by the Ministry of Foreign Affairs, Republic of China (Taiwan). Building on the enthusiastic response to its inaugural edition, we sincerely invite creators at home and abroad to capture the Taiwan they envision — its landscapes, culture, everyday life and diversity, each a window for the world.',
-    aboutP2: 'Open to all themes and formats, the competition welcomes any work related to Taiwan. Complete the online registration and tag your entry #FindingTAIWAN2.0 for a chance to compete for a total prize of NT$800,000 — bringing Taiwan\'s stories to the global stage and connecting them with the world.',
+    aboutP1: 'Following the success of the inaugural #FindingTAIWAN competition in 2025 — which drew 283 entries from 23 countries, revealing many moving Taiwan stories through the lenses of creators from diverse cultural backgrounds — #FindingTAIWAN_2.0 returns with the theme “Where We Connect.”',
+    aboutP2: 'Explore how Taiwan connects with the world through democracy, culture, innovation, technology, and people-to-people exchanges. Share your vision through your own lens, and help the international community discover Taiwan from new and diverse perspectives.',
     aboutGalleryCap: '2025 Inaugural Ceremony',
-    aboutGalleryCredit: 'The 2025 inaugural "Finding Taiwan #FindingTAIWAN" global open call drew 283 entries from 20+ countries. Photos courtesy of the Ministry of Foreign Affairs, Taiwan (R.O.C.).',
+    aboutGalleryCredit: 'The 2025 inaugural "Finding Taiwan #FindingTAIWAN" global open call drew 283 entries from 23 countries. Photos courtesy of the Ministry of Foreign Affairs, Taiwan (R.O.C.).',
     stats: [
       { n: 'NT$800K', l: 'Total prize pool' },
-      { n: 'Global', l: 'Open to all' },
-      { n: '#FindingTAIWAN', l: 'Official hashtag' }
+      { n: '23', l: 'Countries in 2025' },
+      { n: '#FindingTAIWAN2026', l: 'Official hashtag' }
     ],
     partTag: 'How to Participate',
     partTitle: 'The entry process',
-    partLead: 'From filming to submission, simply complete the four steps below.',
+    partLead: 'From filming to submission, just four simple steps.',
     steps: [
-      { no: '01', t: 'Film your Taiwan story', d: 'Film a short video related to Taiwan on any device — any length, any style.' },
-      { no: '02', t: 'Upload & tag your work', d: 'Upload your work to a video platform and tag it #FindingTAIWAN2.0.' },
-      { no: '03', t: 'Complete the entry form', d: 'Complete the online entry form with your video link and contact details.' },
-      { no: '04', t: 'Evaluation & results', d: 'Eligible entries proceed to evaluation; winners are announced on the official website and Facebook page.' }
+      { no: '01', t: 'Shoot your Taiwan story', d: 'Create an original short video (under 1 minute) about Taiwan — vertical or horizontal.' },
+      { no: '02', t: 'Upload & tag', d: 'Post your video publicly on YouTube or Instagram with the hashtag #FindingTAIWAN2026.' },
+      { no: '03', t: 'Complete the form & register', d: 'Fill out the registration form via Google Forms and upload your video and required documents.' },
+      { no: '04', t: 'Shortlist & awards', d: 'Shortlisted entries are announced on the official website; the winners are revealed at the awards ceremony.' }
     ],
-    brochureBtn: 'Download Brochure (PDF)',
+    brochureBtn: 'Download Guidelines & Documents',
     brochureNote: '※ The brochure sets out the full rules, submission specifications and licensing terms.',
     tlTag: 'Timeline',
     tlTitle: 'Key dates',
     timeline: [
-      { d: '2026.04', t: 'Entries open', s: 'Online registration & uploads begin' },
-      { d: '2026.08', t: 'Submission deadline', s: 'Final date to submit entries' },
-      { d: '2026.09', t: 'Eligibility & first round', s: 'Eligibility check & preliminary review' },
-      { d: '2026.10', t: 'Popularity vote', s: 'Public online voting for finalists' },
-      { d: '2026.11', t: 'Awards ceremony', s: 'Winners announced (date TBA)' }
+      { d: '2026.07.01', t: 'Submissions open', s: 'Online registration & uploads begin' },
+      { d: '2026.08.31', t: 'Submissions close', s: 'Final deadline (23:59 GMT+8)' },
+      { d: '2026.09', t: 'Shortlist announced', s: 'Finalists posted on the official website' },
+      { d: '2026.09', t: 'Ceremony & winners', s: 'Awards ceremony & winners announced' }
     ],
-    tlNote: '※ Dates are subject to official announcements.',
+    tlNote: '※ Dates are subject to change. Official announcements by the organizer shall prevail.',
     awardsTag: 'Awards',
     awardsTitle: 'Awards & Prizes',
     awardsSub: 'Total Prize Pool: NT$800,000!',
@@ -1519,6 +1545,10 @@ const C = {
       { p: 'Honorable Mention', c: '4 Winners', a: 'NT$30,000 each' }
     ],
     awardsSpecialLabel: 'Taiwan Panorama Special Award',
+    awardsSpecialIntro: 'To celebrate the 50th anniversary of Taiwan Panorama, #FindingTAIWAN_2.0 introduces the Taiwan Panorama Special Award.',
+    awardsSpecialDesc: 'Taiwan Panorama has long introduced Taiwan to the world through words and images, building a rich and valuable archive of stories. Creators are invited to draw inspiration from its archives and reimagine them through fresh visual storytelling, bringing Taiwan’s history and culture to life. Please refer to the guidelines for details.',
+    awardsSpecialLink: 'Visit Taiwan Panorama',
+    awardsSpecialUrl: 'https://www.taiwan-panorama.com/en/',
     awardsSpecial: [
       { p: 'Grand Prize', c: '1 Winner', a: 'NT$100,000' },
       { p: 'Second Prize', c: '1 Winner', a: 'NT$50,000' },
@@ -1532,21 +1562,23 @@ const C = {
       { k: 'Organizer', v: 'Ministry of Foreign Affairs, Republic of China (Taiwan).' },
       { k: 'Theme', v: 'Original short videos on the theme of "Taiwan" — landscapes, culture, everyday life or diversity; any sub-theme and format are welcome.' },
       { k: 'Eligibility', v: 'Open to creators of any nationality and age worldwide; individual or team entries are both accepted.' },
-      { k: 'Submission', v: 'Works must be your own original with full rights, filmed on any device and of any length; complete the online entry form and publish the work publicly with the tag #FindingTAIWAN2.0.' },
-      { k: 'Entry period', v: 'Entries open from 2026; please see the Timeline for the submission deadline.' },
+      { k: 'Submission', v: 'Works must be your own original with full rights, under 1 minute, vertical or horizontal; complete the online entry form and publish the work publicly on YouTube or Instagram with the tag #FindingTAIWAN2026.' },
+      { k: 'Entry period', v: 'Submission period: July 1 – August 31, 2026 (23:59 GMT+8).' },
       { k: 'Prizes', v: 'Total prize pool NT$800,000 — 1st prize NT$200,000 (×1), 2nd NT$80,000 (×2), 3rd NT$50,000 (×3), Merit NT$30,000 (×4); plus the Taiwan Panorama Special Award — 1st NT$100,000, 2nd NT$50,000, 3rd NT$20,000.' },
       { k: 'Rights & licensing', v: 'Entrants retain copyright and grant the organizer royalty-free use for promotion of this event; full licensing terms follow the official guidelines.' }
     ],
     awNote: '* This is a summary. The official event guidelines (活動簡章) govern the full rules, work specifications and licensing terms.',
     winTag: '2025 Winners',
     winTitle: '2025 Inaugural Award Winners',
-    winBody: 'Winning works from the inaugural competition are archived on the MOFA Facebook hub, showcasing Taiwan as seen by creators around the world.',
+    winBody: 'Winning entries from the 2025 competition are archived on MOFA’s dedicated Facebook section — click any winner to watch.',
     winBtn: 'Visit the MOFA Facebook hub',
     winClipLabel: 'Winning short',
+    winTierLabels: { grand: 'Grand Prize', second: 'Second Prize', third: 'Third Prize', merit: 'Honorable Mention' },
+    winWatch: 'Watch on Facebook',
     soonLabel: 'Coming Soon',
     judgeTag: 'Judges', judgeTitle: 'Our panel of judges', judgeBody: 'The judging panel is being finalized and will be announced in due course.',
-    newsTag: 'News', newsTitle: 'Latest news', newsBody: 'Announcements and news will be published here in due course.',
-    showTag: 'Video Showcase', showTitle: 'Entry showcase', showBody: 'The showcase platform is under development; entries will be available to view here.',
+    newsTag: 'News', newsTitle: 'Latest news', newsBody: 'The latest announcements and news will be posted here.',
+    showTag: 'Video Showcase', showTitle: 'Video Showcase', showBody: 'Submitted entries will be available for viewing during the call.',
     footTagline: 'Telling Taiwan\'s story to the world, through film.',
     footRights: 'Ministry of Foreign Affairs, Taiwan (R.O.C.)',
     footOrg: 'Organized by the Ministry of Foreign Affairs (Taiwan, R.O.C.)',
@@ -1556,7 +1588,7 @@ const C = {
     footFb: 'MOFA Official Facebook',
     footBrochure: 'Download Guidelines',
     footNote: 'The official website of Finding Taiwan 2.0 #FindingTAIWAN',
-    marqueeItems: ['Tell your Taiwan story', '#FindingTAIWAN2.0', 'Global Video Open Call', 'Total Prize NT\$800,000', 'Now Open'],
+    marqueeItems: ['Tell your Taiwan story', 'Where We Connect', '#FindingTAIWAN2026', 'International Short Film Competition', 'Total Prize NT\$800,000', 'Entries Jul 1'],
     videoTag: 'Campaign Film',
     videoLabel: 'Campaign film coming soon',
     form: {
@@ -1592,13 +1624,25 @@ const WINNER_GRADS = [
 ];
 
 // ▼ 填入得獎作品 Facebook 影片網址（留空字串 = 顯示佔位卡）
-const WINNERS_VIDEOS = [
-  { url: 'https://www.facebook.com/carlivan.baleros/videos/1141495774416664/', label: '得獎短片 01' },
-  { url: '', label: '得獎短片 02' },
-  { url: '', label: '得獎短片 03' },
-  { url: '', label: '得獎短片 04' },
-  { url: '', label: '得獎短片 05' },
+const WINNERS_2025 = [
+  { tier: 'grand',  name: 'Carl Ivan Baleros', country: '菲律賓', countryEn: 'Philippines', url: 'https://www.facebook.com/share/r/1BAzhDi4uE/' },
+  { tier: 'second', name: 'Frans Wu',          country: '印尼',   countryEn: 'Indonesia',   url: 'https://www.facebook.com/share/v/1HnqmavPVW/' },
+  { tier: 'second', name: 'Jenny Wu／吳冠儀',   country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.facebook.com/share/r/1EXbfkLULi/' },
+  { tier: 'third',  name: 'REVO ODIZA',         country: '菲律賓', countryEn: 'Philippines', url: 'https://www.facebook.com/share/r/1HPg9N69f6/' },
+  { tier: 'third',  name: 'the TimeTour',       country: '德國',   countryEn: 'Germany',     url: 'https://www.facebook.com/share/r/1E9j9Sj6a2/' },
+  { tier: 'third',  name: 'VietGang',           country: '越南',   countryEn: 'Vietnam',     url: 'https://www.facebook.com/share/r/18pyLMfqGx/' },
+  { tier: 'merit',  name: 'Tropang Litratista', country: '菲律賓', countryEn: 'Philippines', url: 'https://www.facebook.com/share/v/1CqecG3Cd5/' },
+  { tier: 'merit',  name: 'Kathy Creator',      country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.facebook.com/share/v/1Jaq9zWXqm/' },
+  { tier: 'merit',  name: '朱彥銘／枺域影像',    country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.facebook.com/share/v/1EqNUHHymh/' },
+  { tier: 'merit',  name: '王振彬',             country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.facebook.com/share/v/1FBv772xXd/' },
+  { tier: 'merit',  name: '陳郁珊／汶山',        country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.facebook.com/share/r/18ceizuymf/' },
 ];
+const WIN_TIER_GRAD = {
+  grand:  'linear-gradient(135deg,#f6b73c,#e98a14)',
+  second: 'linear-gradient(135deg,#9fb2c9,#6f8298)',
+  third:  'linear-gradient(135deg,#cf9b6b,#a9743f)',
+  merit:  'linear-gradient(135deg,#2f7de1,#1559b0)',
+};
 
 let currentLang = 'zh';
 
@@ -1790,6 +1834,13 @@ function render() {
   });
 
   txt('awards-special-label', t.awardsSpecialLabel);
+  txt('awards-special-intro', t.awardsSpecialIntro);
+  txt('awards-special-desc', t.awardsSpecialDesc);
+  const awLink = document.getElementById('awards-special-link');
+  if (awLink) {
+    awLink.href = t.awardsSpecialUrl;
+    awLink.querySelector('span').textContent = t.awardsSpecialLink;
+  }
   const awSpecial = document.getElementById('awards-special');
   awSpecial.innerHTML = '';
   t.awardsSpecial.forEach((a) => {
@@ -1830,42 +1881,35 @@ function render() {
 
   const wGrid = document.getElementById('winners-grid');
   wGrid.innerHTML = '';
-  const WIN_IMGS = ['photo-1583395145517-1e3177037600','photo-1591962176551-cb2d2febb7be','photo-1598935898639-81586f7d2129','photo-1552993873-0dd1110e025f','photo-1591356442491-99d7775bc7b1'];
-  const makeWinnerCard = (i) => {
-    const img = WIN_IMGS[i % WIN_IMGS.length];
-    const card = document.createElement('div');
-    card.style.cssText = 'position:relative;flex:none;width:clamp(150px,20vw,220px);aspect-ratio:9/16;border-radius:14px;overflow:hidden;box-shadow:0 12px 30px rgba(13,59,128,0.18);cursor:pointer;transition:transform 0.32s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.32s ease;';
-    card.onmouseenter = () => { card.style.transform = 'scale(1.06) translateY(-4px)'; card.style.boxShadow = '0 28px 56px rgba(13,59,128,0.32)'; };
-    card.onmouseleave = () => { card.style.transform = ''; card.style.boxShadow = '0 12px 30px rgba(13,59,128,0.18)'; };
+  // static grid replaces the old marquee — clear the marquee mask/clip
+  wGrid.style.overflow = 'visible';
+  wGrid.style.webkitMaskImage = 'none';
+  wGrid.style.maskImage = 'none';
+  const tierLabels = t.winTierLabels;
+  const grid = document.createElement('div');
+  grid.className = 'win2-grid';
+  WINNERS_2025.forEach((w) => {
+    const card = document.createElement('a');
+    card.className = 'win2-card';
+    card.href = w.url;
+    card.target = '_blank';
+    card.rel = 'noopener';
+    const country = currentLang === 'en' ? w.countryEn : w.country;
     card.innerHTML =
-      '<img src="assets/img/' + img + '.jpg" alt="" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">' +
-      '<span style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.18) 0%,transparent 35%,transparent 55%,rgba(13,40,71,0.90) 100%);"></span>' +
-      '<span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">' +
-        '<span style="width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.18);backdrop-filter:blur(6px);border:2px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;">' +
-          '<span style="width:0;height:0;border-style:solid;border-width:9px 0 9px 17px;border-color:transparent transparent transparent #fff;margin-left:4px;"></span>' +
-        '</span>' +
+      '<span class="win2-top" style="background:' + WIN_TIER_GRAD[w.tier] + ';">' +
+        '<span class="win2-tier"></span>' +
+        '<span class="win2-play"><span class="win2-tri"></span></span>' +
       '</span>' +
-      '<span style="position:absolute;left:0;right:0;bottom:0;padding:12px 12px 14px;">' +
-        '<span style="font-family:\'Noto Sans TC\';font-weight:700;font-size:13px;color:#fff;display:block;line-height:1.4;">' + t.winClipLabel + '</span>' +
-        '<span style="font-family:\'Montserrat\';font-size:10px;color:rgba(255,255,255,0.6);margin-top:3px;display:block;">#FindingTAIWAN2.0</span>' +
+      '<span class="win2-body">' +
+        '<span class="win2-name"></span>' +
+        '<span class="win2-meta"><span class="win2-country"></span><span class="win2-fb">' + t.winWatch + ' ↗</span></span>' +
       '</span>';
-    return card;
-  };
-  const track = document.createElement('div');
-  track.className = 'win-track';
-  // two identical sets so the -50% marquee loops seamlessly
-  for (let pass = 0; pass < 2; pass++) {
-    WINNERS_VIDEOS.forEach((vid, i) => track.appendChild(makeWinnerCard(i)));
-  }
-  wGrid.appendChild(track);
-  // pause on hover (desktop) and while touched (mobile)
-  const pause = () => track.classList.add('paused');
-  const resume = () => track.classList.remove('paused');
-  wGrid.addEventListener('mouseenter', pause);
-  wGrid.addEventListener('mouseleave', resume);
-  wGrid.addEventListener('touchstart', pause, { passive: true });
-  wGrid.addEventListener('touchend', resume);
-  wGrid.addEventListener('touchcancel', resume);
+    card.querySelector('.win2-tier').textContent = tierLabels[w.tier];
+    card.querySelector('.win2-name').textContent = w.name;
+    card.querySelector('.win2-country').textContent = country;
+    grid.appendChild(card);
+  });
+  wGrid.appendChild(grid);
 
   // coming soon
   const sl = t.soonLabel;
@@ -2195,15 +2239,6 @@ function setupOffscreenPause() {
     new IntersectionObserver((entries) => {
       entries.forEach(e => hd.classList.toggle('hd-paused', !e.isIntersecting));
     }, { rootMargin: '120px 0px' }).observe(hd);
-  }
-  const wGrid = document.getElementById('winners-grid');
-  if (wGrid) {
-    new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        const track = wGrid.querySelector('.win-track');
-        if (track) track.style.animationPlayState = e.isIntersecting ? '' : 'paused';
-      });
-    }, { rootMargin: '120px 0px' }).observe(wGrid);
   }
 }
 
