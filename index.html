@@ -1141,7 +1141,7 @@
           <span style="width:22px;height:2px;background:#38e58c;"></span><span id="gh-kicker"></span>
         </div>
 
-        <h2 data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(30px,4.6vw,52px);line-height:1.06;color:#0d2747;margin:16px 0 0;">光華<span style="color:#1574e6;">特別獎</span></h2>
+        <h2 id="gh-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(30px,4.6vw,52px);line-height:1.06;color:#0d2747;margin:16px 0 0;">光華<span style="color:#1574e6;">特別獎</span></h2>
         <div style="font-family:'Montserrat';font-style:italic;font-weight:700;font-size:clamp(14px,1.7vw,18px);color:#5a6a82;margin-top:6px;">The Taiwan Panorama 50th Anniversary Prize</div>
 
         <!-- official partner plate -->
@@ -1248,7 +1248,7 @@
     <div style="max-width:430px;min-width:260px;">
       <div style="display:flex;align-items:center;gap:11px;">
         <img src="assets/logo.png" alt="FindingTAIWAN" style="height:38px;width:auto;display:block;">
-        <span style="font-family:'Noto Sans TC';font-weight:900;font-size:18px;color:#fff;">尋找台灣 2.0 <span style="font-family:'Montserrat';font-size:11px;color:#38e58c;letter-spacing:0.08em;">#FindingTAIWAN2.0</span></span>
+        <span style="font-family:'Montserrat';font-weight:900;font-size:18px;color:#fff;letter-spacing:0.02em;">#FindingTAIWAN<span style="color:#38e58c;">_2.0</span></span>
       </div>
       <!-- organizer (MOFA) mark -->
       <img src="assets/mofa-logo.png" alt="外交部 Ministry of Foreign Affairs, Taiwan (R.O.C.)" style="height:54px;width:auto;display:block;margin-top:18px;">
@@ -1382,6 +1382,7 @@ const C = {
     awardsSpecialLink: '前往光華雜誌',
     awardsSpecialUrl: 'https://www.taiwan-panorama.com/',
     ghKicker: '特別獎 · Special Award',
+    ghTitle: '光華<span style="color:#1574e6;">特別獎</span>',
     ghPlate: '創刊 50 週年',
     ghLead: '#FindingTAIWAN_2.0 響應《台灣光華雜誌》創刊 50 週年，增設【<span style="color:#1574e6;">光華特別獎</span>】獎項！',
     ghIntro: '《台灣光華雜誌》長年透過文字與影像向國際社會介紹台灣，以多元化報導及雋永圖文呈現台灣發展脈動，累積豐富且珍貴的內容資產。本次競賽特別開放創作者以《台灣光華雜誌》作為靈感來源，鼓勵透過影像敘事方式重新詮釋與再創作，讓珍貴的歷史影像與報導以新的形式再次被看見～ 詳細參賽辦法請詳見簡章。',
@@ -1498,9 +1499,10 @@ const C = {
     awardsSpecialLink: 'Visit Taiwan Panorama',
     awardsSpecialUrl: 'https://www.taiwan-panorama.com/en',
     ghKicker: 'Special Award',
+    ghTitle: 'Taiwan Panorama <span style="color:#1574e6;">Special Award</span>',
     ghPlate: '50th Anniversary',
-    ghLead: '#FindingTAIWAN_2.0 marks the 50th anniversary of <em>Taiwan Panorama</em> with a new <span style="color:#1574e6;">Guanghua Special Award</span>!',
-    ghIntro: 'For decades, Taiwan Panorama has introduced Taiwan to the world through words and images, capturing the nation’s development with diverse reportage and timeless photography, and building a rich and precious archive of content. This competition invites creators to draw inspiration from Taiwan Panorama, reinterpreting and reimagining its work through visual storytelling so its precious historic images and reportage can be seen anew. Please see the official rules for full details.',
+    ghLead: 'To celebrate the 50th anniversary of <em>Taiwan Panorama</em>, #FindingTAIWAN_2.0 introduces the <span style="color:#1574e6;">Taiwan Panorama Special Award</span>.',
+    ghIntro: 'Creators are invited to reimagine stories and images from its rich archives, bringing Taiwan’s history and culture to life through fresh visual storytelling. Please refer to the rules for details.',
     ghReelLabel: 'Panorama Image Archive · Archive Reel',
     ghDisclaimer: '※ Covers shown are from past issues of Taiwan Panorama; the archive opened for the competition follows the magazine’s official database.',
     ghCtaPrimary: 'Visit Taiwan Panorama',
@@ -1523,7 +1525,7 @@ const C = {
     newsItems: [
       { date: '2026.06.30', tag: 'Upcoming · MOFA press release', title: 'The Ministry of Foreign Affairs launches the #FindingTaiwan_2.0: Where We Connect international short film competition, inviting creatives worldwide to explore Taiwan’s links with the wider world through the lens!' }
     ],
-    showTag: 'Video Showcase', showTitle: 'Video Showcase', showBody: 'Submitted entries will be available for viewing during the call.',
+    showTag: '2026 Entries', showTitle: '2026 Entries', showBody: 'Submitted entries will be available for viewing during the call.',
     footTagline: 'Telling Taiwan\'s story to the world, through film.',
     footRights: 'Ministry of Foreign Affairs, Taiwan (R.O.C.)',
     footOrg: 'Organized by the Ministry of Foreign Affairs (Taiwan, R.O.C.)',
@@ -1831,6 +1833,8 @@ function render() {
   txt('gh-plate', t.ghPlate);
   txt('gh-reel-label', t.ghReelLabel);
   txt('gh-disclaimer', t.ghDisclaimer);
+  const ghTitleEl = document.getElementById('gh-title');
+  if (ghTitleEl) ghTitleEl.innerHTML = t.ghTitle;
   const ghLeadEl = document.getElementById('gh-lead');
   if (ghLeadEl) ghLeadEl.innerHTML = t.ghLead;
   const ghIntroEl = document.getElementById('gh-intro');
