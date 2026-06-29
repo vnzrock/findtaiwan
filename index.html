@@ -1215,7 +1215,6 @@
 
       <!-- News -->
       <div id="news" style="position:relative;border:1.5px dashed #c3d6f0;border-radius:20px;padding:36px 30px;background:#f7faff;">
-        <span id="soon-label-2" style="position:absolute;top:22px;right:22px;font-family:'Montserrat';font-weight:700;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#1574e6;background:#e2edfc;padding:5px 12px;border-radius:999px;"></span>
         <span style="display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:14px;border:3px solid #1574e6;flex-direction:column;gap:3px;">
           <span style="width:22px;height:2.5px;background:#1574e6;border-radius:2px;"></span>
           <span style="width:22px;height:2.5px;background:#1574e6;border-radius:2px;"></span>
@@ -1527,8 +1526,8 @@ const C = {
     ],
     showTag: '2026 Entries', showTitle: '2026 Entries', showBody: 'Submitted entries will be available for viewing during the call.',
     footTagline: 'Telling Taiwan\'s story to the world, through film.',
-    footRights: 'Ministry of Foreign Affairs, Taiwan (R.O.C.)',
-    footOrg: 'Organized by the Ministry of Foreign Affairs (Taiwan, R.O.C.)',
+    footRights: 'Ministry of Foreign Affairs, Taiwan',
+    footOrg: 'Organized by the Ministry of Foreign Affairs ROC (Taiwan)',
     footLinksTitle: 'Explore',
     footOfficialTitle: 'Official Resources',
     footSite: 'MOFA Official Website',
@@ -1920,7 +1919,7 @@ function render() {
 
   // coming soon
   const sl = t.soonLabel;
-  txt('soon-label-2', sl); txt('soon-label-3', sl);
+  txt('soon-label-3', sl);
   txt('news-tag', t.newsTag); txt('news-title', t.newsTitle); txt('news-body', t.newsBody);
   const newsList = document.getElementById('news-list');
   if (newsList) {
