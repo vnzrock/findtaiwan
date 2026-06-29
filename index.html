@@ -1511,7 +1511,7 @@ const C = {
     ghIntro: 'Creators are invited to reimagine stories and images from its rich archives, bringing Taiwan’s history and culture to life through fresh visual storytelling. Please refer to the rules for details.',
     ghReelLabel: 'Panorama Image Archive · Archive Reel',
     ghDisclaimer: '※ Covers shown are from past issues of Taiwan Panorama; the archive opened for the competition follows the magazine’s official database.',
-    ghCtaPrimary: 'Visit Taiwan Panorama',
+    ghCtaPrimary: 'Visit <em>Taiwan Panorama</em>',
     ghFirstTag: 'Vol.1 No.1',
     awardsSpecial: [
       { p: 'Grand Prize', c: '1 Winner', a: 'NT$100,000' },
@@ -1848,7 +1848,7 @@ function render() {
   if (ghIntroEl) ghIntroEl.innerHTML = t.ghIntro;
   const ghPrimary = document.getElementById('gh-cta-primary');
   if (ghPrimary) {
-    ghPrimary.querySelector('span').textContent = t.ghCtaPrimary;
+    ghPrimary.querySelector('span').innerHTML = t.ghCtaPrimary;
     ghPrimary.href = t.awardsSpecialUrl;
   }
   const ghReel = document.getElementById('gh-reel');
