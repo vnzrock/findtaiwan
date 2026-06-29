@@ -1050,6 +1050,21 @@
   </div>
 </section>
 
+<!-- NEWS (moved up: sits right after About) -->
+<section id="news" style="background:#fff;padding:clamp(56px,8vw,96px) clamp(18px,4vw,40px);">
+  <div data-reveal style="max-width:780px;margin:0 auto;position:relative;border:1.5px dashed #c3d6f0;border-radius:20px;padding:36px 30px;background:#f7faff;">
+    <span style="display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:14px;border:3px solid #1574e6;flex-direction:column;gap:3px;">
+      <span style="width:22px;height:2.5px;background:#1574e6;border-radius:2px;"></span>
+      <span style="width:22px;height:2.5px;background:#1574e6;border-radius:2px;"></span>
+      <span style="width:14px;height:2.5px;background:#1574e6;border-radius:2px;"></span>
+    </span>
+    <div id="news-tag" style="font-family:'Montserrat';font-weight:700;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#1574e6;margin-top:22px;"></div>
+    <h3 id="news-title" style="font-family:'Noto Sans TC';font-weight:900;font-size:22px;color:#0d2747;margin:8px 0 10px;"></h3>
+    <p id="news-body" style="font-family:'Noto Sans TC';font-size:14.5px;line-height:1.75;color:#5a6a82;margin:0;"></p>
+    <div id="news-list" style="margin-top:18px;"></div>
+  </div>
+</section>
+
 <!-- 2. PARTICIPATE -->
 <section id="participate" style="background:#eef5ff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);position:relative;overflow:hidden;">
   <div style="max-width:1180px;margin:0 auto;position:relative;">
@@ -1215,19 +1230,6 @@
   <div style="max-width:1180px;margin:0 auto;">
     <div data-reveal style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
 
-      <!-- News -->
-      <div id="news" style="position:relative;border:1.5px dashed #c3d6f0;border-radius:20px;padding:36px 30px;background:#f7faff;">
-        <span style="display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:14px;border:3px solid #1574e6;flex-direction:column;gap:3px;">
-          <span style="width:22px;height:2.5px;background:#1574e6;border-radius:2px;"></span>
-          <span style="width:22px;height:2.5px;background:#1574e6;border-radius:2px;"></span>
-          <span style="width:14px;height:2.5px;background:#1574e6;border-radius:2px;"></span>
-        </span>
-        <div id="news-tag" style="font-family:'Montserrat';font-weight:700;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#1574e6;margin-top:22px;"></div>
-        <h3 id="news-title" style="font-family:'Noto Sans TC';font-weight:900;font-size:22px;color:#0d2747;margin:8px 0 10px;"></h3>
-        <p id="news-body" style="font-family:'Noto Sans TC';font-size:14.5px;line-height:1.75;color:#5a6a82;margin:0;"></p>
-        <div id="news-list" style="margin-top:18px;"></div>
-      </div>
-
       <!-- Video Showcase -->
       <div style="position:relative;border:1.5px dashed #c3d6f0;border-radius:20px;padding:36px 30px;background:#f7faff;">
         <span id="soon-label-3" style="position:absolute;top:22px;right:22px;font-family:'Montserrat';font-weight:700;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#1574e6;background:#e2edfc;padding:5px 12px;border-radius:999px;"></span>
@@ -1308,7 +1310,7 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
   window.addEventListener('load', toTop);
 })();
 
-const NAV_HREFS = ['#about','#participate','#timeline','#awards','#guanghua','#winners','#news'];
+const NAV_HREFS = ['#about','#news','#participate','#timeline','#awards','#guanghua','#winners'];
 
 // 光華特別獎 archive reel — vintage Taiwan Panorama / Sinorama covers (assets/guanghua/)
 const GH_REEL = [
@@ -1332,7 +1334,7 @@ const VIDEO_ID = '_koDf0NAnRY'; // 2024 Trending Taiwan Short Film Competition (
 
 const C = {
   zh: {
-    nav: ['關於','參加方式','時程','獎項獎金','光華特別獎','精選作品','最新消息'],
+    nav: ['關於','最新消息','參加方式','時程','獎項獎金','光華特別獎','精選作品'],
     apply: '立即報名',
     brochure: '下載活動簡章',
     heroKicker: '用鏡頭說出你和台灣的故事！',
@@ -1415,7 +1417,7 @@ const C = {
     ],
     showTag: '參賽作品 / Video Showcase', showTitle: '本屆報名作品', showBody: '徵件期間將開放瀏覽參賽作品。',
     footTagline: '以影像述說台灣，讓世界看見。',
-    footRights: '中華民國外交部 Ministry of Foreign Affairs, Taiwan (R.O.C.)',
+    footRights: '中華民國外交部 Ministry of Foreign Affairs, ROC (Taiwan)',
     footContactLabel: '聯絡方式：',
     footOrg: '主辦單位 · 中華民國外交部',
     footLinksTitle: '網站導覽',
@@ -1450,7 +1452,7 @@ const C = {
     }
   },
   en: {
-    nav: ['About','Participate','Timeline','Awards','Special','Winners','News'],
+    nav: ['About','News','Participate','Timeline','Awards','Special','Winners'],
     apply: 'Apply Now',
     brochure: 'Download Brochure',
     heroKicker: 'Tell your Taiwan story through your lens!',
@@ -1533,15 +1535,15 @@ const C = {
     ],
     showTag: '2026 Entries', showTitle: '2026 Entries', showBody: 'Submitted entries will be available for viewing during the call.',
     footTagline: 'Telling Taiwan\'s story to the world, through film.',
-    footRights: 'Ministry of Foreign Affairs, Taiwan',
+    footRights: 'Ministry of Foreign Affairs ROC (Taiwan)',
     footContactLabel: 'Contact Email:',
-    footOrg: 'Organized by the Ministry of Foreign Affairs ROC (Taiwan)',
+    footOrg: 'Organized by the Ministry of Foreign Affairs',
     footLinksTitle: 'Explore',
     footOfficialTitle: 'Official Resources',
     footSite: 'MOFA Official Website',
     footFb: 'MOFA Official Facebook',
     footBrochure: 'Download Rules',
-    footNote: 'The official website of Finding Taiwan 2.0 #FindingTAIWAN',
+    footNote: 'The official website of #FindingTAIWAN2.0',
     marqueeItems: ['Tell your Taiwan story', 'Where We Connect', '#FindingTAIWAN2026', 'International Short Film Competition', 'Total Prize NT\$800,000', 'Entries Jul 1'],
     videoTag: 'Campaign Film',
     videoLabel: 'Campaign film coming soon',
