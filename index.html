@@ -1048,6 +1048,64 @@
   </div>
 </section>
 
+<!-- 2. PARTICIPATE -->
+<section id="participate" style="background:#eef5ff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);position:relative;overflow:hidden;">
+  <div style="max-width:1180px;margin:0 auto;position:relative;">
+    <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#1574e6;">
+      <span style="width:22px;height:2px;background:#38e58c;"></span><span id="part-tag"></span>
+    </div>
+    <h2 id="part-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(28px,4vw,46px);color:#0d2747;margin:18px 0 6px;"></h2>
+    <p id="part-lead" style="font-family:'Noto Sans TC';font-size:16px;color:#5a6a82;margin:0;"></p>
+    <div id="steps-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:clamp(32px,5vw,48px);"></div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:18px;margin-top:clamp(32px,5vw,44px);padding:26px 30px;background:#0d3b80;border-radius:18px;">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:12px;background:rgba(56,229,140,0.18);">
+        <span style="font-family:'Montserrat';font-weight:700;color:#38e58c;font-size:20px;">PDF</span>
+      </span>
+      <div style="flex:1;min-width:200px;">
+        <div id="brochure-btn-text" style="font-family:'Noto Sans TC';font-weight:900;font-size:18px;color:#fff;"></div>
+        <div id="brochure-note" style="font-family:'Noto Sans TC';font-size:13px;color:rgba(255,255,255,0.65);margin-top:4px;"></div>
+      </div>
+      <a id="brochure-link" href="https://drive.google.com/drive/folders/10ZA3p4uWKFSUD_RmB8p4mZPMovVyj4JR?usp=sharing" target="_blank" rel="noopener noreferrer" style="text-decoration:none;font-family:'Noto Sans TC';font-weight:700;font-size:15px;padding:13px 28px;background:#38e58c;color:#0d3b80;border-radius:999px;white-space:nowrap;"></a>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO (Campaign Film) -->
+<!-- 3. TIMELINE -->
+<section id="timeline" style="background:#fff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);">
+  <div style="max-width:820px;margin:0 auto;">
+    <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#1574e6;">
+      <span style="width:22px;height:2px;background:#38e58c;"></span><span id="tl-tag"></span>
+    </div>
+    <h2 id="tl-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(28px,4vw,46px);color:#0d2747;margin:18px 0 clamp(32px,5vw,48px);"></h2>
+    <div id="timeline-list"></div>
+    <p id="tl-note" style="font-family:'Noto Sans TC';font-size:13px;color:#8a97aa;margin:8px 0 0;padding-left:120px;"></p>
+  </div>
+</section>
+
+<!-- 4. AWARDS -->
+<section id="awards" style="position:relative;background:#0f63cf;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);overflow:hidden;">
+  <div style="position:relative;max-width:1080px;margin:0 auto;">
+    <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#38e58c;">
+      <span style="width:22px;height:2px;background:#38e58c;"></span><span id="awards-tag"></span>
+    </div>
+    <h2 id="awards-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(28px,4.4vw,50px);color:#fff;margin:18px 0 10px;"></h2>
+    <p id="awards-sub" style="font-family:'Noto Sans TC';font-weight:900;font-size:clamp(18px,2.6vw,28px);color:#FFD600;margin:0 0 clamp(30px,4vw,44px);"></p>
+
+    <div id="awards-main" class="awards-list" data-reveal data-inview></div>
+
+    <div class="awards-special" data-reveal data-inview>
+      <div class="awards-special-head">
+        <span class="awards-special-badge">★</span>
+        <h3 id="awards-special-label"></h3>
+      </div>
+      <div id="awards-special" class="awards-special-grid"></div>
+    </div>
+
+    <p id="awards-note" style="font-family:'Noto Sans TC';font-size:13px;color:rgba(255,255,255,0.55);margin:clamp(24px,3vw,32px) 0 0;"></p>
+  </div>
+</section>
+
 <!-- 4b. 光華特別獎 — Taiwan Panorama 50th Anniversary Prize (imported from Claude Design: 光華特別獎 Section v2) -->
 <style>
   @keyframes gh-strip { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -1128,65 +1186,6 @@
       <a id="gh-cta-primary" class="gh-cta-primary" href="https://www.taiwan-panorama.com/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;padding:16px 34px;background:linear-gradient(180deg,#5af2a4,#38e58c 55%,#22c97a);color:#0d3b80;font-family:'Noto Sans TC';font-weight:900;font-size:16px;border-radius:999px;box-shadow:0 12px 30px rgba(56,229,140,0.35);text-decoration:none;transition:transform .25s ease,box-shadow .25s ease;"><span></span> <span style="display:inline-block;animation:gh-arrow 1.4s ease-in-out infinite;">→</span></a>
     </div>
 
-  </div>
-</section>
-
-<!-- 2. PARTICIPATE -->
-<section id="participate" style="background:#eef5ff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);position:relative;overflow:hidden;">
-  <div style="max-width:1180px;margin:0 auto;position:relative;">
-    <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#1574e6;">
-      <span style="width:22px;height:2px;background:#38e58c;"></span><span id="part-tag"></span>
-    </div>
-    <h2 id="part-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(28px,4vw,46px);color:#0d2747;margin:18px 0 6px;"></h2>
-    <p id="part-lead" style="font-family:'Noto Sans TC';font-size:16px;color:#5a6a82;margin:0;"></p>
-    <div id="steps-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:clamp(32px,5vw,48px);"></div>
-    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:18px;margin-top:clamp(32px,5vw,44px);padding:26px 30px;background:#0d3b80;border-radius:18px;">
-      <span style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:12px;background:rgba(56,229,140,0.18);">
-        <span style="font-family:'Montserrat';font-weight:700;color:#38e58c;font-size:20px;">PDF</span>
-      </span>
-      <div style="flex:1;min-width:200px;">
-        <div id="brochure-btn-text" style="font-family:'Noto Sans TC';font-weight:900;font-size:18px;color:#fff;"></div>
-        <div id="brochure-note" style="font-family:'Noto Sans TC';font-size:13px;color:rgba(255,255,255,0.65);margin-top:4px;"></div>
-      </div>
-      <a id="brochure-link" href="https://drive.google.com/drive/folders/10ZA3p4uWKFSUD_RmB8p4mZPMovVyj4JR?usp=sharing" target="_blank" rel="noopener noreferrer" style="text-decoration:none;font-family:'Noto Sans TC';font-weight:700;font-size:15px;padding:13px 28px;background:#38e58c;color:#0d3b80;border-radius:999px;white-space:nowrap;"></a>
-    </div>
-  </div>
-</section>
-
-<!-- VIDEO (Campaign Film) -->
-<!-- 3. TIMELINE -->
-<section id="timeline" style="background:#fff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);">
-  <div style="max-width:820px;margin:0 auto;">
-    <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#1574e6;">
-      <span style="width:22px;height:2px;background:#38e58c;"></span><span id="tl-tag"></span>
-    </div>
-    <h2 id="tl-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(28px,4vw,46px);color:#0d2747;margin:18px 0 clamp(32px,5vw,48px);"></h2>
-    <div id="timeline-list"></div>
-    <p id="tl-note" style="font-family:'Noto Sans TC';font-size:13px;color:#8a97aa;margin:8px 0 0;padding-left:120px;"></p>
-  </div>
-</section>
-
-<!-- 4. AWARDS -->
-<section id="awards" style="position:relative;background:#0f63cf;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);overflow:hidden;">
-  <div style="position:relative;max-width:1080px;margin:0 auto;">
-    <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#38e58c;">
-      <span style="width:22px;height:2px;background:#38e58c;"></span><span id="awards-tag"></span>
-    </div>
-    <h2 id="awards-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(28px,4.4vw,50px);color:#fff;margin:18px 0 10px;"></h2>
-    <p id="awards-sub" style="font-family:'Noto Sans TC';font-weight:900;font-size:clamp(18px,2.6vw,28px);color:#FFD600;margin:0 0 clamp(30px,4vw,44px);"></p>
-
-    <div id="awards-main" class="awards-list" data-reveal data-inview></div>
-
-    <div class="awards-special" data-reveal data-inview>
-      <div class="awards-special-head">
-        <span class="awards-special-badge">★</span>
-        <h3 id="awards-special-label"></h3>
-      </div>
-      <div id="awards-special" class="awards-special-grid"></div>
-      <a id="awards-special-link" class="awards-special-link" href="#" target="_blank" rel="noopener"><span></span> ↗</a>
-    </div>
-
-    <p id="awards-note" style="font-family:'Noto Sans TC';font-size:13px;color:rgba(255,255,255,0.55);margin:clamp(24px,3vw,32px) 0 0;"></p>
   </div>
 </section>
 
@@ -1304,7 +1303,7 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
   window.addEventListener('load', toTop);
 })();
 
-const NAV_HREFS = ['#about','#guanghua','#participate','#timeline','#awards','#winners','#news'];
+const NAV_HREFS = ['#about','#participate','#timeline','#awards','#guanghua','#winners','#news'];
 
 // 光華特別獎 archive reel — vintage Taiwan Panorama / Sinorama covers (assets/guanghua/)
 const GH_REEL = [
@@ -1328,7 +1327,7 @@ const VIDEO_ID = '_koDf0NAnRY'; // 2024 Trending Taiwan Short Film Competition (
 
 const C = {
   zh: {
-    nav: ['關於','光華特別獎','參加方式','時程','獎項獎金','精選作品','最新消息'],
+    nav: ['關於','參加方式','時程','獎項獎金','光華特別獎','精選作品','最新消息'],
     apply: '立即報名',
     brochure: '下載活動簡章',
     heroKicker: '用鏡頭說出你和台灣的故事！',
@@ -1444,7 +1443,7 @@ const C = {
     }
   },
   en: {
-    nav: ['About','Panorama','Participate','Timeline','Awards','Winners','News'],
+    nav: ['About','Participate','Timeline','Awards','Panorama','Winners','News'],
     apply: 'Apply Now',
     brochure: 'Download Brochure',
     heroKicker: 'Tell your Taiwan story through your lens!',
@@ -1581,7 +1580,7 @@ const WINNERS_2025 = [
   { tier: 'merit',  name: 'Kathy Creator',      country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.instagram.com/mofa_taiwan/reel/DUf8EuAEtSW/', cover: 'assets/img/winners/08-merit-kathy.jpg' },
   { tier: 'merit',  name: '朱彥銘／枺域影像',    country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.instagram.com/mofa_taiwan/reel/DUKItDojTMV/', cover: 'assets/img/winners/09-merit-zhu.jpg' },
   { tier: 'merit',  name: '王振彬',             country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.instagram.com/mofa_taiwan/reel/DUMtf4PDTeI/', cover: 'assets/img/winners/10-merit-wang.jpg' },
-  { tier: 'merit',  name: '陳郁珊／汶山',        country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.instagram.com/mofa_taiwan/reel/DTUD6m9Ei65/' },
+  { tier: 'merit',  name: '陳郁珊／汶山',        country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.instagram.com/mofa_taiwan/reel/DTUD6m9Ei65/', cover: 'assets/img/winners/11-merit-chen.jpg' },
 ];
 const WIN_TIER_GRAD = {
   grand:  'linear-gradient(135deg,#f6b73c,#e98a14)',
@@ -1812,11 +1811,6 @@ function render() {
   });
 
   txt('awards-special-label', t.awardsSpecialLabel);
-  const awLink = document.getElementById('awards-special-link');
-  if (awLink) {
-    awLink.href = t.awardsSpecialUrl;
-    awLink.querySelector('span').textContent = t.awardsSpecialLink;
-  }
   const awSpecial = document.getElementById('awards-special');
   awSpecial.innerHTML = '';
   t.awardsSpecial.forEach((a) => {
