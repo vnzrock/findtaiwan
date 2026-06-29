@@ -1225,6 +1225,7 @@
         <div id="news-tag" style="font-family:'Montserrat';font-weight:700;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#1574e6;margin-top:22px;"></div>
         <h3 id="news-title" style="font-family:'Noto Sans TC';font-weight:900;font-size:22px;color:#0d2747;margin:8px 0 10px;"></h3>
         <p id="news-body" style="font-family:'Noto Sans TC';font-size:14.5px;line-height:1.75;color:#5a6a82;margin:0;"></p>
+        <div id="news-list" style="margin-top:18px;"></div>
       </div>
 
       <!-- Video Showcase -->
@@ -1404,6 +1405,9 @@ const C = {
     winWatch: '前往 Facebook 觀賞',
     soonLabel: 'Coming Soon',
     newsTag: '最新消息 / News', newsTitle: '最新消息', newsBody: '最新公告與新聞訊息將於近期更新發布。',
+    newsItems: [
+      { date: '2026.06.30', tag: '預計上線 · MOFA 新聞稿', title: '外交部推出「#FindingTAIWAN_2.0：Where We Connect」全球徵片競賽 邀請全球創作者用影像述說台灣與世界的連結' }
+    ],
     showTag: '參賽作品 / Video Showcase', showTitle: '本屆精彩作品', showBody: '徵件期間將開放瀏覽參賽作品。',
     footTagline: '以影像述說台灣，讓世界看見。',
     footRights: '中華民國外交部 Ministry of Foreign Affairs, Taiwan (R.O.C.)',
@@ -1517,6 +1521,9 @@ const C = {
     winWatch: 'Watch on Facebook',
     soonLabel: 'Coming Soon',
     newsTag: 'News', newsTitle: 'Latest news', newsBody: 'The latest announcements and news will be posted here.',
+    newsItems: [
+      { date: '2026.06.30', tag: 'Upcoming · MOFA press release', title: 'The Ministry of Foreign Affairs launches the #FindingTaiwan_2.0: Where We Connect international short film competition, inviting creatives worldwide to explore Taiwan’s links with the wider world through the lens!' }
+    ],
     showTag: 'Video Showcase', showTitle: 'Video Showcase', showBody: 'Submitted entries will be available for viewing during the call.',
     footTagline: 'Telling Taiwan\'s story to the world, through film.',
     footRights: 'Ministry of Foreign Affairs, Taiwan (R.O.C.)',
@@ -1917,6 +1924,25 @@ function render() {
   const sl = t.soonLabel;
   txt('soon-label-2', sl); txt('soon-label-3', sl);
   txt('news-tag', t.newsTag); txt('news-title', t.newsTitle); txt('news-body', t.newsBody);
+  const newsList = document.getElementById('news-list');
+  if (newsList) {
+    newsList.innerHTML = '';
+    (t.newsItems || []).forEach((n) => {
+      const a = document.createElement('article');
+      a.style.cssText = 'border-top:1px solid #dde6f3;padding:14px 0 0;margin-top:14px;';
+      const meta = document.createElement('div');
+      meta.style.cssText = "display:flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#1574e6;";
+      meta.innerHTML = '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#38e58c;flex:none;"></span>';
+      const metaTxt = document.createElement('span');
+      metaTxt.textContent = n.date + (n.tag ? ' · ' + n.tag : '');
+      meta.appendChild(metaTxt);
+      const h = document.createElement('h4');
+      h.style.cssText = "font-family:'Noto Sans TC';font-weight:800;font-size:15.5px;line-height:1.55;color:#0d2747;margin:8px 0 0;";
+      h.textContent = n.title;
+      a.appendChild(meta); a.appendChild(h);
+      newsList.appendChild(a);
+    });
+  }
   txt('show-tag', t.showTag); txt('show-title', t.showTitle); txt('show-body', t.showBody);
 
   // footer
@@ -1942,10 +1968,25 @@ function render() {
   setupReveal();
 }
 
+// English lives at /en, Chinese at / — keep the language in the URL
+function urlForLang(l) { return l === 'en' ? '/en' : '/'; }
+function langFromUrl() {
+  const p = location.pathname.replace(/\/+$/, '');
+  if (/\/en$/i.test(p)) return 'en';
+  try { if ((new URLSearchParams(location.search).get('lang') || '').toLowerCase() === 'en') return 'en'; } catch (e) {}
+  return 'zh';
+}
 function setLang(lang) {
+  if (lang === currentLang) return;
   currentLang = lang;
   render();
+  try { history.pushState({ lang }, '', urlForLang(lang)); } catch (e) {}
 }
+// back/forward between / and /en re-renders without a reload
+window.addEventListener('popstate', () => {
+  const l = langFromUrl();
+  if (l !== currentLang) { currentLang = l; render(); }
+});
 
 // scroll reveal
 let _io = null;
@@ -2227,6 +2268,9 @@ function setupMobileMenu() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // pick language from the URL (/en or ?lang=en) and normalize the address to /en or /
+  currentLang = langFromUrl();
+  try { history.replaceState({ lang: currentLang }, '', urlForLang(currentLang) + location.hash); } catch (e) {}
   if (!location.hash) { window.scrollTo(0, 0); }
   render();
   initParticles();
