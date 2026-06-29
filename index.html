@@ -256,6 +256,9 @@
     #sticky-apply{padding:13px 22px;font-size:14px;}
     #site-header nav{padding:9px clamp(16px,4vw,22px)!important;}
     #site-header img{height:46px!important;}
+    /* hide the header logo over the hero; reveal once scrolled past it */
+    #hdr-logo{opacity:0;transform:translateY(-4px);pointer-events:none;transition:opacity .3s ease,transform .3s ease;}
+    #site-header.nav-solid #hdr-logo{opacity:1;transform:none;pointer-events:auto;}
     .about-gallery{grid-template-columns:repeat(2,1fr)!important;}
     .about-gallery .ag-wide{grid-column:span 2!important;}
     .about-gallery .ag-cell{grid-column:span 1!important;}
@@ -419,7 +422,7 @@
 <!-- STICKY NAV -->
 <header id="site-header">
   <nav style="max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(18px,4vw,40px);">
-    <a href="#top" style="display:inline-flex;align-items:center;text-decoration:none;">
+    <a href="#top" id="hdr-logo" style="display:inline-flex;align-items:center;text-decoration:none;">
       <img src="assets/logo-eye.png" alt="尋找台灣 2.0 #FindingTAIWAN 2.0" style="height:60px;width:auto;display:block;">
     </a>
     <div id="nav-desktop-items" style="display:flex;align-items:center;gap:clamp(12px,2vw,24px);flex-wrap:wrap;">
@@ -679,7 +682,7 @@
     <!-- bottom marquee -->
     <div class="hd-marquee"><span id="hero-scroll"></span></div>
   </div>
-<div id="mh" aria-label="#FindingTAIWAN 2.0" style="position: relative; width: 100%; max-width: 430px; margin: 0 auto; min-height: 100svh; overflow: hidden; display: flex; flex-direction: column; background: #1574e6 url('assets/kv-bg.png') center/cover no-repeat; font-family: 'Montserrat','Noto Sans TC',sans-serif;">
+<div id="mh" aria-label="#FindingTAIWAN 2.0" style="position: relative; width: 100%; max-width: 430px; margin: 0 auto; min-height: 100svh; overflow: hidden; background: #1574e6 url('assets/kv-bg.png') center/cover no-repeat; font-family: 'Montserrat','Noto Sans TC',sans-serif;">
                     <!-- ===== line-drawn EARTH slowly turning ===== -->
           <div aria-hidden="true" style="position: absolute; display:none; left: 50%; top: 52%; transform: translate(-50%,-50%); width: 580px; height: 580px; pointer-events: none; opacity: 0.85;">
             <svg viewBox="0 0 400 400" style="width: 100%; height: 100%; display: block; overflow: visible;">
@@ -883,7 +886,7 @@
           <img src="assets/kv-map.png" alt="" aria-hidden="true" style="position:absolute; left:50%; top:48%; transform:translate(-50%,-50%); height:70%; width:auto; max-width:150%; z-index:0; pointer-events:none; opacity:0.9; filter:drop-shadow(0 0 9px rgba(150,225,255,0.9)) brightness(1.5); -webkit-mask-image:linear-gradient(105deg,transparent 40%,#000 50%,transparent 60%); mask-image:linear-gradient(105deg,transparent 40%,#000 50%,transparent 60%); -webkit-mask-size:260% 100%; mask-size:260% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; animation: mapFloat 16s ease-in-out infinite, mapSweep 5.5s ease-in-out infinite;">
 
           <!-- ===== copy block: white tagline + green banner ===== -->
-          <div style="position: relative; z-index: 4; padding-top: 62px;">
+          <div style="position: relative; z-index: 4; padding-top: calc(env(safe-area-inset-top, 0px) + 96px);">
             <!-- top tagline row -->
             
             <!-- v2-style heading: eyebrow chip + 3-line title -->
@@ -1010,7 +1013,7 @@
             <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin:0 0 12px; font-family:'Noto Sans TC'; font-weight:600; font-size:12px; color:rgba(255,255,255,0.9); text-shadow:0 1px 6px rgba(0,0,0,0.3);"><span style="width:7px;height:7px;border-radius:50%;background:#ff5c7a;box-shadow:0 0 8px rgba(255,92,122,0.8);flex:none;"></span><span id="mh-deadline">報名期間：2026/7/1–8/31</span></div>
             <div style="display: flex; gap: 9px;">
               <a id="mh-cta" href="https://forms.gle/JoRh9FvzBjhm4SkSA" target="_blank" rel="noopener" style="position: relative; flex: 1; text-decoration: none; text-align: center; font-family: 'Noto Sans TC'; font-weight: 800; font-size: 14.5px; padding: 16px 0; background: linear-gradient(180deg,#5af2a4 0%,#38e58c 50%,#22c97a 100%); color: #0d3b80; border-radius: 999px; box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset, 0 8px 28px rgba(56,229,140,0.45), 0 0 30px rgba(56,229,140,0.4);">立即報名 →</a>
-              <a href="活動簡章.pdf" download="FindingTAIWAN2.0_活動簡章.pdf" style="flex: none; text-decoration: none; text-align: center; font-family: 'Noto Sans TC'; font-weight: 800; font-size: 14.5px; padding: 16px 20px; background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.7); color: #fff; border-radius: 999px;">下載簡章</a>
+              <a href="https://drive.google.com/drive/folders/10ZA3p4uWKFSUD_RmB8p4mZPMovVyj4JR?usp=sharing" target="_blank" rel="noopener noreferrer" style="flex: none; text-decoration: none; text-align: center; font-family: 'Noto Sans TC'; font-weight: 800; font-size: 14.5px; padding: 16px 20px; background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.7); color: #fff; border-radius: 999px;">下載簡章</a>
               
             </div>
           </div>
@@ -1145,7 +1148,7 @@
         <div id="brochure-btn-text" style="font-family:'Noto Sans TC';font-weight:900;font-size:18px;color:#fff;"></div>
         <div id="brochure-note" style="font-family:'Noto Sans TC';font-size:13px;color:rgba(255,255,255,0.65);margin-top:4px;"></div>
       </div>
-      <a id="brochure-link" href="活動簡章.pdf" download="FindingTAIWAN2.0_活動簡章.pdf" style="text-decoration:none;font-family:'Noto Sans TC';font-weight:700;font-size:15px;padding:13px 28px;background:#38e58c;color:#0d3b80;border-radius:999px;white-space:nowrap;"></a>
+      <a id="brochure-link" href="https://drive.google.com/drive/folders/10ZA3p4uWKFSUD_RmB8p4mZPMovVyj4JR?usp=sharing" target="_blank" rel="noopener noreferrer" style="text-decoration:none;font-family:'Noto Sans TC';font-weight:700;font-size:15px;padding:13px 28px;background:#38e58c;color:#0d3b80;border-radius:999px;white-space:nowrap;"></a>
     </div>
   </div>
 </section>
@@ -1269,7 +1272,7 @@
       <div style="display:flex;flex-direction:column;gap:11px;">
         <a class="foot-link" id="foot-site" href="https://www.mofa.gov.tw/" target="_blank" rel="noopener"></a>
         <a class="foot-link" id="foot-fb" href="https://www.facebook.com/Taiwan.MOFA" target="_blank" rel="noopener"></a>
-        <a class="foot-link" id="foot-brochure" href="活動簡章.pdf" download="FindingTAIWAN2.0_活動簡章.pdf"></a>
+        <a class="foot-link" id="foot-brochure" href="https://drive.google.com/drive/folders/10ZA3p4uWKFSUD_RmB8p4mZPMovVyj4JR?usp=sharing" target="_blank" rel="noopener noreferrer"></a>
       </div>
     </div>
   </div>
