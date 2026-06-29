@@ -335,6 +335,8 @@
   #hero-desktop .hd-glow{position:absolute;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(86,165,255,1) 0%,rgba(40,112,235,0.7) 42%,rgba(24,78,200,0) 74%);mix-blend-mode:plus-lighter;opacity:0.25;animation:kvshine 4.6s ease-in-out infinite;}
   @keyframes kvshine{0%,100%{opacity:0.28;}50%{opacity:1;}}
   #hero-desktop .hd-card{position:absolute;aspect-ratio:9/16;border-radius:13px;border:2px solid rgba(255,255,255,0.88);box-shadow:0 18px 36px rgba(0,0,0,0.34);overflow:hidden;}
+  /* TEMP: desktop hero reel cards hidden pending redesign — delete this rule to restore */
+  #hero-desktop .hd-card{display:none !important;}
   #hero-desktop .hd-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
   #hero-desktop .hd-card-grad{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,0.4));}
   #hero-desktop .hd-card-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.95);display:flex;align-items:center;justify-content:center;}
@@ -1201,7 +1203,7 @@
         <p id="win-body" style="font-family:'Noto Sans TC';font-size:16px;line-height:1.85;color:#5a6a82;margin:0;"></p>
       </div>
       <a id="win-btn" href="https://www.instagram.com/mofa_taiwan/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-family:'Noto Sans TC';font-weight:700;font-size:15px;padding:14px 28px;background:linear-gradient(135deg,#f58529 0%,#dd2a7b 45%,#8134af 80%,#515bd4 100%);color:#fff;border-radius:999px;white-space:nowrap;">
-        <span style="font-family:'Montserrat';font-weight:800;letter-spacing:0.04em;">IG</span><span id="win-btn-text"></span> ↗
+        <span id="win-btn-text"></span> ↗
       </a>
     </div>
     <div id="winners-grid" style="margin-top:clamp(30px,4vw,48px);"></div>
@@ -1280,6 +1282,10 @@
   <div style="position:relative;max-width:1180px;margin:clamp(32px,4vw,44px) auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,0.15);display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;justify-content:space-between;font-family:'Noto Sans TC';font-size:12.5px;color:rgba(255,255,255,0.6);">
     <span>© 2026 <span id="foot-rights"></span>　All rights reserved.</span>
     <span id="foot-note" style="color:rgba(255,255,255,0.5);"></span>
+  </div>
+  <!-- contact email — sits at the very bottom of the page -->
+  <div style="position:relative;max-width:1180px;margin:14px auto 0;font-family:'Noto Sans TC';font-size:12.5px;color:rgba(255,255,255,0.7);">
+    <span id="foot-contact-label"></span> <a href="mailto:admin@trillion-one.com" style="color:#aaffd6;text-decoration:none;">admin@trillion-one.com</a>
   </div>
 </footer>
 
@@ -1407,9 +1413,10 @@ const C = {
     newsItems: [
       { date: '2026.06.30', tag: '預計上線 · MOFA 新聞稿', title: '外交部推出「#FindingTAIWAN_2.0：Where We Connect」全球徵片競賽 邀請全球創作者用影像述說台灣與世界的連結' }
     ],
-    showTag: '參賽作品 / Video Showcase', showTitle: '本屆精彩作品', showBody: '徵件期間將開放瀏覽參賽作品。',
+    showTag: '參賽作品 / Video Showcase', showTitle: '本屆報名作品', showBody: '徵件期間將開放瀏覽參賽作品。',
     footTagline: '以影像述說台灣，讓世界看見。',
     footRights: '中華民國外交部 Ministry of Foreign Affairs, Taiwan (R.O.C.)',
+    footContactLabel: '聯絡方式：',
     footOrg: '主辦單位 · 中華民國外交部',
     footLinksTitle: '網站導覽',
     footOfficialTitle: '官方資源',
@@ -1443,7 +1450,7 @@ const C = {
     }
   },
   en: {
-    nav: ['About','Participate','Timeline','Awards','Panorama','Winners','News'],
+    nav: ['About','Participate','Timeline','Awards','Special','Winners','News'],
     apply: 'Apply Now',
     brochure: 'Download Brochure',
     heroKicker: 'Tell your Taiwan story through your lens!',
@@ -1527,6 +1534,7 @@ const C = {
     showTag: '2026 Entries', showTitle: '2026 Entries', showBody: 'Submitted entries will be available for viewing during the call.',
     footTagline: 'Telling Taiwan\'s story to the world, through film.',
     footRights: 'Ministry of Foreign Affairs, Taiwan',
+    footContactLabel: 'Contact Email:',
     footOrg: 'Organized by the Ministry of Foreign Affairs ROC (Taiwan)',
     footLinksTitle: 'Explore',
     footOfficialTitle: 'Official Resources',
@@ -1945,6 +1953,7 @@ function render() {
   // footer
   txt('foot-tagline', t.footTagline);
   txt('foot-rights', t.footRights);
+  txt('foot-contact-label', t.footContactLabel);
   txt('foot-org', t.footOrg);
   txt('foot-links-title', t.footLinksTitle);
   txt('foot-official-title', t.footOfficialTitle);
