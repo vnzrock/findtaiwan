@@ -886,7 +886,7 @@
           <img src="assets/kv-map.png" alt="" aria-hidden="true" style="position:absolute; left:50%; top:48%; transform:translate(-50%,-50%); height:70%; width:auto; max-width:150%; z-index:0; pointer-events:none; opacity:0.9; filter:drop-shadow(0 0 9px rgba(150,225,255,0.9)) brightness(1.5); -webkit-mask-image:linear-gradient(105deg,transparent 40%,#000 50%,transparent 60%); mask-image:linear-gradient(105deg,transparent 40%,#000 50%,transparent 60%); -webkit-mask-size:260% 100%; mask-size:260% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; animation: mapFloat 16s ease-in-out infinite, mapSweep 5.5s ease-in-out infinite;">
 
           <!-- ===== copy block: white tagline + green banner ===== -->
-          <div style="position: relative; z-index: 4; padding-top: calc(env(safe-area-inset-top, 0px) + 96px);">
+          <div style="position: relative; z-index: 4; padding-top: calc(env(safe-area-inset-top, 0px) + 58px);">
             <!-- top tagline row -->
             
             <!-- v2-style heading: eyebrow chip + 3-line title -->
@@ -906,9 +906,9 @@
           <!-- ===== event eye logo (brand mark) ===== -->
           
 
-          <!-- phone stage: grows to fill height; phone + cards stay centered -->
-          <div style="position: relative; z-index: 5; flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; padding: 14px 0;">
-            <div style="position: relative; width: 100%; display: flex; justify-content: center; flex: none;">
+          <!-- flexible gaps: shrink so the phone never overlaps the lockup, grow to fill tall screens -->
+          <div style="flex: 1 1 0; min-height: 10px;"></div>
+          <div style="position: relative; width: 100%; display: flex; justify-content: center; flex: none;">
             <div style="position: absolute; top: 32px; right: -4px; width: 78px; aspect-ratio: 9/16; border-radius: 12px; border: 2px solid rgba(255,255,255,0.85); box-shadow: 0 16px 32px rgba(0,0,0,0.32); animation: ad-driftB 8s ease-in-out infinite; overflow: hidden;">
               <img src="assets/img/photo-1621584728858-616080e4bd01-sm.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
               <span style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.4));"></span>
@@ -924,7 +924,7 @@
               <span style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.4));"></span>
               <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 16px; height: 16px; border-radius: 50%; background: rgba(255,255,255,0.95); display: flex; align-items: center; justify-content: center;"><span style="width: 0; height: 0; border-style: solid; border-width: 3px 0 3px 6px; border-color: transparent transparent transparent #ff9f43; margin-left: 1px;"></span></span>
             </div>
-              <div style="position: relative; z-index: 5; margin: 0; width: 200px; height: 356px; border-radius: 30px; background: #0d2747; padding: 6px; box-shadow: 0 28px 58px rgba(0,0,0,0.42), 0 0 0 4px rgba(255,255,255,0.08);">
+              <div style="position: relative; z-index: 5; margin: 0; width: 200px; height: 320px; border-radius: 30px; background: #0d2747; padding: 6px; box-shadow: 0 28px 58px rgba(0,0,0,0.42), 0 0 0 4px rgba(255,255,255,0.08);">
             <div style="position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 64px; height: 14px; background: #0d2747; border-radius: 0 0 9px 9px; z-index: 6;"></div>
 
             <div style="position: relative; width: 100%; height: 100%; border-radius: 24px; overflow: hidden; background: #000;">
@@ -1005,9 +1005,9 @@
             <div style="position: relative; z-index: 5; margin: 14px auto 0; text-align: center; padding: 0 18px;">
             <span id="mh-tagline" style="font-family: 'Noto Sans TC'; font-weight: 700; font-style: italic; font-size: 16px; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.22);">用鏡頭說出你和台灣的故事!</span>
           </div>
-          </div>
+          <div style="flex: 1 1 0; min-height: 10px;"></div>
 
-          <div style="position: relative; z-index: 5; margin: 24px auto 0; max-width: 360px; padding: 0 18px 40px;">
+          <div style="position: relative; z-index: 5; margin: 18px auto 0; max-width: 360px; padding: 0 18px 26px;">
             <!-- Total Prize ticket stub -->
             
             <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin:0 0 12px; font-family:'Noto Sans TC'; font-weight:600; font-size:12px; color:rgba(255,255,255,0.9); text-shadow:0 1px 6px rgba(0,0,0,0.3);"><span style="width:7px;height:7px;border-radius:50%;background:#ff5c7a;box-shadow:0 0 8px rgba(255,92,122,0.8);flex:none;"></span><span id="mh-deadline">報名期間：2026/7/1–8/31</span></div>
