@@ -15,7 +15,7 @@
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { margin: 0; background: #fff; font-family: 'Montserrat','Noto Sans TC',sans-serif; color: #0d2747; overflow-x: hidden; }
-  section { scroll-margin-top: 84px; }
+  section { scroll-margin-top: 96px; }
   ::selection { background: #38e58c; color: #0d3b80; }
 
   /* scroll reveal */
@@ -30,8 +30,6 @@
   }
 
   /* campaign video loader cover */
-  #campaign-poster.hide { opacity:0; pointer-events:none; }
-  @keyframes vidLoad { 0%,100%{opacity:.5;transform:scale(.97)} 50%{opacity:1;transform:scale(1.03)} }
 
   /* footer */
   .foot-h { font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:700; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:15px; }
@@ -107,22 +105,36 @@
 
   /* modern loading entry */
   html.intro-lock, html.intro-lock body { overflow:hidden !important; height:100%; overscroll-behavior:none; }
-  #cine-intro { position:fixed; inset:0; z-index:9999; pointer-events:none; background:radial-gradient(125% 90% at 50% 42%,#15264e 0%,#0b1430 55%,#070d1e 100%); animation:cineOut 0.8s cubic-bezier(.7,0,.2,1) 2.15s forwards; }
+  #cine-intro { position:fixed; inset:0; z-index:9999; pointer-events:none; background:radial-gradient(125% 90% at 50% 42%,#15264e 0%,#0b1430 55%,#070d1e 100%); animation:cineOut 0.7s cubic-bezier(.7,0,.2,1) 1.35s forwards; }
   #cine-intro .cine-stack { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(13px,2.4vw,20px); padding:0 24px; }
-  #cine-intro .cine-logo { width:clamp(104px,24vw,150px); height:auto; opacity:0; filter:drop-shadow(0 10px 30px rgba(0,0,0,0.45)); animation:cineLogo 1.7s cubic-bezier(.2,.7,.2,1) forwards; }
-  #cine-intro .cine-title { text-align:center; color:#fff; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:800; font-style:italic; letter-spacing:0.1em; font-size:clamp(19px,4.4vw,44px); opacity:0; animation:cineTitle 1.7s cubic-bezier(.2,.7,.2,1) .18s forwards; }
-  #cine-intro .cine-title b { color:#38e58c; }
+  #cine-intro .cine-logo { width:clamp(200px,46vw,360px); height:auto; opacity:0; filter:drop-shadow(0 10px 30px rgba(0,0,0,0.45)); animation:cineLogo 1.15s cubic-bezier(.2,.7,.2,1) forwards; }
   #cine-intro .cine-bar2 { margin-top:8px; width:120px; height:2px; border-radius:2px; background:rgba(255,255,255,0.16); overflow:hidden; opacity:0; animation:cineBarIn .4s ease .35s forwards; }
-  #cine-intro .cine-bar2::after { content:""; display:block; height:100%; width:100%; background:#38e58c; transform-origin:left; transform:scaleX(0); animation:cineBar 1.85s cubic-bezier(.45,0,.2,1) .4s forwards; }
+  #cine-intro .cine-bar2::after { content:""; display:block; height:100%; width:100%; background:#38e58c; transform-origin:left; transform:scaleX(0); animation:cineBar 1.15s cubic-bezier(.45,0,.2,1) .3s forwards; }
   @keyframes cineOut { to { opacity:0; transform:scale(1.05); visibility:hidden; } }
   @keyframes cineLogo { 0%{opacity:0;filter:blur(9px);transform:translateY(10px) scale(.9)} 38%{opacity:1;filter:blur(0);transform:none} 100%{opacity:1;filter:blur(0);transform:none} }
-  @keyframes cineTitle { 0%{opacity:0;transform:translateY(8px);letter-spacing:.26em} 50%{opacity:1;transform:none;letter-spacing:.1em} 100%{opacity:1;letter-spacing:.1em} }
   @keyframes cineBarIn { to { opacity:1; } }
   @keyframes cineBar { to { transform:scaleX(1); } }
 
   /* hero staggered entrance */
   .hero-anim { opacity:0; animation:heroIn 0.95s cubic-bezier(.2,.7,.2,1) forwards; animation-delay:var(--d,0s); }
   @keyframes heroIn { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:none} }
+  /* per-piece staggered entrance for the assembled key-visual lockup */
+  .kv-in { opacity:0; animation:kvPartIn 0.72s cubic-bezier(.2,.7,.2,1) forwards; animation-delay:var(--pd,0s); }
+  @keyframes kvPartIn { from{opacity:0;transform:translateY(20px) scale(.95)} to{opacity:1;transform:none} }
+  /* headline lockup holds back until the kicker finishes typing, then zooms in big -> normal (JS adds .kv-show).
+     pieces are shown statically so the whole lockup animates as one unit. */
+  #hero-desktop #hero-title { opacity:0; }
+  #hero-desktop #hero-title .kv-in { opacity:1; animation:none; transform:none; }
+  #hero-desktop.seq-in #hero-title { animation:kvZoomIn 0.74s cubic-bezier(.2,.7,.25,1) forwards; transform-origin:left center; }
+  @keyframes kvZoomIn { from{opacity:0;transform:scale(1.32)} to{opacity:1;transform:scale(1)} }
+  /* phone + drifting reel cards also hold back until the kicker finishes typing */
+  #hero-desktop .hd-phone-col { opacity:0; }
+  #hero-desktop.seq-in .hd-phone-col { animation:heroIn 0.95s cubic-bezier(.2,.7,.2,1) 0.12s both; }
+  /* cards enter with the SAME heroIn effect, at the SAME time as the phone, then hand off to the drift */
+  #hero-desktop .hd-card { opacity:0; }
+  #hero-desktop.seq-in .hd-card.drift-a { animation:heroIn 0.9s cubic-bezier(.2,.7,.2,1) 0.12s both, ad-driftA 8.5s ease-in-out infinite 1.0s; }
+  #hero-desktop.seq-in .hd-card.drift-b { animation:heroIn 0.9s cubic-bezier(.2,.7,.2,1) 0.12s both, ad-driftB 9s ease-in-out infinite 1.1s; }
+  #hero-desktop.seq-in .hd-card.drift-d { animation:heroIn 0.9s cubic-bezier(.2,.7,.2,1) 0.12s both, ad-driftD 9.5s ease-in-out infinite 1.2s; }
 
   /* sticky apply button */
   #sticky-apply { position:fixed; right:clamp(14px,3vw,30px); bottom:clamp(14px,3vw,30px); z-index:55; display:inline-flex; align-items:center; gap:9px; padding:14px 26px; background:#38e58c; color:#0d3b80; font-family:'Noto Sans TC',sans-serif; font-weight:900; font-size:15px; border-radius:999px; text-decoration:none; box-shadow:0 12px 34px rgba(56,229,140,0.5),0 4px 14px rgba(13,59,128,0.22); opacity:0; transform:translateY(22px) scale(0.9); pointer-events:none; transition:opacity .4s ease, transform .4s cubic-bezier(.34,1.56,.64,1); }
@@ -138,7 +150,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     #cine-intro { display:none !important; }
-    .hero-anim { opacity:1 !important; animation:none !important; }
+    .hero-anim, .kv-in, #hero-title, #hero-kicker, #hero-desktop .hd-phone-col, #hero-desktop .hd-card { opacity:1 !important; animation:none !important; transform:none !important; }
     #sticky-apply .sa-pulse::after { animation:none !important; }
     #sticky-apply::after { animation:none !important; }
     .win-track { animation:none !important; }
@@ -167,50 +179,6 @@
   /* Section headlines: a touch tighter so longer English titles hold together */
   html.lang-en h2 { letter-spacing: -0.01em !important; line-height: 1.1 !important; }
 
-  /* ===== Registration modal ===== */
-  #apply-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:flex-start; justify-content:center; padding:clamp(16px,5vh,56px) 16px; background:rgba(8,28,60,0.62); backdrop-filter:blur(6px); opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s ease; overflow-y:auto; }
-  #apply-modal.open { opacity:1; visibility:visible; }
-  .apply-dialog { position:relative; width:100%; max-width:560px; margin:auto; background:#fff; border-radius:22px; box-shadow:0 40px 90px rgba(6,22,52,0.45); padding:clamp(26px,4vw,40px); transform:translateY(24px) scale(0.97); opacity:0; transition:transform .38s cubic-bezier(.2,.8,.25,1), opacity .38s ease; }
-  #apply-modal.open .apply-dialog { transform:none; opacity:1; }
-  .apply-close { position:absolute; top:16px; right:16px; width:38px; height:38px; border:none; border-radius:50%; background:#eef3fb; color:#0d3b80; font-size:22px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s ease, transform .2s ease; }
-  .apply-close:hover { background:#dfe8f7; transform:rotate(90deg); }
-  .apply-eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:'Montserrat'; font-weight:700; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#1574e6; }
-  .apply-eyebrow::before { content:""; width:20px; height:2px; background:#38e58c; }
-  #apply-modal h2 { font-family:'Noto Sans TC'; font-weight:900; font-style:italic; font-size:clamp(24px,3.4vw,32px); color:#0d2747; margin:12px 0 6px; }
-  .apply-sub { font-family:'Noto Sans TC'; font-size:14px; line-height:1.6; color:#5a6a82; margin:0 0 22px; }
-  .field { margin-bottom:16px; }
-  .field > label { display:block; font-family:'Noto Sans TC'; font-weight:700; font-size:14px; color:#0d2747; margin-bottom:7px; }
-  .field .req { color:#FF5A4F; margin-left:2px; }
-  .field input, .field textarea { width:100%; padding:12px 14px; font-family:'Noto Sans TC',sans-serif; font-size:15px; color:#0d2747; background:#f7faff; border:1.5px solid #d9e3f2; border-radius:11px; outline:none; transition:border-color .18s ease, box-shadow .18s ease, background .18s ease; }
-  .field input::placeholder, .field textarea::placeholder { color:#9fb0c6; }
-  .field input:focus, .field textarea:focus { border-color:#1574e6; background:#fff; box-shadow:0 0 0 3px rgba(21,116,230,0.15); }
-  .field textarea { resize:vertical; min-height:96px; line-height:1.6; }
-  .field.invalid input, .field.invalid textarea { border-color:#FF5A4F; background:#fff5f4; }
-  .field.invalid input:focus, .field.invalid textarea:focus { box-shadow:0 0 0 3px rgba(255,90,79,0.18); }
-  .field-hint { font-family:'Noto Sans TC'; font-size:12.5px; color:#8a97aa; margin:6px 0 0; }
-  .field-err { display:none; font-family:'Noto Sans TC'; font-size:12.5px; font-weight:600; color:#e5443b; margin-top:6px; }
-  .field.invalid .field-err { display:block; }
-  .agree-row { display:flex; align-items:flex-start; gap:10px; margin:4px 0 6px; cursor:pointer; }
-  .agree-row input { width:18px; height:18px; margin-top:2px; flex:none; accent-color:#1574e6; cursor:pointer; }
-  .agree-row span { font-family:'Noto Sans TC'; font-size:13.5px; line-height:1.55; color:#5a6a82; }
-  #agree-field.invalid .agree-row span { color:#e5443b; }
-  .form-submit { width:100%; margin-top:14px; padding:15px 24px; border:none; border-radius:12px; background:#FF5A4F; color:#fff; font-family:'Noto Sans TC'; font-weight:900; font-size:16px; cursor:pointer; box-shadow:0 10px 26px rgba(255,90,79,0.42); transition:transform .2s ease, box-shadow .2s ease, opacity .2s ease; }
-  .form-submit:hover { transform:translateY(-2px); box-shadow:0 16px 34px rgba(255,90,79,0.5); }
-  .form-submit:disabled { opacity:0.7; cursor:default; transform:none; }
-  /* success state */
-  #apply-success { text-align:center; padding:14px 4px 6px; }
-  .success-logo { position:relative; width:96px; height:96px; margin:6px auto 16px; border-radius:50%; background:linear-gradient(150deg,#2f93f5,#0f63cf); display:flex; align-items:center; justify-content:center; box-shadow:0 16px 34px rgba(15,99,207,0.34); }
-  .success-logo img { width:58px; height:auto; display:block; }
-  .success-badge { position:absolute; right:-3px; bottom:-3px; width:36px; height:36px; border-radius:50%; background:#38e58c; border:3px solid #fff; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(25,181,106,0.4); }
-  .success-badge svg { width:18px; height:18px; }
-  .success-badge path { fill:none; stroke:#0d3b80; stroke-width:6; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:48; stroke-dashoffset:48; }
-  #apply-modal.open .success-badge path { animation:checkDraw .5s ease .28s forwards; }
-  @keyframes checkDraw { to { stroke-dashoffset:0; } }
-  .success-wordmark { display:block; font-family:'Noto Sans TC'; font-weight:900; font-size:15px; color:#0d3b80; margin-bottom:6px; }
-  .success-wordmark b { font-family:'Montserrat'; font-weight:700; font-size:11px; letter-spacing:0.06em; color:#1574e6; }
-  #apply-success h2 { margin-top:0; }
-  .success-body { font-family:'Noto Sans TC'; font-size:15px; line-height:1.7; color:#5a6a82; margin:0 auto 24px; max-width:380px; }
-
   /* awards photo collage backdrop */
   #awards-collage { grid-template-rows:repeat(2,1fr); }
   #awards-collage img { width:100%; height:100%; object-fit:cover; display:block; }
@@ -225,52 +193,27 @@
   .award-card.feat .aw-m { color:#dba000; }
   .award-card.feat .aw-r::after { content:"★"; color:#FFC400; margin-left:8px; font-size:17px; vertical-align:1px; }
 
-  /* rules — clean readable text card */
-  .rules-card { background:#fff; border-radius:20px; padding:clamp(22px,4vw,40px); box-shadow:0 30px 64px rgba(8,30,80,0.30); margin-top:clamp(28px,4vw,40px); }
-  .rule-row { display:grid; grid-template-columns:148px 1fr; gap:20px; padding:18px 0; border-top:1px solid #eef1f6; }
-  .rule-row:first-child { border-top:0; padding-top:4px; }
-  .rule-k { font-family:'Noto Sans TC','Montserrat',sans-serif; font-weight:900; font-size:16px; color:#0d3b80; }
-  .rule-v { font-family:'Noto Sans TC',sans-serif; font-size:15.5px; line-height:1.95; color:#3a4a63; }
-  @media (max-width:600px) {
-    .rule-row { grid-template-columns:1fr; gap:6px; padding:15px 0; }
-    .rule-k { font-size:15px; }
-    .rule-v { font-size:15px; line-height:1.9; }
-  }
-
-  /* awards — premium prize cards on deep navy */
-  .awards-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(14px,1.6vw,20px); }
-  .award-card { position:relative; background:linear-gradient(165deg,rgba(255,255,255,0.10),rgba(255,255,255,0.04)); border:1px solid rgba(255,255,255,0.14); border-radius:18px; padding:clamp(22px,2.4vw,30px) clamp(18px,2vw,24px); display:flex; flex-direction:column; gap:8px; overflow:hidden; transition:transform 0.32s cubic-bezier(0.34,1.4,0.64,1), border-color 0.32s ease, box-shadow 0.32s ease; }
-  .award-card:hover { transform:translateY(-6px); border-color:rgba(255,214,0,0.5); box-shadow:0 22px 48px rgba(0,0,0,0.34); }
-  .award-card.is-top { background:linear-gradient(165deg,rgba(255,214,0,0.18),rgba(255,214,0,0.05)); border-color:rgba(255,214,0,0.55); }
-  .award-card .ac-rank { position:absolute; top:14px; right:16px; font-family:'Montserrat',sans-serif; font-weight:800; font-size:34px; line-height:1; color:rgba(255,255,255,0.08); }
-  .award-card.is-top .ac-rank { color:rgba(255,214,0,0.22); }
-  .award-card .ac-place { font-family:'Noto Sans TC','Montserrat',sans-serif; font-weight:900; font-size:clamp(17px,1.9vw,20px); color:#fff; }
-  .award-card .ac-count { display:inline-flex; align-self:flex-start; font-family:'Noto Sans TC',sans-serif; font-weight:700; font-size:12px; letter-spacing:0.02em; color:#0d2747; background:#FFD600; padding:3px 11px; border-radius:999px; }
-  .award-card.is-top .ac-count { background:#FFD600; }
-  .award-card .ac-amount { margin-top:auto; padding-top:6px; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:800; font-size:clamp(19px,2.2vw,24px); color:#FFD600; letter-spacing:-0.01em; }
-  .awards-special { margin-top:clamp(20px,2.6vw,28px); background:rgba(255,255,255,0.05); border:1px dashed rgba(255,255,255,0.22); border-radius:18px; padding:clamp(22px,3vw,32px); }
+  /* awards — clean prize list on deep navy */
+  .awards-list { display:flex; flex-direction:column; gap:12px; }
+  .award-srow.is-top { border-color:rgba(255,214,0,0.5); background:rgba(255,214,0,0.10); }
+  .award-srow.is-top .as-place { font-size:19px; }
+  .award-srow.is-top .as-amount { font-size:clamp(18px,2vw,23px); }
+  .awards-special { margin-top:clamp(20px,2.6vw,28px); background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.14); border-radius:18px; padding:clamp(22px,3vw,32px); }
   .awards-special-head { display:flex; align-items:center; gap:12px; margin-bottom:clamp(16px,2.2vw,22px); }
   .awards-special-badge { display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:50%; background:#FFD600; color:#0d2747; font-size:18px; line-height:1; flex:none; }
   .awards-special-head h3 { font-family:'Noto Sans TC',sans-serif; font-weight:900; font-style:italic; font-size:clamp(20px,2.6vw,28px); color:#fff; margin:0; }
-  .awards-special-intro { font-family:'Noto Sans TC',sans-serif; font-weight:700; font-size:clamp(15px,1.7vw,17px); line-height:1.7; color:#FFD600; margin:0 0 10px; }
-  .awards-special-desc { font-family:'Noto Sans TC',sans-serif; font-size:14.5px; line-height:1.9; color:rgba(255,255,255,0.78); margin:0 0 clamp(18px,2.2vw,24px); max-width:760px; }
   .awards-special-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(12px,1.4vw,18px); }
   .awards-special-link { display:inline-flex; align-items:center; gap:6px; margin-top:clamp(16px,2vw,22px); font-family:'Noto Sans TC',sans-serif; font-weight:700; font-size:14px; color:#0d2747; background:#FFD600; padding:11px 22px; border-radius:999px; text-decoration:none; transition:transform .25s ease, box-shadow .25s ease; }
   .awards-special-link:hover { transform:translateY(-2px); box-shadow:0 12px 26px rgba(255,214,0,0.28); }
-  .award-srow { display:flex; align-items:center; justify-content:space-between; gap:10px; background:rgba(13,39,71,0.5); border:1px solid rgba(255,255,255,0.1); border-radius:13px; padding:14px 18px; }
+  .award-srow { display:flex; align-items:center; justify-content:space-between; gap:12px; background:rgba(13,39,71,0.5); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:18px 22px; transition:transform .3s cubic-bezier(.2,.7,.2,1), border-color .3s ease, background .3s ease; }
+  .award-srow:hover { transform:translateX(4px); border-color:rgba(255,255,255,0.22); }
   .award-srow .as-left { display:flex; flex-direction:column; gap:5px; }
-  .award-srow .as-place { font-family:'Noto Sans TC',sans-serif; font-weight:900; font-size:16px; color:#fff; }
+  .award-srow .as-place { font-family:'Noto Sans TC',sans-serif; font-weight:900; font-size:17px; color:#fff; }
   .award-srow .as-count { font-family:'Noto Sans TC',sans-serif; font-size:12px; color:rgba(255,255,255,0.6); }
-  .award-srow .as-amount { font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:800; font-size:clamp(15px,1.7vw,18px); color:#FFD600; white-space:nowrap; }
+  .award-srow .as-amount { font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:800; font-size:clamp(16px,1.8vw,19px); color:#FFD600; white-space:nowrap; }
   @media (max-width:880px) {
-    .awards-grid { grid-template-columns:repeat(2,1fr); }
     .awards-special-grid { grid-template-columns:1fr; }
     .award-srow { padding:13px 16px; }
-  }
-  @media (max-width:480px) {
-    .awards-grid { grid-template-columns:1fr; }
-    .award-card { flex-direction:row; align-items:center; justify-content:space-between; flex-wrap:wrap; }
-    .award-card .ac-amount { margin-top:0; padding-top:0; }
   }
 
   /* 2025 winners — slow auto-scrolling reel, pauses on hover / touch */
@@ -281,8 +224,10 @@
 
 
   /* === fixed transparent header === */
-  #site-header{position:fixed;top:0;left:0;right:0;z-index:50;background:transparent;transition:background .35s ease,box-shadow .35s ease;}
-  #site-header.nav-solid{background:rgba(21,116,230,0.96);backdrop-filter:blur(8px);box-shadow:0 2px 18px rgba(13,59,128,0.18);}
+  /* header scrolls away with the hero, then sticks (fixed) only after the hero */
+  #site-header{position:absolute;top:0;left:0;right:0;z-index:50;background:transparent;transition:background .35s ease,box-shadow .35s ease;}
+  #site-header.nav-solid{position:fixed;background:rgba(21,116,230,0.96);backdrop-filter:blur(8px);box-shadow:0 2px 18px rgba(13,59,128,0.18);animation:navDrop .42s cubic-bezier(.2,.7,.2,1);}
+  @keyframes navDrop{from{transform:translateY(-100%)}to{transform:translateY(0)}}
   #nav-burger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;border:none;background:transparent;cursor:pointer;padding:0;border-radius:10px;transition:background .2s;}
   #nav-burger:hover{background:rgba(255,255,255,0.1);}
   #nav-burger span{display:block;width:22px;height:2.5px;background:#fff;border-radius:2px;transition:transform .28s ease,opacity .28s ease;transform-origin:center;}
@@ -303,13 +248,14 @@
     #top{min-height:100svh;padding:0!important;overflow:hidden;}
     #hero-mobile-cards{display:none!important;}
     #hero-filmstrip{display:none!important;}
-    section{scroll-margin-top:66px;}
+    section{scroll-margin-top:80px;}
     #stats-grid{display:none!important;}
-    #video{padding-left:0!important;padding-right:0!important;}
     /* each step reveals on its own as it scrolls in (drop the grid stagger that made it flash by) */
     .step-card{transition-delay:0s!important;transition-duration:1s,.7s,.32s!important;}
     /* labelled green pill on mobile, slightly more compact */
     #sticky-apply{padding:13px 22px;font-size:14px;}
+    #site-header nav{padding:9px clamp(16px,4vw,22px)!important;}
+    #site-header img{height:46px!important;}
     .about-gallery{grid-template-columns:repeat(2,1fr)!important;}
     .about-gallery .ag-wide{grid-column:span 2!important;}
     .about-gallery .ag-cell{grid-column:span 1!important;}
@@ -317,8 +263,6 @@
 
   /* === Mobile Hero AD — phone cycler, drifting reel cards, turning globe === */
   /* (hidden by default; enabled on phones / touch via media queries below)   */
-  #mh{display:none;}
-
   /* drifting background reel cards */
   @keyframes ad-driftA { 0%,100% { transform: translate(0,0) rotate(-6deg); } 50% { transform: translate(8px,-22px) rotate(-3deg); } }
   @keyframes ad-driftB { 0%,100% { transform: translate(0,0) rotate(7deg); } 50% { transform: translate(-10px,-30px) rotate(4deg); } }
@@ -326,9 +270,6 @@
   @keyframes ad-driftD { 0%,100% { transform: translate(0,0) rotate(5deg); } 50% { transform: translate(10px,-24px) rotate(8deg); } }
   @keyframes ad-driftE { 0%,100% { transform: translate(0,0) rotate(-4deg); } 50% { transform: translate(5px,-16px) rotate(-2deg); } }
   @keyframes ad-pulse  { 0%,100% { box-shadow: 0 0 0 0 rgba(56,229,140,0.55); } 60% { box-shadow: 0 0 0 12px rgba(56,229,140,0); } }
-  /* composited pulse ring for the mobile CTA (cheaper than animating box-shadow) */
-  #mh-cta::after { content:""; position:absolute; inset:0; border-radius:999px; border:2px solid rgba(56,229,140,0.55); opacity:0; animation:mhRing 2.6s ease-out infinite; pointer-events:none; }
-  @keyframes mhRing { 0%{transform:scale(1);opacity:.5} 70%,100%{transform:scale(1.13);opacity:0} }
   @keyframes ad-rise   { 0% { transform: translateY(100%); opacity: 0; } 12%,88% { opacity: 0.55; } 100% { transform: translateY(-180%); opacity: 0; } }
   @keyframes ad-globe  { from { transform: translateX(0); } to { transform: translateX(-400px); } }
 
@@ -347,7 +288,12 @@
   @keyframes ad-progress { 0% { width: 0; } 100% { width: 100%; } }
   @keyframes ad-heart  { 0%,100% { transform: scale(1); } 40% { transform: scale(1.28); } }
   @keyframes ad-blink  { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+  /* mobile hero: faint Taiwan map drift + scanning glow sweep */
+  @keyframes mapFloat { 0%,100%{transform:translate(-50%,-50%)} 50%{transform:translate(-50%,-53%)} }
+  @keyframes mapSweep { 0%{-webkit-mask-position:135% 0;mask-position:135% 0;} 100%{-webkit-mask-position:-35% 0;mask-position:-35% 0;} }
 
+  /* the dedicated mobile hero (#mh) is hidden by default; shown on phones / touch below */
+  #mh{display:none;}
   @media (prefers-reduced-motion: reduce) {
     #mh *, #mh *::before, #mh *::after { animation: none !important; transition: none !important; }
   }
@@ -356,22 +302,35 @@
 
   /* ── show the mobile hero / hide the desktop hero on phones & touch ── */
   @media(max-width:768px){
-    #mh{display:block!important;}
+    #mh{display:flex!important;flex-direction:column;}
     #hero-desktop,#hero-particles{display:none!important;}
   }
   @media(pointer:coarse){
-    #mh{display:block!important;}
+    #mh{display:flex!important;flex-direction:column;}
     #hero-desktop,#hero-particles{display:none!important;}
   }
 
   /* === Desktop Hero (handoff: Desktop Hero AD) — phone cycler, turning globe, drifting reels === */
-  #hero-desktop{position:relative;min-height:100vh;overflow:hidden;background:linear-gradient(160deg,#2f93f5 0%,#1574e6 55%,#0f63cf 100%);}
-  #hero-desktop .hd-grid{position:absolute;inset:0;z-index:1;pointer-events:none;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.05) 0 1px,transparent 1px 72px),repeating-linear-gradient(90deg,rgba(255,255,255,0.05) 0 1px,transparent 1px 72px);}
+  #hero-desktop{position:relative;min-height:100vh;overflow:hidden;background:#1574e6 url('assets/kv-bg.png') center/100% 100% no-repeat;}
   #hero-desktop .hd-deco{position:absolute;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:1240px;height:100%;padding:0 clamp(28px,5vw,64px);pointer-events:none;z-index:2;}
-  #hero-desktop .hd-globe{position:absolute;top:50%;right:-40px;transform:translateY(-50%);width:clamp(540px,52vw,860px);aspect-ratio:1;opacity:0.62;}
-  #hero-desktop .hd-globe svg{width:100%;height:100%;display:block;overflow:visible;}
-  #hero-desktop .hd-circuit{position:absolute;top:108px;left:clamp(28px,5vw,64px);width:200px;height:128px;opacity:0.45;}
-  #hero-desktop .hd-circuit svg{width:100%;height:100%;display:block;}
+  #hero-desktop .hd-globe{display:none;}
+  /* dotted Taiwan key-visual map (left) + flowing lines (bottom) */
+  #hero-desktop .hd-lines-wrap{position:absolute;left:0;right:0;bottom:clamp(60px,13vh,150px);width:100%;z-index:1;pointer-events:none;line-height:0;overflow:hidden;}
+  /* the lines + sparkles drift together slowly like a wave */
+  #hero-desktop .hd-lines-move{position:relative;display:block;width:110%;margin-left:-5%;line-height:0;animation:kvWave 19s ease-in-out infinite;}
+  #hero-desktop .hd-lines{display:block;width:100%;height:auto;opacity:0.8;}
+  @keyframes kvWave{0%,100%{transform:translate(-2.5%,0)}50%{transform:translate(2.5%,-7px)}}
+  /* twinkling sparkle dots — brief slow flash, only ~2 lit at a time */
+  #hero-desktop .hd-twinkle{position:absolute;width:clamp(24px,2.6vw,46px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(205,238,255,0.95) 0%,rgba(120,200,255,0.5) 36%,rgba(90,170,255,0) 70%);mix-blend-mode:plus-lighter;opacity:0;animation:kvtwinkle 8s ease-in-out infinite;}
+  @keyframes kvtwinkle{0%,82%,100%{opacity:0;transform:translate(-50%,-50%) scale(0.6)}8%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}20%{opacity:0;transform:translate(-50%,-50%) scale(0.65)}}
+  /* map sits right next to the lockup, like the KV (eye overlaps the map edge) */
+  #hero-desktop .hd-kv-lockup{display:flex;align-items:center;}
+  /* map height = ~1.72x lockup height, matching the KV proportions (lockup width 44vw / ratio 3.05 x 1.72 = ~25vw) */
+  #hero-desktop .hd-kv-map-wrap{position:relative;flex:none;line-height:0;margin-right:clamp(-22px,-1.3vw,-8px);}
+  #hero-desktop .hd-kv-map{display:block;height:clamp(200px,28vw,370px);width:auto;opacity:0.92;filter:drop-shadow(0 0 26px rgba(130,215,255,0.22));}
+  /* slow shining glow points on the map's KV glow spots — each on its own timing */
+  #hero-desktop .hd-glow{position:absolute;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(86,165,255,1) 0%,rgba(40,112,235,0.7) 42%,rgba(24,78,200,0) 74%);mix-blend-mode:plus-lighter;opacity:0.25;animation:kvshine 4.6s ease-in-out infinite;}
+  @keyframes kvshine{0%,100%{opacity:0.28;}50%{opacity:1;}}
   #hero-desktop .hd-card{position:absolute;aspect-ratio:9/16;border-radius:13px;border:2px solid rgba(255,255,255,0.88);box-shadow:0 18px 36px rgba(0,0,0,0.34);overflow:hidden;}
   #hero-desktop .hd-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
   #hero-desktop .hd-card-grad{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,0.4));}
@@ -381,16 +340,40 @@
   #hero-desktop .hd-dot{position:absolute;border-radius:50%;background:rgba(255,255,255,0.3);}
 
   #hero-desktop .hd-inner{position:relative;z-index:10;max-width:1240px;margin:0 auto;min-height:100vh;display:flex;align-items:center;justify-content:space-between;gap:clamp(28px,4vw,64px);padding:clamp(96px,12vh,128px) clamp(28px,5vw,64px) clamp(70px,9vh,92px);}
-  #hero-desktop .hd-copy{flex:1 1 520px;max-width:660px;}
-  #hero-desktop .hd-stub{display:inline-block;background:#38e58c;color:#0d3b80;font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(13px,1.3vw,15px);padding:9px 32px 9px 20px;clip-path:polygon(0 0,100% 0,calc(100% - 14px) 100%,0 100%);box-shadow:0 8px 20px rgba(0,0,0,0.18);}
+  #hero-desktop .hd-copy{flex:1 1 520px;max-width:920px;}
+  #hero-desktop .hd-stub{display:inline-block;background:#38e58c;color:#0d3b80;font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(17px,2.1vw,24px);padding:12px 44px 12px 26px;clip-path:polygon(0 0,100% 0,calc(100% - 18px) 100%,0 100%);box-shadow:0 8px 20px rgba(0,0,0,0.18);min-height:1em;}
+  #hero-desktop .hd-stub .hk-caret{display:inline-block;width:3px;height:1.05em;margin-left:3px;background:#0d3b80;vertical-align:-0.14em;animation:hkBlink 0.7s step-end infinite;}
+  @keyframes hkBlink{0%,100%{opacity:1}50%{opacity:0}}
+  /* kicker: hidden until typing starts; types out centred, then slides home (JS-driven) */
+  #hero-desktop #hero-kicker{opacity:0;transition:opacity .4s ease;}
+  #hero-desktop #hero-kicker.kicker-shown{opacity:1;}
+  #hero-desktop #hero-kicker.kicker-center{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);margin:0;z-index:20;white-space:nowrap;}
   #hero-desktop .hd-title{font-family:'Noto Sans TC',sans-serif;font-weight:900;font-style:italic;font-size:clamp(52px,6.2vw,92px);line-height:1.0;color:#fff;margin:20px 0 0;letter-spacing:-0.01em;text-shadow:0 4px 14px rgba(0,0,0,0.22);}
   #hero-desktop .hd-title .ht-20{display:inline-block;font-family:'Montserrat';font-style:italic;font-weight:900;font-size:0.74em;color:#38e58c;margin-left:0.12em;transform:translateY(-0.14em);}
   #hero-desktop .hd-title .ht-tag{font-family:'Noto Sans TC';font-style:italic;font-weight:900;font-size:0.82em;color:#38e58c;letter-spacing:0.005em;}
   #hero-desktop .hd-title .ht-l3{font-size:0.68em;}
+  /* new campaign key visual (lockup) replacing the text headline */
+  #hero-desktop .hd-title{margin:clamp(36px,4vw,58px) 0 0;}
+  /* assembled lockup from individual pieces (aspect 1210/445), each positioned + animated in */
+  #hero-desktop .hd-lock{position:relative;flex:0 1 auto;width:clamp(360px,50vw,640px);max-width:100%;aspect-ratio:1210/445;filter:drop-shadow(0 8px 26px rgba(0,0,0,0.30));}
+  #hero-desktop .hd-lp{position:absolute;display:block;height:auto;}
+  #hero-desktop .hd-lp-word{left:6.2%;top:0;width:92.6%;}
+  #hero-desktop .hd-lp-eye{left:0;top:34.2%;width:37.6%;}
+  #hero-desktop .hd-lp-sub{left:7.4%;top:88.1%;width:23.7%;}
+  #hero-desktop .hd-lp-arc{left:43.7%;top:40.5%;width:54.1%;height:9.4%;}
+  #hero-desktop .hd-lp-wwc{left:41.7%;top:51.2%;width:58%;}
+  #hero-desktop .hd-lp-cn{left:42.2%;top:71%;width:46.2%;}
+  #hero-desktop .hd-lp-en{left:42.4%;top:90.8%;width:45.3%;}
+  /* KV shining dot on the "2" of 2.0 */
+  #hero-desktop .hd-dot-2{position:absolute;left:89.5%;top:15%;width:14%;aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;z-index:6;mix-blend-mode:screen;animation:hdDot2 3.6s ease-in-out infinite;}
+  @keyframes hdDot2{0%,100%{opacity:0.55;transform:translate(-50%,-50%) scale(0.85);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.12);}}
   #hero-desktop .hd-tagline{margin-top:22px;font-family:'Noto Sans TC';font-weight:700;font-style:italic;font-size:clamp(16px,1.5vw,22px);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.28);}
-  #hero-desktop .hd-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:clamp(26px,3vw,36px);}
+  #hero-desktop .hd-cta{display:flex;gap:16px;flex-wrap:wrap;margin-top:clamp(44px,5vw,66px);}
   #hero-desktop .hd-apply{display:inline-flex;align-items:center;gap:10px;padding:17px 38px;background:linear-gradient(180deg,#5af2a4 0%,#38e58c 50%,#22c97a 100%);color:#0d3b80;font-family:'Noto Sans TC';font-weight:900;font-size:17px;border-radius:999px;text-decoration:none;box-shadow:0 0 0 1px rgba(255,255,255,0.5) inset,0 12px 32px rgba(56,229,140,0.45),0 0 40px rgba(56,229,140,0.35);animation:ad-pulse 2.6s ease-out infinite;transition:transform .2s;}
   #hero-desktop .hd-apply:hover{transform:translateY(-2px);}
+  #hero-desktop .hd-brochure{display:inline-flex;align-items:center;gap:9px;padding:16px 32px;background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.7);color:#fff;font-family:'Noto Sans TC';font-weight:800;font-size:17px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);transition:transform .2s,background .2s;}
+  #hero-desktop .hd-brochure:hover{transform:translateY(-2px);background:rgba(255,255,255,0.2);}
+  #hero-desktop .hd-deadline{margin-top:clamp(22px,2.4vw,32px);font-family:'Noto Sans TC';font-weight:600;font-size:13px;letter-spacing:0.01em;color:rgba(255,255,255,0.86);text-shadow:0 1px 6px rgba(0,0,0,0.3);}
   #hero-desktop .hd-prize{display:inline-flex;align-items:stretch;margin-top:clamp(30px,3.2vw,40px);background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.22);border-radius:16px;backdrop-filter:blur(6px);overflow:hidden;max-width:100%;}
   #hero-desktop .hd-prize-total{padding:15px 24px;display:flex;flex-direction:column;justify-content:center;}
   #hero-desktop #hero-prize-total{font-family:'Noto Sans TC';font-weight:900;font-size:clamp(18px,2vw,24px);color:#38e58c;line-height:1.2;}
@@ -425,8 +408,7 @@
 <!-- cinematic intro -->
 <div id="cine-intro" aria-hidden="true">
   <div class="cine-stack">
-    <img class="cine-logo" src="assets/logo.png" alt="">
-    <div class="cine-title">尋找台灣 2.0 <b>#FindingTAIWAN</b></div>
+    <img class="cine-logo" src="assets/logo-eye.png" alt="尋找台灣 2.0 #FindingTAIWAN 2.0">
     <div class="cine-bar2"></div>
   </div>
 </div>
@@ -437,13 +419,12 @@
 <!-- STICKY NAV -->
 <header id="site-header">
   <nav style="max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(18px,4vw,40px);">
-    <a href="#top" style="display:inline-flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;">
-      <img src="assets/logo.png" alt="尋找台灣 2.0 #FindingTAIWAN" style="height:38px;width:auto;display:block;">
-      <span style="font-family:'Montserrat';font-weight:800;font-size:11px;letter-spacing:0.12em;color:#fff;white-space:nowrap;">#FindingTAIWAN</span>
+    <a href="#top" style="display:inline-flex;align-items:center;text-decoration:none;">
+      <img src="assets/logo-eye.png" alt="尋找台灣 2.0 #FindingTAIWAN 2.0" style="height:60px;width:auto;display:block;">
     </a>
     <div id="nav-desktop-items" style="display:flex;align-items:center;gap:clamp(12px,2vw,24px);flex-wrap:wrap;">
       <div id="nav-links" style="display:contents;"></div>
-      <a id="nav-apply" href="#participate" onclick="openApplyModal(event)" style="text-decoration:none;padding:9px 20px;background:#FF5A4F;color:#fff;border-radius:999px;font-family:'Noto Sans TC';font-weight:700;font-size:14px;box-shadow:0 4px 16px rgba(255,90,79,0.45);"></a>
+      <a id="nav-apply" href="https://forms.gle/JoRh9FvzBjhm4SkSA" target="_blank" rel="noopener" style="text-decoration:none;padding:9px 20px;background:#FF5A4F;color:#fff;border-radius:999px;font-family:'Noto Sans TC';font-weight:700;font-size:14px;box-shadow:0 4px 16px rgba(255,90,79,0.45);"></a>
     </div>
     <div style="display:flex;align-items:center;gap:10px;">
       <div style="display:flex;align-items:center;border:1.5px solid rgba(255,255,255,0.45);border-radius:999px;padding:2px;">
@@ -457,18 +438,31 @@
 <!-- mobile fullscreen menu -->
 <div id="nav-mobile-menu" role="dialog" aria-modal="true" aria-label="選單">
   <div id="nav-mobile-links"></div>
-  <a class="nm-apply-btn" href="#participate" id="nm-apply" onclick="openApplyModal(event);closeMobileMenu();"></a>
+  <a class="nm-apply-btn" href="https://forms.gle/JoRh9FvzBjhm4SkSA" target="_blank" rel="noopener" id="nm-apply" onclick="closeMobileMenu()"></a>
 </div>
 
 <!-- HERO -->
-<section id="top" style="position:relative;background:linear-gradient(135deg,#2f93f5 0%,#1574e6 60%,#0f63cf 100%);overflow:hidden;">
+<section id="top" style="position:relative;background:#1574e6 url('assets/kv-bg.png') center/100% 100% no-repeat;overflow:hidden;">
 
   <!-- ===== DESKTOP HERO (handoff: Desktop Hero AD — phone cycler, turning globe, drifting reels) ===== -->
   <div id="hero-desktop">
     <canvas id="hero-particles" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></canvas>
 
     <!-- grid backdrop -->
-    <div class="hd-grid" aria-hidden="true"></div>
+
+    <!-- flowing lines + twinkling sparkle dots (bottom) -->
+    <span class="hd-lines-wrap" aria-hidden="true">
+      <span class="hd-lines-move">
+        <img class="hd-lines" src="assets/kv-lines.png?v=3" alt="">
+        <i class="hd-twinkle" style="left:19.9%;top:78.9%;animation-duration:8s;animation-delay:0s;"></i>
+        <i class="hd-twinkle" style="left:81.1%;top:56.8%;animation-duration:8s;animation-delay:1.15s;"></i>
+        <i class="hd-twinkle" style="left:46%;top:76.1%;animation-duration:8s;animation-delay:2.3s;"></i>
+        <i class="hd-twinkle" style="left:72.8%;top:17.1%;animation-duration:8s;animation-delay:3.45s;"></i>
+        <i class="hd-twinkle" style="left:28%;top:75.6%;animation-duration:8s;animation-delay:4.6s;"></i>
+        <i class="hd-twinkle" style="left:14.4%;top:59%;animation-duration:8s;animation-delay:5.75s;"></i>
+        <i class="hd-twinkle" style="left:37.1%;top:62.3%;animation-duration:8s;animation-delay:6.9s;"></i>
+      </span>
+    </span>
 
     <!-- centered decoration layer: globe / circuit / drifting cards / dust -->
     <div class="hd-deco" aria-hidden="true">
@@ -534,56 +528,22 @@
         </svg>
       </div>
 
-      <!-- circuit pattern, upper-left -->
-      <div class="hd-circuit">
-        <svg viewBox="0 0 220 140">
-          <g stroke="#aaffd6" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M0 22 L28 22 L28 46 L70 46"></path>
-            <path d="M70 46 L70 20 L112 20"></path>
-            <path d="M70 46 L70 78"></path>
-            <path d="M70 78 L34 78 L34 100 L0 100"></path>
-            <path d="M70 78 L114 78 L114 54 L150 54"></path>
-            <path d="M114 54 L114 20"></path>
-            <path d="M150 54 L150 90 L196 90"></path>
-            <path d="M150 54 L180 54 L180 14"></path>
-            <path d="M0 122 L52 122 L52 102"></path>
-            <path d="M126 116 L162 116 L162 132"></path>
-          </g>
-          <g fill="#aaffd6">
-            <circle cx="28" cy="22" r="2.4"></circle><circle cx="70" cy="46" r="3"></circle><circle cx="70" cy="78" r="2.4"></circle><circle cx="114" cy="54" r="2.4"></circle><circle cx="150" cy="54" r="3"></circle><circle cx="180" cy="14" r="2.4"></circle><circle cx="52" cy="102" r="2.4"></circle><circle cx="126" cy="116" r="2.4"></circle><circle cx="196" cy="90" r="2.4"></circle>
-          </g>
-          <g fill="none" stroke="#aaffd6" stroke-width="1">
-            <rect x="100" y="92" width="20" height="20" rx="2"></rect>
-            <rect x="184" y="32" width="14" height="14" rx="1.5"></rect>
-          </g>
-        </svg>
-      </div>
 
-      <!-- drifting Taiwan reel cards (decorative) -->
-      <div class="hd-card" style="top:96px;right:40px;width:110px;animation:ad-driftA 8s ease-in-out infinite;z-index:5;">
+      <!-- drifting Taiwan reel cards (decorative) — cascade off the phone's right edge -->
+      <div class="hd-card drift-a" style="top:calc(50% - 205px);right:-80px;width:72px;z-index:11;">
         <img src="assets/img/photo-1621584728858-616080e4bd01-sm.jpg" alt="">
         <span class="hd-card-grad"></span>
-        <span class="hd-card-play" style="animation:ad-pulse 2.4s ease-out infinite;"><span style="border-width:5px 0 5px 9px;border-color:transparent transparent transparent #ff5c7a;"></span></span>
+        <span class="hd-card-play" style="animation:ad-pulse 2.4s ease-out infinite;"><span style="border-width:4px 0 4px 7px;border-color:transparent transparent transparent #ff5c7a;"></span></span>
       </div>
-      <div class="hd-card" style="top:250px;right:-6px;width:86px;animation:ad-driftB 9s ease-in-out infinite 0.5s;z-index:4;">
+      <div class="hd-card drift-b" style="top:calc(50% - 22px);right:-96px;width:84px;z-index:11;">
         <img src="assets/img/photo-1583395201959-d2de287f8045-sm.jpg" alt="">
         <span class="hd-card-grad"></span>
         <span class="hd-card-play"><span style="border-width:4px 0 4px 7px;border-color:transparent transparent transparent #1aa15c;"></span></span>
       </div>
-      <div class="hd-card" style="top:404px;right:104px;width:74px;opacity:0.78;animation:ad-driftC 10s ease-in-out infinite 1s;z-index:3;">
-        <img src="assets/img/photo-1530324652194-d78318776d5c-sm.jpg" alt="">
-        <span class="hd-card-grad"></span>
-        <span class="hd-card-play"><span style="border-width:3px 0 3px 5px;border-color:transparent transparent transparent #7a5cff;"></span></span>
-      </div>
-      <div class="hd-card" style="bottom:104px;right:34px;width:96px;animation:ad-driftD 7.5s ease-in-out infinite 0.8s;z-index:5;">
-        <img src="assets/img/photo-1526682847805-721837c3f83b-sm.jpg" alt="">
-        <span class="hd-card-grad"></span>
-        <span class="hd-card-play"><span style="border-width:4px 0 4px 7px;border-color:transparent transparent transparent #ff9f43;"></span></span>
-      </div>
-      <div class="hd-card" style="bottom:138px;right:-10px;width:64px;opacity:0.74;animation:ad-driftE 9.5s ease-in-out infinite 1.4s;z-index:3;">
+      <div class="hd-card drift-d" style="top:calc(50% + 160px);right:-78px;width:66px;z-index:11;">
         <img src="assets/img/photo-1571474004502-c1def214ac6d-sm.jpg" alt="">
         <span class="hd-card-grad"></span>
-        <span class="hd-card-play"><span style="border-width:3px 0 3px 5px;border-color:transparent transparent transparent #1aa15c;"></span></span>
+        <span class="hd-card-play"><span style="border-width:3px 0 3px 5px;border-color:transparent transparent transparent #7a5cff;"></span></span>
       </div>
 
       <!-- floating dust motes + corner dots -->
@@ -602,26 +562,38 @@
 
       <!-- LEFT: copy block -->
       <div class="hd-copy">
-        <div id="hero-kicker" class="hd-stub hero-anim" style="--d:0.95s;"></div>
-        <h1 id="hero-title" class="hd-title hero-anim" style="--d:1.05s;"></h1>
-        <div id="hero-tagline" class="hd-tagline hero-anim" style="--d:1.15s;"></div>
-        <div class="hd-cta hero-anim" style="--d:1.25s;">
-          <a id="hero-apply" href="#participate" onclick="openApplyModal(event)" class="hd-apply"></a>
+        <div id="hero-kicker" class="hd-stub"></div>
+        <h1 id="hero-title" class="hd-title" aria-label="#FindingTAIWAN 2.0 — Where We Connect 全球徵片競賽 International Short Film Competition">
+          <span class="hd-kv-lockup">
+            <span class="hd-kv-map-wrap kv-in" style="--pd:2.3s;">
+              <img class="hd-kv-map" src="assets/kv-map.png?v=7" alt="" aria-hidden="true">
+              <i class="hd-glow" style="left:30.5%;top:47%;width:24%;animation-duration:4.4s;animation-delay:0s;"></i>
+              <i class="hd-glow" style="left:66.8%;top:67.5%;width:21%;animation-duration:5.6s;animation-delay:1.3s;"></i>
+              <i class="hd-glow" style="left:71.8%;top:19.6%;width:18%;animation-duration:5.0s;animation-delay:2.4s;"></i>
+              <i class="hd-glow" style="left:34%;top:83.7%;width:16%;animation-duration:6.3s;animation-delay:0.8s;"></i>
+              <i class="hd-glow" style="left:58%;top:24%;width:15%;animation-duration:5.3s;animation-delay:3.2s;"></i>
+            </span>
+            <span class="hd-lock" aria-hidden="true">
+              <img class="hd-lp hd-lp-word kv-in" src="assets/kv-word.png" alt="" style="--pd:2.55s;">
+              <img class="hd-lp hd-lp-eye  kv-in" src="assets/kv-eye.png"  alt="" style="--pd:2.7s;">
+              <img class="hd-lp hd-lp-sub  kv-in" src="assets/kv-eyesub.png" alt="" style="--pd:2.82s;">
+              <img class="hd-lp hd-lp-arc  kv-in" src="assets/kv-arc.png"  alt="" style="--pd:2.9s;">
+              <img class="hd-lp hd-lp-wwc  kv-in" src="assets/kv-wwc.png"  alt="" style="--pd:3.0s;">
+              <img class="hd-lp hd-lp-cn   kv-in" src="assets/kv-cn.png"   alt="" style="--pd:3.12s;">
+              <img class="hd-lp hd-lp-en   kv-in" src="assets/kv-en.png"   alt="" style="--pd:3.24s;">
+              <img class="hd-dot-2" src="assets/dot.png" alt="" aria-hidden="true">
+            </span>
+          </span>
+        </h1>
+        <div class="hd-cta hero-anim" style="--d:3.4s;">
+          <a id="hero-apply" href="https://forms.gle/JoRh9FvzBjhm4SkSA" target="_blank" rel="noopener" class="hd-apply"></a>
+          <a id="hero-brochure" href="https://drive.google.com/drive/folders/10ZA3p4uWKFSUD_RmB8p4mZPMovVyj4JR" target="_blank" rel="noopener noreferrer" class="hd-brochure"></a>
         </div>
-        <div class="hd-prize hero-anim" style="--d:1.38s;">
-          <div class="hd-prize-total"><span id="hero-prize-total"></span></div>
-          <span class="hd-prize-div"></span>
-          <div class="hd-prize-sub"><span id="hero-prize-sub"></span></div>
-        </div>
-        <div class="hd-live hero-anim" style="--d:1.5s;">
-          <span class="hd-live-dot"></span>
-          <span class="hd-live-label">LIVE</span>
-          <span id="hero-live"></span>
-        </div>
+        <div id="hero-deadline" class="hd-deadline hero-anim" style="--d:3.55s;"></div>
       </div>
 
       <!-- RIGHT: phone with cycling reels -->
-      <div class="hd-phone-col hero-anim" style="--d:0.85s;">
+      <div class="hd-phone-col">
         <div class="hd-phone">
           <div class="hd-notch"></div>
           <div class="hd-screen">
@@ -700,11 +672,6 @@
           </div>
         </div>
 
-        <!-- live submissions label under phone -->
-        <div class="hd-phone-label">
-          <span class="hd-live-dot" style="background:#38e58c;box-shadow:0 0 6px rgba(56,229,140,0.8);"></span>
-          <span id="hero-phone-label"></span>
-        </div>
       </div>
 
     </div>
@@ -712,9 +679,9 @@
     <!-- bottom marquee -->
     <div class="hd-marquee"><span id="hero-scroll"></span></div>
   </div>
-<div id="mh" aria-label="#FindingTAIWAN 2.0" style="position: relative; width: 100%; max-width: 430px; margin: 0 auto; min-height: 100svh; overflow: hidden; background: linear-gradient(160deg,#2f93f5 0%,#1574e6 55%,#0f63cf 100%); font-family: 'Montserrat','Noto Sans TC',sans-serif;">
+<div id="mh" aria-label="#FindingTAIWAN 2.0" style="position: relative; width: 100%; max-width: 430px; margin: 0 auto; min-height: 100svh; overflow: hidden; display: flex; flex-direction: column; background: #1574e6 url('assets/kv-bg.png') center/cover no-repeat; font-family: 'Montserrat','Noto Sans TC',sans-serif;">
                     <!-- ===== line-drawn EARTH slowly turning ===== -->
-          <div aria-hidden="true" style="position: absolute; left: 50%; top: 52%; transform: translate(-50%,-50%); width: 580px; height: 580px; pointer-events: none; opacity: 0.85;">
+          <div aria-hidden="true" style="position: absolute; display:none; left: 50%; top: 52%; transform: translate(-50%,-50%); width: 580px; height: 580px; pointer-events: none; opacity: 0.85;">
             <svg viewBox="0 0 400 400" style="width: 100%; height: 100%; display: block; overflow: visible;">
               <defs>
                 <clipPath id="ad-globe-clip"><circle cx="200" cy="200" r="180"></circle></clipPath>
@@ -843,7 +810,7 @@
           </div>
 
           <!-- ===== decorative circuit pattern (top-left) ===== -->
-          <div aria-hidden="true" style="position: absolute; top: 22px; left: 0; width: 150px; height: 96px; pointer-events: none; z-index: 2; opacity: 0.55;">
+          <div aria-hidden="true" style="position: absolute; display:none; top: 22px; left: 0; width: 150px; height: 96px; pointer-events: none; z-index: 2; opacity: 0.55;">
             <svg viewBox="0 0 150 96" style="width: 100%; height: 100%; display: block;">
               <g stroke="#aaffd6" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M0 16 L18 16 L18 32 L46 32"></path>
@@ -879,48 +846,41 @@
           <div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; z-index: 1;">
             <!-- (Card 0 removed — it was overlapping the title.) -->
 
-            <!-- top-right medium (Taipei sunset highrise) -->
-            <div style="position: absolute; top: 232px; right: -4px; width: 78px; aspect-ratio: 9/16; border-radius: 12px; border: 2px solid rgba(255,255,255,0.85); box-shadow: 0 16px 32px rgba(0,0,0,0.32); animation: ad-driftB 8s ease-in-out infinite; overflow: hidden;">
-              <img src="assets/img/photo-1621584728858-616080e4bd01-sm.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
-              <span style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.4));"></span>
-              <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 18px; height: 18px; border-radius: 50%; background: rgba(255,255,255,0.95); display: flex; align-items: center; justify-content: center; animation: ad-pulse 2.4s ease-out infinite;"><span style="width: 0; height: 0; border-style: solid; border-width: 4px 0 4px 7px; border-color: transparent transparent transparent #ff5c7a; margin-left: 2px;"></span></span>
-            </div>
+            
 
-            <!-- mid-left small (green Taiwan) -->
-            <div style="position: absolute; top: 348px; left: -8px; width: 64px; aspect-ratio: 9/16; border-radius: 10px; border: 2px solid rgba(255,255,255,0.85); box-shadow: 0 12px 26px rgba(0,0,0,0.26); animation: ad-driftC 9s ease-in-out infinite; overflow: hidden;">
-              <img src="assets/img/photo-1583395201959-d2de287f8045-sm.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
-              <span style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.35));"></span>
-              <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 14px; height: 14px; border-radius: 50%; background: rgba(255,255,255,0.92); display: flex; align-items: center; justify-content: center;"><span style="width: 0; height: 0; border-style: solid; border-width: 3px 0 3px 5px; border-color: transparent transparent transparent #1aa15c; margin-left: 1px;"></span></span>
-            </div>
+            
 
-            <!-- mid-right medium (yellow train) -->
-            <div style="position: absolute; top: 388px; right: -10px; width: 68px; aspect-ratio: 9/16; border-radius: 10px; border: 2px solid rgba(255,255,255,0.85); box-shadow: 0 12px 26px rgba(0,0,0,0.26); animation: ad-driftD 7.5s ease-in-out infinite; overflow: hidden;">
-              <img src="assets/img/photo-1526682847805-721837c3f83b-sm.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
-              <span style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.4));"></span>
-              <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 16px; height: 16px; border-radius: 50%; background: rgba(255,255,255,0.95); display: flex; align-items: center; justify-content: center;"><span style="width: 0; height: 0; border-style: solid; border-width: 3px 0 3px 6px; border-color: transparent transparent transparent #ff9f43; margin-left: 1px;"></span></span>
-            </div>
+            
 
             <!-- bottom-left small (motorcycle street) -->
-            <div style="position: absolute; top: 490px; left: 4px; width: 54px; aspect-ratio: 9/16; border-radius: 9px; border: 1.5px solid rgba(255,255,255,0.55); box-shadow: 0 8px 18px rgba(0,0,0,0.25); opacity: 0.78; animation: ad-driftE 10s ease-in-out infinite; overflow: hidden;">
+            <div style="position: absolute; display:none; top: 490px; left: 4px; width: 54px; aspect-ratio: 9/16; border-radius: 9px; border: 1.5px solid rgba(255,255,255,0.55); box-shadow: 0 8px 18px rgba(0,0,0,0.25); opacity: 0.78; animation: ad-driftE 10s ease-in-out infinite; overflow: hidden;">
               <img src="assets/img/photo-1530324652194-d78318776d5c-sm.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
               <span style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.35));"></span>
               <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.88); display: flex; align-items: center; justify-content: center;"><span style="width: 0; height: 0; border-style: solid; border-width: 3px 0 3px 4px; border-color: transparent transparent transparent #7a5cff; margin-left: 1px;"></span></span>
             </div>
 
             <!-- bottom-right tiny (blue orange building) -->
-            <div style="position: absolute; top: 522px; right: 8px; width: 50px; aspect-ratio: 9/16; border-radius: 9px; border: 1.5px solid rgba(255,255,255,0.55); box-shadow: 0 8px 18px rgba(0,0,0,0.25); opacity: 0.78; animation: ad-driftA 8.5s ease-in-out infinite 0.4s; overflow: hidden;">
+            <div style="position: absolute; display:none; top: 522px; right: 8px; width: 50px; aspect-ratio: 9/16; border-radius: 9px; border: 1.5px solid rgba(255,255,255,0.55); box-shadow: 0 8px 18px rgba(0,0,0,0.25); opacity: 0.78; animation: ad-driftA 8.5s ease-in-out infinite 0.4s; overflow: hidden;">
               <img src="assets/img/photo-1571474004502-c1def214ac6d-sm.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
               <span style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.35));"></span>
               <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.88); display: flex; align-items: center; justify-content: center;"><span style="width: 0; height: 0; border-style: solid; border-width: 2.5px 0 2.5px 4px; border-color: transparent transparent transparent #1aa15c; margin-left: 1px;"></span></span>
             </div>
 
             <!-- floating dust motes rising -->
-            <span style="position: absolute; left: 72px; top: 380px; width: 6px; height: 6px; border-radius: 50%; background: #38e58c; animation: ad-rise 6s linear infinite;"></span>
+            <span style="position: absolute; left: 72px; top: 380px; width: 5px; height: 5px; border-radius: 50%; background: #38e58c; opacity:0.6; animation: ad-rise 8s linear infinite;"></span>
             <span style="position: absolute; right: 96px; top: 460px; width: 4px; height: 4px; border-radius: 50%; background: #38e58c; opacity: 0.55; animation: ad-rise 7.5s linear infinite 1.2s;"></span>
             <span style="position: absolute; left: 180px; top: 540px; width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.6); animation: ad-rise 8s linear infinite 0.6s;"></span>
-            <span style="position: absolute; left: 130px; top: 420px; width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.5); animation: ad-rise 9s linear infinite 2s;"></span>
-            <span style="position: absolute; right: 60px; top: 500px; width: 5px; height: 5px; border-radius: 50%; background: #38e58c; opacity: 0.5; animation: ad-rise 7s linear infinite 3.4s;"></span>
+            <span style="position: absolute; display:none; left: 130px; top: 420px; width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.5); animation: ad-rise 9s linear infinite 2s;"></span>
+            <span style="position: absolute; display:none; right: 60px; top: 500px; width: 5px; height: 5px; border-radius: 50%; background: #38e58c; opacity: 0.5; animation: ad-rise 7s linear infinite 3.4s;"></span>
           </div>
+
+          <!-- desktop-style flowing wave lines at the base -->
+          <span aria-hidden="true" style="position:absolute; left:0; right:0; bottom:0; z-index:1; line-height:0; pointer-events:none;"><img src="assets/kv-lines.png?v=3" alt="" style="display:block; width:118%; margin-left:-9%; height:auto; opacity:0.7;"></span>
+
+          <!-- large faint Taiwan map, sits at the very back -->
+          <img src="assets/kv-map.png" alt="" aria-hidden="true" style="position:absolute; left:50%; top:48%; transform:translate(-50%,-50%); height:70%; width:auto; max-width:150%; opacity:0.22; z-index:0; pointer-events:none; animation: mapFloat 16s ease-in-out infinite;">
+          <!-- scanning glow that lights up the Taiwan dots -->
+          <img src="assets/kv-map.png" alt="" aria-hidden="true" style="position:absolute; left:50%; top:48%; transform:translate(-50%,-50%); height:70%; width:auto; max-width:150%; z-index:0; pointer-events:none; opacity:0.9; filter:drop-shadow(0 0 9px rgba(150,225,255,0.9)) brightness(1.5); -webkit-mask-image:linear-gradient(105deg,transparent 40%,#000 50%,transparent 60%); mask-image:linear-gradient(105deg,transparent 40%,#000 50%,transparent 60%); -webkit-mask-size:260% 100%; mask-size:260% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; animation: mapFloat 16s ease-in-out infinite, mapSweep 5.5s ease-in-out infinite;">
 
           <!-- ===== copy block: white tagline + green banner ===== -->
           <div style="position: relative; z-index: 4; padding-top: 62px;">
@@ -934,17 +894,34 @@
                 
                 
               </span>
-            </div><div style="padding: 16px 22px 0; position: relative">
-              <div id="mh-chip" style="display: inline-block; background: #38e58c; color: #0d3b80; font-family: 'Noto Sans TC'; font-weight: 900; font-style: italic; font-size: 11px; padding: 6px 22px 6px 14px; clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%); box-shadow: 0 4px 10px rgba(0,0,0,0.12);">報名 7/1–8/31</div>
-              <h1 id="mh-title" style="font-family: 'Noto Serif TC','Noto Sans TC'; font-weight: 900; font-style: italic; font-size: 30px; line-height: 1.1; color: #fff; margin: 12px 0 0; letter-spacing: 0; text-shadow: 0 3px 10px rgba(0,0,0,0.28); position: relative">尋找台灣 2.0<br><span style="color:#38e58c; font-family:'Montserrat'; font-style: italic; font-weight: 900; font-size: 22px; letter-spacing: 0.01em;">#FindingTAIWAN</span><br>全球徵片競賽</h1>
+            </div><div style="padding: 16px 22px 0; position: relative; text-align: center;">
+              <div id="mh-chip" style="display: none; background: #38e58c; color: #0d3b80; font-family: 'Noto Sans TC'; font-weight: 900; font-style: italic; font-size: 12.5px; padding: 7px 18px; border-radius: 999px; box-shadow: 0 6px 16px rgba(0,0,0,0.18);">報名 7/1–8/31</div>
+              <h1 id="mh-title" style="margin: 0; position: relative"><img src="assets/kv-lockup.png" alt="#FindingTAIWAN 2.0 — Where We Connect 全球徵片競賽 International Short Film Competition" style="display:block; width: 100%; max-width: 340px; height: auto; margin: 0 auto; filter: drop-shadow(0 4px 14px rgba(0,0,0,0.30));"></h1>
             </div>
           </div>
 
           <!-- ===== event eye logo (brand mark) ===== -->
           
 
-          <!-- ===== inner phone (D centerpiece) ===== -->
-          <div style="position: relative; z-index: 5; margin: 12px auto 0; width: 200px; height: 356px; border-radius: 30px; background: #0d2747; padding: 6px; box-shadow: 0 28px 58px rgba(0,0,0,0.42), 0 0 0 4px rgba(255,255,255,0.08);">
+          <!-- phone stage: grows to fill height; phone + cards stay centered -->
+          <div style="position: relative; z-index: 5; flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; padding: 14px 0;">
+            <div style="position: relative; width: 100%; display: flex; justify-content: center; flex: none;">
+            <div style="position: absolute; top: 32px; right: -4px; width: 78px; aspect-ratio: 9/16; border-radius: 12px; border: 2px solid rgba(255,255,255,0.85); box-shadow: 0 16px 32px rgba(0,0,0,0.32); animation: ad-driftB 8s ease-in-out infinite; overflow: hidden;">
+              <img src="assets/img/photo-1621584728858-616080e4bd01-sm.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+              <span style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.4));"></span>
+              <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 18px; height: 18px; border-radius: 50%; background: rgba(255,255,255,0.95); display: flex; align-items: center; justify-content: center; animation: ad-pulse 2.4s ease-out infinite;"><span style="width: 0; height: 0; border-style: solid; border-width: 4px 0 4px 7px; border-color: transparent transparent transparent #ff5c7a; margin-left: 2px;"></span></span>
+            </div>
+            <div style="position: absolute; top: 148px; left: -8px; width: 64px; aspect-ratio: 9/16; border-radius: 10px; border: 2px solid rgba(255,255,255,0.85); box-shadow: 0 12px 26px rgba(0,0,0,0.26); animation: ad-driftC 9s ease-in-out infinite; overflow: hidden;">
+              <img src="assets/img/photo-1583395201959-d2de287f8045-sm.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+              <span style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.35));"></span>
+              <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 14px; height: 14px; border-radius: 50%; background: rgba(255,255,255,0.92); display: flex; align-items: center; justify-content: center;"><span style="width: 0; height: 0; border-style: solid; border-width: 3px 0 3px 5px; border-color: transparent transparent transparent #1aa15c; margin-left: 1px;"></span></span>
+            </div>
+            <div style="position: absolute; top: 188px; right: -10px; width: 68px; aspect-ratio: 9/16; border-radius: 10px; border: 2px solid rgba(255,255,255,0.85); box-shadow: 0 12px 26px rgba(0,0,0,0.26); animation: ad-driftD 7.5s ease-in-out infinite; overflow: hidden;">
+              <img src="assets/img/photo-1526682847805-721837c3f83b-sm.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+              <span style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.4));"></span>
+              <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 16px; height: 16px; border-radius: 50%; background: rgba(255,255,255,0.95); display: flex; align-items: center; justify-content: center;"><span style="width: 0; height: 0; border-style: solid; border-width: 3px 0 3px 6px; border-color: transparent transparent transparent #ff9f43; margin-left: 1px;"></span></span>
+            </div>
+              <div style="position: relative; z-index: 5; margin: 0; width: 200px; height: 356px; border-radius: 30px; background: #0d2747; padding: 6px; box-shadow: 0 28px 58px rgba(0,0,0,0.42), 0 0 0 4px rgba(255,255,255,0.08);">
             <div style="position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 64px; height: 14px; background: #0d2747; border-radius: 0 0 9px 9px; z-index: 6;"></div>
 
             <div style="position: relative; width: 100%; height: 100%; border-radius: 24px; overflow: hidden; background: #000;">
@@ -1021,18 +998,19 @@
               </span>
             </div>
           </div>
-
-          <!-- handwritten tagline, sits directly beneath the phone -->
-          <div style="position: relative; z-index: 5; margin: 14px auto 0; text-align: center; padding: 0 18px;">
+            </div>
+            <div style="position: relative; z-index: 5; margin: 14px auto 0; text-align: center; padding: 0 18px;">
             <span id="mh-tagline" style="font-family: 'Noto Sans TC'; font-weight: 700; font-style: italic; font-size: 16px; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.22);">用鏡頭說出你和台灣的故事!</span>
           </div>
+          </div>
 
-          <!-- ===== bottom prize chip + CTAs (pinned) ===== -->
-          <div style="position: absolute; z-index: 5; left: 18px; right: 18px; bottom: 24px;">
+          <div style="position: relative; z-index: 5; margin: 24px auto 0; max-width: 360px; padding: 0 18px 40px;">
             <!-- Total Prize ticket stub -->
             
+            <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin:0 0 12px; font-family:'Noto Sans TC'; font-weight:600; font-size:12px; color:rgba(255,255,255,0.9); text-shadow:0 1px 6px rgba(0,0,0,0.3);"><span style="width:7px;height:7px;border-radius:50%;background:#ff5c7a;box-shadow:0 0 8px rgba(255,92,122,0.8);flex:none;"></span><span id="mh-deadline">報名期間：2026/7/1–8/31</span></div>
             <div style="display: flex; gap: 9px;">
-              <a id="mh-cta" href="#participate" onclick="openApplyModal(event)" style="position: relative; flex: 1; text-decoration: none; text-align: center; font-family: 'Noto Sans TC'; font-weight: 800; font-size: 14.5px; padding: 16px 0; background: linear-gradient(180deg,#5af2a4 0%,#38e58c 50%,#22c97a 100%); color: #0d3b80; border-radius: 999px; box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset, 0 8px 28px rgba(56,229,140,0.45), 0 0 30px rgba(56,229,140,0.4);">立即報名 →</a>
+              <a id="mh-cta" href="https://forms.gle/JoRh9FvzBjhm4SkSA" target="_blank" rel="noopener" style="position: relative; flex: 1; text-decoration: none; text-align: center; font-family: 'Noto Sans TC'; font-weight: 800; font-size: 14.5px; padding: 16px 0; background: linear-gradient(180deg,#5af2a4 0%,#38e58c 50%,#22c97a 100%); color: #0d3b80; border-radius: 999px; box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset, 0 8px 28px rgba(56,229,140,0.45), 0 0 30px rgba(56,229,140,0.4);">立即報名 →</a>
+              <a href="活動簡章.pdf" download="FindingTAIWAN2.0_活動簡章.pdf" style="flex: none; text-decoration: none; text-align: center; font-family: 'Noto Sans TC'; font-weight: 800; font-size: 14.5px; padding: 16px 20px; background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.7); color: #fff; border-radius: 999px;">下載簡章</a>
               
             </div>
           </div>
@@ -1041,7 +1019,7 @@
 </section>
 
 <!-- 1. ABOUT -->
-<section id="about" style="background:#fff;padding:clamp(56px,8vw,104px) clamp(18px,4vw,40px);position:relative;overflow:hidden;">
+<section id="about" style="background:#fff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);position:relative;overflow:hidden;">
   <!-- soft Taiwan tone wash in the background corner -->
   <div aria-hidden="true" style="position:absolute;top:-120px;right:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(56,229,140,0.12),transparent 70%);"></div>
   <div style="max-width:1180px;margin:0 auto;position:relative;">
@@ -1067,8 +1045,91 @@
   </div>
 </section>
 
+<!-- 4b. 光華特別獎 — Taiwan Panorama 50th Anniversary Prize (imported from Claude Design: 光華特別獎 Section v2) -->
+<style>
+  @keyframes gh-strip { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes gh-arrow { 0%,100% { transform: translateX(0); } 50% { transform: translateX(7px); } }
+  @keyframes gh-blink { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+  @keyframes gh-seal { 0%,100% { transform: rotate(-7deg); } 50% { transform: rotate(-3deg); } }
+  #guanghua .gh-reel-track { animation: gh-strip 64s linear infinite; }
+  #guanghua .gh-reel-band:hover .gh-reel-track { animation-play-state: paused; }
+  #guanghua .gh-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(56,229,140,0.45); }
+  #guanghua .gh-cta-secondary:hover { background: rgba(21,116,230,0.08); }
+  #guanghua .gh-cell img { transition: filter .4s ease; }
+  #guanghua .gh-cell:hover img { filter: sepia(0.12) contrast(1.04) brightness(1) saturate(0.95); }
+  @media (max-width: 720px) {
+    #guanghua .gh-cell { width: 158px !important; height: 222px !important; }
+    #guanghua .gh-seal { display: none !important; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #guanghua .gh-reel-track { animation: none !important; }
+    #guanghua .gh-seal { animation: none !important; }
+  }
+</style>
+<section id="guanghua" style="position:relative;background:#ffffff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);overflow:hidden;scroll-margin-top:70px;font-family:'Montserrat','Noto Sans TC',sans-serif;">
+  <!-- soft brand blobs (matches other white sections) -->
+  <div aria-hidden="true" style="position:absolute;top:-80px;right:-80px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(21,116,230,0.06),transparent 65%);pointer-events:none;"></div>
+  <div aria-hidden="true" style="position:absolute;bottom:40px;left:-80px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(56,229,140,0.06),transparent 65%);pointer-events:none;"></div>
+
+  <div style="position:relative;max-width:1180px;margin:0 auto;z-index:2;">
+
+    <!-- ===== header row ===== -->
+    <div style="display:flex;flex-wrap:wrap;gap:28px 40px;align-items:flex-start;justify-content:space-between;">
+      <div style="flex:1;min-width:320px;max-width:720px;">
+        <div style="display:inline-flex;align-items:center;gap:10px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#1574e6;">
+          <span style="width:22px;height:2px;background:#38e58c;"></span><span id="gh-kicker"></span>
+        </div>
+
+        <h2 data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(30px,4.6vw,52px);line-height:1.06;color:#0d2747;margin:16px 0 0;">光華<span style="color:#1574e6;">特別獎</span></h2>
+        <div style="font-family:'Montserrat';font-style:italic;font-weight:700;font-size:clamp(14px,1.7vw,18px);color:#5a6a82;margin-top:6px;">The Taiwan Panorama 50th Anniversary Prize</div>
+
+        <!-- official partner plate -->
+        <div data-reveal style="display:inline-flex;align-items:center;gap:16px;margin-top:24px;padding:14px 22px;background:#f3f8ff;border:1px solid #e0ebf8;border-radius:14px;box-shadow:0 10px 26px rgba(13,59,128,0.08);">
+          <img src="assets/panorama-logo.png" alt="台灣光華雜誌 Taiwan Panorama" style="height:42px;width:auto;display:block;">
+          <span style="width:1px;align-self:stretch;background:#d8e6f5;margin:2px 0;"></span>
+          <span style="font-family:'Noto Sans TC';font-weight:900;font-size:14px;color:#0d3b80;line-height:1.3;"><span id="gh-plate"></span><br><span style="font-family:'Space Mono','Montserrat',monospace;font-weight:400;font-size:11px;color:#1574e6;letter-spacing:0.06em;">EST. 1976 — 2026</span></span>
+        </div>
+
+        <p id="gh-lead" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-size:clamp(16px,1.7vw,19px);line-height:1.7;color:#0d2747;margin:24px 0 0;max-width:640px;"></p>
+        <p id="gh-intro" data-reveal style="font-family:'Noto Sans TC';font-size:clamp(14.5px,1.5vw,16.5px);line-height:1.9;color:#5a6a82;margin:14px 0 0;max-width:640px;"></p>
+      </div>
+
+      <!-- 50th anniversary seal -->
+      <div class="gh-seal" data-reveal="scale" style="flex:none;position:relative;width:168px;height:168px;margin-top:6px;border-radius:50%;background:radial-gradient(circle at 50% 38%,#1574e6,#0d3b80);box-shadow:0 18px 40px rgba(13,59,128,0.30),inset 0 0 0 2px rgba(255,255,255,0.18);animation:gh-seal 7s ease-in-out infinite;transform-origin:center;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;">
+        <span style="font-family:'Montserrat';font-weight:900;font-style:italic;font-size:46px;line-height:1;color:#38e58c;text-shadow:0 2px 10px rgba(0,0,0,0.25);">50</span>
+        <span style="font-family:'Noto Sans TC';font-weight:900;font-size:15px;letter-spacing:0.04em;margin-top:4px;">週年</span>
+        <span style="font-family:'Montserrat';font-weight:700;font-size:8.5px;letter-spacing:0.22em;color:rgba(255,255,255,0.7);margin-top:5px;">ANNIVERSARY</span>
+      </div>
+    </div>
+
+    <!-- ===== archive film strip ===== -->
+    <div style="position:relative;margin-top:clamp(40px,5vw,60px);">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;font-family:'Space Mono','Montserrat',monospace;font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:#5a6a82;">
+        <span style="width:8px;height:8px;border-radius:50%;background:#38e58c;box-shadow:0 0 8px rgba(56,229,140,0.7);animation:gh-blink 1.8s ease-in-out infinite;"></span>
+        <span id="gh-reel-label"></span>
+        <span style="flex:1;height:1px;background:linear-gradient(90deg,#d8e6f5,transparent);"></span>
+      </div>
+
+      <div class="gh-reel-band" style="position:relative;width:100%;overflow:hidden;background:#08233f;border-radius:8px;box-shadow:0 20px 44px rgba(13,59,128,0.22);padding:14px 0;">
+        <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:14px;background-image:repeating-linear-gradient(90deg,transparent 0 18px,#051728 18px 30px,transparent 30px 36px);background-size:36px 14px;z-index:4;"></div>
+        <div aria-hidden="true" style="position:absolute;bottom:0;left:0;right:0;height:14px;background-image:repeating-linear-gradient(90deg,transparent 0 18px,#051728 18px 30px,transparent 30px 36px);background-size:36px 14px;z-index:4;"></div>
+        <div aria-hidden="true" style="position:absolute;top:0;bottom:0;left:0;width:110px;background:linear-gradient(90deg,#08233f,transparent);z-index:3;pointer-events:none;"></div>
+        <div aria-hidden="true" style="position:absolute;top:0;bottom:0;right:0;width:110px;background:linear-gradient(270deg,#08233f,transparent);z-index:3;pointer-events:none;"></div>
+        <div id="gh-reel" class="gh-reel-track" style="display:flex;gap:6px;width:max-content;padding:6px 0;"></div>
+      </div>
+      <div id="gh-disclaimer" style="margin-top:12px;font-family:'Noto Sans TC';font-size:12.5px;color:#8a97aa;"></div>
+    </div>
+
+    <!-- ===== CTA ===== -->
+    <div data-reveal style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:clamp(44px,5vw,68px);">
+      <a id="gh-cta-primary" class="gh-cta-primary" href="https://www.taiwan-panorama.com/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;padding:16px 34px;background:linear-gradient(180deg,#5af2a4,#38e58c 55%,#22c97a);color:#0d3b80;font-family:'Noto Sans TC';font-weight:900;font-size:16px;border-radius:999px;box-shadow:0 12px 30px rgba(56,229,140,0.35);text-decoration:none;transition:transform .25s ease,box-shadow .25s ease;"><span></span> <span style="display:inline-block;animation:gh-arrow 1.4s ease-in-out infinite;">→</span></a>
+    </div>
+
+  </div>
+</section>
+
 <!-- 2. PARTICIPATE -->
-<section id="participate" style="background:#eef5ff;padding:clamp(56px,8vw,104px) clamp(18px,4vw,40px);position:relative;overflow:hidden;">
+<section id="participate" style="background:#eef5ff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);position:relative;overflow:hidden;">
   <div style="max-width:1180px;margin:0 auto;position:relative;">
     <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#1574e6;">
       <span style="width:22px;height:2px;background:#38e58c;"></span><span id="part-tag"></span>
@@ -1090,20 +1151,8 @@
 </section>
 
 <!-- VIDEO (Campaign Film) -->
-<section id="video" style="background:#fff;padding:clamp(40px,6vw,84px) clamp(18px,4vw,40px) 0;">
-  <div style="max-width:1180px;margin:0 auto;">
-    <div data-reveal style="position:relative;width:100%;margin:0 auto;aspect-ratio:16/9;overflow:hidden;background:#0d2747;">
-      <iframe id="campaign-iframe" data-src="https://www.youtube-nocookie.com/embed/_koDf0NAnRY?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=_koDf0NAnRY" title="FindingTAIWAN 2.0 Campaign Film" style="position:absolute;inset:0;width:100%;height:100%;border:0;display:block;" allow="autoplay;encrypted-media;picture-in-picture" allowfullscreen loading="lazy"></iframe>
-      <!-- branded cover hides YouTube's loading chrome until the film is actually playing -->
-      <div id="campaign-poster" style="position:absolute;inset:0;z-index:2;background:#0d2747;display:flex;align-items:center;justify-content:center;transition:opacity .55s ease;">
-        <img src="assets/logo.png" alt="" style="width:clamp(60px,11vw,88px);height:auto;animation:vidLoad 1.5s ease-in-out infinite;">
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- 3. TIMELINE -->
-<section id="timeline" style="background:#fff;padding:clamp(56px,8vw,104px) clamp(18px,4vw,40px);">
+<section id="timeline" style="background:#fff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);">
   <div style="max-width:820px;margin:0 auto;">
     <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#1574e6;">
       <span style="width:22px;height:2px;background:#38e58c;"></span><span id="tl-tag"></span>
@@ -1115,25 +1164,21 @@
 </section>
 
 <!-- 4. AWARDS -->
-<section id="awards" style="position:relative;background:#0d2747;padding:clamp(56px,8vw,104px) clamp(18px,4vw,40px);overflow:hidden;">
-  <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.035) 0 1px,transparent 1px 64px),repeating-linear-gradient(90deg,rgba(255,255,255,0.035) 0 1px,transparent 1px 64px);"></div>
-  <div style="position:absolute;top:-130px;right:-90px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(255,214,0,0.16),transparent 70%);pointer-events:none;"></div>
+<section id="awards" style="position:relative;background:#0f63cf;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);overflow:hidden;">
   <div style="position:relative;max-width:1080px;margin:0 auto;">
-    <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#FFD600;">
-      <span style="width:22px;height:2px;background:#FFD600;"></span><span id="awards-tag"></span>
+    <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#38e58c;">
+      <span style="width:22px;height:2px;background:#38e58c;"></span><span id="awards-tag"></span>
     </div>
     <h2 id="awards-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(28px,4.4vw,50px);color:#fff;margin:18px 0 10px;"></h2>
     <p id="awards-sub" style="font-family:'Noto Sans TC';font-weight:900;font-size:clamp(18px,2.6vw,28px);color:#FFD600;margin:0 0 clamp(30px,4vw,44px);"></p>
 
-    <div id="awards-main" class="awards-grid" data-reveal data-inview></div>
+    <div id="awards-main" class="awards-list" data-reveal data-inview></div>
 
     <div class="awards-special" data-reveal data-inview>
       <div class="awards-special-head">
         <span class="awards-special-badge">★</span>
         <h3 id="awards-special-label"></h3>
       </div>
-      <p id="awards-special-intro" class="awards-special-intro"></p>
-      <p id="awards-special-desc" class="awards-special-desc"></p>
       <div id="awards-special" class="awards-special-grid"></div>
       <a id="awards-special-link" class="awards-special-link" href="#" target="_blank" rel="noopener"><span></span> ↗</a>
     </div>
@@ -1142,23 +1187,8 @@
   </div>
 </section>
 
-<!-- 5. RULES -->
-<section id="rules" style="position:relative;background:#0f63cf;padding:clamp(56px,8vw,104px) clamp(18px,4vw,40px);overflow:hidden;">
-  <div style="position:relative;max-width:880px;margin:0 auto;">
-    <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#38e58c;">
-      <span style="width:22px;height:2px;background:#38e58c;"></span><span id="aw-tag"></span>
-    </div>
-    <h2 id="aw-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(28px,4.4vw,50px);color:#fff;margin:18px 0 6px;"></h2>
-    <p id="aw-sub" style="font-family:'Noto Sans TC';font-size:16px;line-height:1.7;color:rgba(255,255,255,0.85);margin:0;max-width:640px;"></p>
-    <div class="rules-card" data-reveal data-inview>
-      <div id="rules-list"></div>
-      <p id="aw-note" style="font-family:'Noto Sans TC';font-size:13.5px;line-height:1.8;color:#8a97aa;margin:20px 0 0;"></p>
-    </div>
-  </div>
-</section>
-
 <!-- 6. 2025 WINNERS -->
-<section id="winners" style="background:#f3f8ff;padding:clamp(56px,8vw,104px) clamp(18px,4vw,40px);">
+<section id="winners" style="background:#f3f8ff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);">
   <div style="max-width:1180px;margin:0 auto;">
     <div style="display:flex;flex-wrap:wrap;gap:22px;align-items:flex-end;justify-content:space-between;">
       <div style="max-width:640px;">
@@ -1173,21 +1203,6 @@
       </a>
     </div>
     <div id="winners-grid" style="margin-top:clamp(30px,4vw,48px);"></div>
-
-    <!-- 2025 event photo gallery -->
-    <div data-reveal data-inview style="margin-top:clamp(44px,6vw,72px);">
-      <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#1574e6;">
-        <span style="width:18px;height:2px;background:#FFD600;"></span><span id="about-gallery-cap"></span>
-      </div>
-      <div class="about-gallery">
-        <figure class="ag-wide"><img src="https://ws.mofa.gov.tw/001/Upload/402/relpic/76/120778/087c04fc-2729-47e1-b5bc-1baace4f2bb3.jpg" alt="2025 FindingTAIWAN 頒獎典禮" loading="lazy"></figure>
-        <figure class="ag-wide"><img src="https://ws.mofa.gov.tw/001/Upload/402/relpic/76/120778/99366ed4-2400-4b28-ba4b-4bcf425f30fc.jpg" alt="2025 FindingTAIWAN 入圍者合影" loading="lazy"></figure>
-        <figure class="ag-cell"><img src="https://ws.mofa.gov.tw/001/Upload/402/relpic/76/120778/ffced11b-7179-442b-8904-08da44ae7103.jpg" alt="2025 FindingTAIWAN 頒獎現場" loading="lazy"></figure>
-        <figure class="ag-cell"><img src="https://ws.mofa.gov.tw/001/Upload/402/relpic/76/120778/329f2e40-f692-4c37-a094-5f46769d8bab.jpg" alt="2025 FindingTAIWAN 首獎得主" loading="lazy"></figure>
-        <figure class="ag-cell"><img src="https://ws.mofa.gov.tw/001/Upload/402/relpic/76/120778/575a2e89-867a-40f7-8db2-6e9f46949222.jpg" alt="2025 FindingTAIWAN 貴賓合影" loading="lazy"></figure>
-      </div>
-      <p id="about-gallery-credit" style="font-family:'Noto Sans TC';font-size:12px;color:#9aa7ba;margin:12px 0 0;"></p>
-    </div>
   </div>
 </section>
 
@@ -1195,15 +1210,6 @@
 <section id="judges" style="background:#fff;padding:clamp(56px,8vw,96px) clamp(18px,4vw,40px) clamp(24px,4vw,40px);">
   <div style="max-width:1180px;margin:0 auto;">
     <div data-reveal style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
-
-      <!-- Judges -->
-      <div style="position:relative;border:1.5px dashed #c3d6f0;border-radius:20px;padding:36px 30px;background:#f7faff;">
-        <span id="soon-label-1" style="position:absolute;top:22px;right:22px;font-family:'Montserrat';font-weight:700;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#1574e6;background:#e2edfc;padding:5px 12px;border-radius:999px;"></span>
-        <span style="display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:50%;border:3px solid #1574e6;"><span style="width:18px;height:18px;border-radius:50%;background:#1574e6;"></span></span>
-        <div id="judge-tag" style="font-family:'Montserrat';font-weight:700;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#1574e6;margin-top:22px;"></div>
-        <h3 id="judge-title" style="font-family:'Noto Sans TC';font-weight:900;font-size:22px;color:#0d2747;margin:8px 0 10px;"></h3>
-        <p id="judge-body" style="font-family:'Noto Sans TC';font-size:14.5px;line-height:1.75;color:#5a6a82;margin:0;"></p>
-      </div>
 
       <!-- News -->
       <div id="news" style="position:relative;border:1.5px dashed #c3d6f0;border-radius:20px;padding:36px 30px;background:#f7faff;">
@@ -1241,6 +1247,8 @@
         <img src="assets/logo.png" alt="FindingTAIWAN" style="height:38px;width:auto;display:block;">
         <span style="font-family:'Noto Sans TC';font-weight:900;font-size:18px;color:#fff;">尋找台灣 2.0 <span style="font-family:'Montserrat';font-size:11px;color:#38e58c;letter-spacing:0.08em;">#FindingTAIWAN2.0</span></span>
       </div>
+      <!-- organizer (MOFA) mark -->
+      <img src="assets/mofa-logo.png" alt="外交部 Ministry of Foreign Affairs, Taiwan (R.O.C.)" style="height:54px;width:auto;display:block;margin-top:18px;">
       <!-- verified official-organizer badge -->
       <div style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:8px 15px;background:rgba(56,229,140,0.12);border:1px solid rgba(56,229,140,0.42);border-radius:999px;">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="#38e58c" aria-hidden="true"><path d="M12 1.6l2.7 1.95 3.32-.05 1.02 3.16 2.7 1.94-1.05 3.15 1.05 3.15-2.7 1.94-1.02 3.16-3.32-.05L12 22.4l-2.7-1.95-3.32.05-1.02-3.16-2.7-1.94 1.05-3.15L2.26 9.1l2.7-1.94L5.98 4l3.32.05L12 1.6z"></path><path d="M10.6 14.6l-2.3-2.3-1.3 1.3 3.6 3.6 6.4-6.4-1.3-1.3z" fill="#0d3b80"></path></svg>
@@ -1274,68 +1282,7 @@
 </footer>
 
 <!-- sticky apply button -->
-<a id="sticky-apply" href="#participate" onclick="openApplyModal(event)" aria-label="立即報名"><span class="sa-pulse"></span><span class="sa-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#0d3b80" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"></path><path d="M12 5l7 7-7 7"></path></svg></span><span id="sticky-apply-text"></span></a>
-
-<!-- REGISTRATION MODAL -->
-<div id="apply-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="form-title" onclick="if(event.target===this)closeApplyModal()">
-  <div class="apply-dialog">
-    <button type="button" class="apply-close" id="apply-close-btn" onclick="closeApplyModal()" aria-label="Close">&times;</button>
-
-    <!-- form view -->
-    <div id="apply-form-view">
-      <span class="apply-eyebrow">#FindingTAIWAN2.0</span>
-      <h2 id="form-title"></h2>
-      <p class="apply-sub" id="form-subtitle"></p>
-
-      <form id="apply-form" novalidate>
-        <div class="field" id="name-field">
-          <label for="f-name"><span id="lbl-name"></span><span class="req">*</span></label>
-          <input id="f-name" name="name" type="text" autocomplete="name">
-          <p class="field-err" id="err-name"></p>
-        </div>
-        <div class="field" id="phone-field">
-          <label for="f-phone"><span id="lbl-phone"></span><span class="req">*</span></label>
-          <input id="f-phone" name="phone" type="tel" autocomplete="tel">
-          <p class="field-err" id="err-phone"></p>
-        </div>
-        <div class="field" id="email-field">
-          <label for="f-email"><span id="lbl-email"></span><span class="req">*</span></label>
-          <input id="f-email" name="email" type="email" autocomplete="email">
-          <p class="field-err" id="err-email"></p>
-        </div>
-        <div class="field" id="url-field">
-          <label for="f-url"><span id="lbl-url"></span><span class="req">*</span></label>
-          <input id="f-url" name="videoUrl" type="url" inputmode="url">
-          <p class="field-hint" id="hint-url"></p>
-          <p class="field-err" id="err-url"></p>
-        </div>
-        <div class="field" id="intro-field">
-          <label for="f-intro"><span id="lbl-intro"></span></label>
-          <textarea id="f-intro" name="intro" rows="3"></textarea>
-        </div>
-        <div class="field" id="agree-field" style="margin-bottom:6px;">
-          <label class="agree-row"><input type="checkbox" id="f-agree"><span id="lbl-agree"></span></label>
-          <p class="field-err" id="err-agree" style="margin-top:2px;"></p>
-        </div>
-        <button type="submit" class="form-submit" id="form-submit"></button>
-      </form>
-    </div>
-
-    <!-- success view -->
-    <div id="apply-success" style="display:none;">
-      <div class="success-logo">
-        <img src="assets/logo.png" alt="#FindingTAIWAN2.0">
-        <span class="success-badge">
-          <svg viewBox="0 0 52 52" aria-hidden="true"><path d="M14 27 l8 8 l16 -17"/></svg>
-        </span>
-      </div>
-      <span class="success-wordmark">尋找台灣 2.0 <b>#FindingTAIWAN2.0</b></span>
-      <h2 id="success-title"></h2>
-      <p class="success-body" id="success-body"></p>
-      <button type="button" class="form-submit" id="success-btn" onclick="closeApplyModal()"></button>
-    </div>
-  </div>
-</div>
+<a id="sticky-apply" href="https://forms.gle/JoRh9FvzBjhm4SkSA" target="_blank" rel="noopener" aria-label="立即報名"><span class="sa-pulse"></span><span class="sa-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#0d3b80" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"></path><path d="M12 5l7 7-7 7"></path></svg></span><span id="sticky-apply-text"></span></a>
 
 <script>
 // Always open at the very top on (re)load — never restore the previous scroll position
@@ -1347,21 +1294,42 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
   if (!reduce) {
     // lock scrolling while the loading scene plays so the page always settles at the top
     document.documentElement.classList.add('intro-lock');
-    setTimeout(function () { document.documentElement.classList.remove('intro-lock'); }, 5000); // failsafe
+    setTimeout(function () { document.documentElement.classList.remove('intro-lock'); }, 3500); // failsafe
   }
   window.addEventListener('pageshow', toTop);
   window.addEventListener('load', toTop);
 })();
 
-const NAV_HREFS = ['#about','#participate','#timeline','#awards','#rules','#winners','#judges','#news'];
+const NAV_HREFS = ['#about','#guanghua','#participate','#timeline','#awards','#winners','#news'];
+
+// 光華特別獎 archive reel — vintage Taiwan Panorama / Sinorama covers (assets/guanghua/)
+const GH_REEL = [
+  { f: '197601', y: '1976', d: '1976.01', e: 'SINORAMA', first: true },
+  { f: '197607', y: '1976', d: '1976.07', e: 'SINORAMA' },
+  { f: '197804', y: '1978', d: '1978.04', e: 'SINORAMA' },
+  { f: '198102', y: '1981', d: '1981.02', e: 'SINORAMA' },
+  { f: '198403', y: '1984', d: '1984.03', e: 'SINORAMA' },
+  { f: '198612', y: '1986', d: '1986.12', e: 'SINORAMA' },
+  { f: '198702', y: '1987', d: '1987.02', e: 'SINORAMA' },
+  { f: '199001', y: '1990', d: '1990.01', e: 'SINORAMA' },
+  { f: '199312', y: '1993', d: '1993.12', e: 'SINORAMA' },
+  { f: '199802', y: '1998', d: '1998.02', e: 'SINORAMA' },
+  { f: '200407', y: '2004', d: '2004.07', e: 'SINORAMA' },
+  { f: '200508', y: '2005', d: '2005.08', e: 'SINORAMA' },
+  { f: '201309', y: '2013', d: '2013.09', e: 'PANORAMA' },
+  { f: '202003', y: '2020', d: '2020.03', e: 'PANORAMA' },
+  { f: '202311', y: '2023', d: '2023.11', e: 'PANORAMA' }
+];
 const VIDEO_ID = '_koDf0NAnRY'; // 2024 Trending Taiwan Short Film Competition (MoFA)
 
 const C = {
   zh: {
-    nav: ['關於','參加方式','時程','獎項獎金','競賽規則','精選作品','評審','最新消息'],
+    nav: ['關於','光華特別獎','參加方式','時程','獎項獎金','精選作品','最新消息'],
     apply: '立即報名',
     brochure: '下載活動簡章',
-    heroKicker: '外交部全球徵片競賽 · 報名 7/1–8/31',
+    heroKicker: '用鏡頭說出你和台灣的故事！',
+    heroBrochure: '下載簡章',
+    heroDeadline: '報名期間：2026/7/1 (三)–2026/8/31 (一) 23:59:59 (GMT+8)',
     heroT1: '尋找台灣 2.0', heroT2: 'Where We Connect', heroT3: '全球徵片競賽',
     mhChip: '報名 7/1–8/31', mhTagline: '用鏡頭說出你和台灣的故事！',
     heroLive: '報名期間 2026/7/1–8/31 · 即刻參賽', heroPhoneLabel: '即時投稿', heroScroll: '↓ 向下捲動・了解活動介紹',
@@ -1373,8 +1341,6 @@ const C = {
     aboutFeatureCap: '2025 首屆活動現場',
     aboutP1: '外交部於 2025 年首次舉辦「尋找台灣 #FindingTAIWAN」全球徵片活動，獲得國內外創作者熱烈響應，共徵集來自 23 個國家的 283 件作品參賽，透過不同文化背景創作者的鏡頭與視角，看見許多動人的台灣故事。',
     aboutP2: '今年「#FindingTAIWAN_2.0」全球徵片競賽再度盛大起跑，聚焦「Where We Connect 台灣與世界的連結」，鼓勵創作者從民主、創新、文化、科技及人與人交流等不同面向出發，以自身觀察與創意視角，呈現台灣與世界相互連結的故事，讓國際社會從更多元的角度認識台灣。',
-    aboutGalleryCap: '2025 首屆活動現場',
-    aboutGalleryCredit: '2025 首屆「尋找台灣 #FindingTAIWAN」全球徵片競賽頒獎典禮，吸引來自 23 個國家、283 件作品參賽。照片提供／中華民國外交部。',
     stats: [
       { n: '80 萬', l: '總獎金(新台幣)' },
       { n: '23 國', l: '首屆參賽國家' },
@@ -1410,29 +1376,22 @@ const C = {
       { p: '佳作', c: '4 名', a: '每名 3 萬元' }
     ],
     awardsSpecialLabel: '光華特別獎',
-    awardsSpecialIntro: '#FindingTAIWAN_2.0 響應《台灣光華雜誌》創刊 50 週年，特別增設【光華特別獎】！',
-    awardsSpecialDesc: '《台灣光華雜誌》長年透過文字與影像向國際社會介紹台灣，累積豐富而珍貴的內容資產。本次競賽特別開放創作者以《台灣光華雜誌》作為靈感來源，鼓勵以影像敘事重新詮釋與再創作，讓珍貴的歷史影像與報導以全新形式再次被看見。詳細參賽辦法請詳見簡章。',
     awardsSpecialLink: '前往光華雜誌',
     awardsSpecialUrl: 'https://www.taiwan-panorama.com/',
+    ghKicker: '特別獎 · Special Award',
+    ghPlate: '創刊 50 週年',
+    ghLead: '#FindingTAIWAN_2.0 響應《台灣光華雜誌》創刊 50 週年，增設【<span style="color:#1574e6;">光華特別獎</span>】獎項！',
+    ghIntro: '《台灣光華雜誌》長年透過文字與影像向國際社會介紹台灣，以多元化報導及雋永圖文呈現台灣發展脈動，累積豐富且珍貴的內容資產。本次競賽特別開放創作者以《台灣光華雜誌》作為靈感來源，鼓勵透過影像敘事方式重新詮釋與再創作，讓珍貴的歷史影像與報導以新的形式再次被看見～ 詳細參賽辦法請詳見簡章。',
+    ghReelLabel: '光華影像典藏 · Archive Reel',
+    ghDisclaimer: '※ 圖為歷年《台灣光華雜誌》封面，實際開放典藏內容以《台灣光華雜誌》官方資料庫為準。',
+    ghCtaPrimary: '前往光華雜誌',
+    ghFirstTag: '創刊號',
     awardsSpecial: [
       { p: '一獎', c: '1 名', a: '新台幣 10 萬元' },
       { p: '二獎', c: '1 名', a: '新台幣 5 萬元' },
       { p: '三獎', c: '1 名', a: '新台幣 2 萬元' }
     ],
     awardsNote: '※ 各獎項名額與金額以官方活動簡章公告為準。',
-    awTag: '競賽規則 / Rules',
-    awTitle: '競賽規則',
-    awSub: '以下為「尋找台灣 2.0 #FindingTAIWAN」全球徵片競賽參賽辦法摘要，方便快速閱讀。',
-    rules: [
-      { k: '主辦單位', v: '中華民國（台灣）外交部。' },
-      { k: '徵件主題', v: '以「台灣」為主題之原創短影音，不限子題與形式——自然地景、人文風情、常民生活、多元文化皆可。' },
-      { k: '參賽資格', v: '不限國籍與年齡，全球創作者皆可報名；個人或團隊參賽均可。' },
-      { k: '作品規格', v: '須為本人原創且擁有完整權利之作品，影片長度 1 分鐘以內，不限直式或橫式；須完成線上報名，並於 YouTube 或 Instagram 公開發布、標註 #FindingTAIWAN2026。' },
-      { k: '報名與截止', v: '報名期間自 2026 年 7 月 1 日起至 8 月 31 日 23:59（GMT+8）止。' },
-      { k: '獎項與獎金', v: '總獎金新台幣 80 萬元——首獎 1 名 20 萬、二獎 2 名各 8 萬、三獎 3 名各 5 萬、佳作 4 名各 3 萬；另設「光華特別獎」——一獎 10 萬、二獎 5 萬、三獎 2 萬。' },
-      { k: '著作權與授權', v: '參賽者保有作品著作權，並同意主辦單位於本活動宣傳推廣範圍內無償使用；完整授權條款以官方活動簡章為準。' }
-    ],
-    awNote: '※ 以上為摘要說明。完整參賽辦法、作品規格與授權條款，請以官方「活動簡章」為準。',
     winTag: '2025 精選作品 / 2025 Winners',
     winTitle: '2025 首屆得獎作品',
     winBody: '首屆競賽得獎作品已於外交部臉書專區完整收錄，呈現世界各地創作者鏡頭下的台灣風貌！點擊任一作品即可前往觀賞。',
@@ -1441,7 +1400,6 @@ const C = {
     winTierLabels: { grand: '首獎', second: '二獎', third: '三獎', merit: '佳作' },
     winWatch: '前往 Facebook 觀賞',
     soonLabel: 'Coming Soon',
-    judgeTag: '評審 / Judges', judgeTitle: '專業評審陣容', judgeBody: '評審名單刻正籌組中，將於近期正式公布，敬請期待。',
     newsTag: '最新消息 / News', newsTitle: '最新消息', newsBody: '最新公告與新聞訊息將於近期更新發布。',
     showTag: '參賽作品 / Video Showcase', showTitle: '本屆精彩作品', showBody: '徵件期間將開放瀏覽參賽作品。',
     footTagline: '以影像述說台灣，讓世界看見。',
@@ -1479,10 +1437,12 @@ const C = {
     }
   },
   en: {
-    nav: ['About','Participate','Timeline','Awards','Rules','Winners','Judges','News'],
+    nav: ['About','Panorama','Participate','Timeline','Awards','Winners','News'],
     apply: 'Apply Now',
     brochure: 'Download Brochure',
-    heroKicker: 'MOFA Global Short Film Competition · Where We Connect',
+    heroKicker: 'Tell your Taiwan story through your lens!',
+    heroBrochure: 'Download Guidelines',
+    heroDeadline: 'Registration: 2026/7/1 (Wed)–2026/8/31 (Mon) 23:59:59 (GMT+8)',
     heroT1: 'Finding Taiwan 2.0', heroT2: 'Where We Connect', heroT3: 'International Short Film Competition',
     mhChip: 'Entries Jul 1–Aug 31', mhTagline: 'Tell your Taiwan story through your lens.',
     heroLive: 'Submissions open Jul 1 – Aug 31, 2026', heroPhoneLabel: 'Live submissions', heroScroll: '↓ Scroll · About the event',
@@ -1494,8 +1454,6 @@ const C = {
     aboutFeatureCap: '2025 Inaugural Ceremony',
     aboutP1: 'Following the success of the inaugural #FindingTAIWAN competition in 2025 — which drew 283 entries from 23 countries, revealing many moving Taiwan stories through the lenses of creators from diverse cultural backgrounds — #FindingTAIWAN_2.0 returns with the theme “Where We Connect.”',
     aboutP2: 'Explore how Taiwan connects with the world through democracy, culture, innovation, technology, and people-to-people exchanges. Share your vision through your own lens, and help the international community discover Taiwan from new and diverse perspectives.',
-    aboutGalleryCap: '2025 Inaugural Ceremony',
-    aboutGalleryCredit: 'The 2025 inaugural "Finding Taiwan #FindingTAIWAN" global open call drew 283 entries from 23 countries. Photos courtesy of the Ministry of Foreign Affairs, Taiwan (R.O.C.).',
     stats: [
       { n: 'NT$800K', l: 'Total prize pool' },
       { n: '23', l: 'Countries in 2025' },
@@ -1531,29 +1489,22 @@ const C = {
       { p: 'Honorable Mention', c: '4 Winners', a: 'NT$30,000 each' }
     ],
     awardsSpecialLabel: 'Taiwan Panorama Special Award',
-    awardsSpecialIntro: 'To celebrate the 50th anniversary of Taiwan Panorama, #FindingTAIWAN_2.0 introduces the Taiwan Panorama Special Award.',
-    awardsSpecialDesc: 'Taiwan Panorama has long introduced Taiwan to the world through words and images, building a rich and valuable archive of stories. Creators are invited to draw inspiration from its archives and reimagine them through fresh visual storytelling, bringing Taiwan’s history and culture to life. Please refer to the guidelines for details.',
     awardsSpecialLink: 'Visit Taiwan Panorama',
-    awardsSpecialUrl: 'https://www.taiwan-panorama.com/en/',
+    awardsSpecialUrl: 'https://www.taiwan-panorama.com/en',
+    ghKicker: 'Special Award',
+    ghPlate: '50th Anniversary',
+    ghLead: '#FindingTAIWAN_2.0 marks the 50th anniversary of <em>Taiwan Panorama</em> with a new <span style="color:#1574e6;">Guanghua Special Award</span>!',
+    ghIntro: 'For decades, Taiwan Panorama has introduced Taiwan to the world through words and images, capturing the nation’s development with diverse reportage and timeless photography, and building a rich and precious archive of content. This competition invites creators to draw inspiration from Taiwan Panorama, reinterpreting and reimagining its work through visual storytelling so its precious historic images and reportage can be seen anew. Please see the official guidelines for full details.',
+    ghReelLabel: 'Panorama Image Archive · Archive Reel',
+    ghDisclaimer: '※ Covers shown are from past issues of Taiwan Panorama; the archive opened for the competition follows the magazine’s official database.',
+    ghCtaPrimary: 'Visit Taiwan Panorama',
+    ghFirstTag: 'Vol.1 No.1',
     awardsSpecial: [
       { p: 'Grand Prize', c: '1 Winner', a: 'NT$100,000' },
       { p: 'Second Prize', c: '1 Winner', a: 'NT$50,000' },
       { p: 'Third Prize', c: '1 Winner', a: 'NT$20,000' }
     ],
     awardsNote: '※ Final award categories and amounts follow the official guidelines.',
-    awTag: 'Rules',
-    awTitle: 'Competition Rules',
-    awSub: 'A quick-read summary of the entry rules for the Finding Taiwan 2.0 #FindingTAIWAN global video open call.',
-    rules: [
-      { k: 'Organizer', v: 'Ministry of Foreign Affairs, Republic of China (Taiwan).' },
-      { k: 'Theme', v: 'Original short videos on the theme of "Taiwan" — landscapes, culture, everyday life or diversity; any sub-theme and format are welcome.' },
-      { k: 'Eligibility', v: 'Open to creators of any nationality and age worldwide; individual or team entries are both accepted.' },
-      { k: 'Submission', v: 'Works must be your own original with full rights, under 1 minute, vertical or horizontal; complete the online entry form and publish the work publicly on YouTube or Instagram with the tag #FindingTAIWAN2026.' },
-      { k: 'Entry period', v: 'Submission period: July 1 – August 31, 2026 (23:59 GMT+8).' },
-      { k: 'Prizes', v: 'Total prize pool NT$800,000 — 1st prize NT$200,000 (×1), 2nd NT$80,000 (×2), 3rd NT$50,000 (×3), Merit NT$30,000 (×4); plus the Taiwan Panorama Special Award — 1st NT$100,000, 2nd NT$50,000, 3rd NT$20,000.' },
-      { k: 'Rights & licensing', v: 'Entrants retain copyright and grant the organizer royalty-free use for promotion of this event; full licensing terms follow the official guidelines.' }
-    ],
-    awNote: '* This is a summary. The official event guidelines (活動簡章) govern the full rules, work specifications and licensing terms.',
     winTag: '2025 Winners',
     winTitle: '2025 Inaugural Award Winners',
     winBody: 'Winning entries from the 2025 competition are archived on MOFA’s dedicated Facebook section — click any winner to watch.',
@@ -1562,7 +1513,6 @@ const C = {
     winTierLabels: { grand: 'Grand Prize', second: 'Second Prize', third: 'Third Prize', merit: 'Honorable Mention' },
     winWatch: 'Watch on Facebook',
     soonLabel: 'Coming Soon',
-    judgeTag: 'Judges', judgeTitle: 'Our panel of judges', judgeBody: 'The judging panel is being finalized and will be announced in due course.',
     newsTag: 'News', newsTitle: 'Latest news', newsBody: 'The latest announcements and news will be posted here.',
     showTag: 'Video Showcase', showTitle: 'Video Showcase', showBody: 'Submitted entries will be available for viewing during the call.',
     footTagline: 'Telling Taiwan\'s story to the world, through film.',
@@ -1611,16 +1561,16 @@ const WINNER_GRADS = [
 
 // ▼ 填入得獎作品 Facebook 影片網址（留空字串 = 顯示佔位卡）
 const WINNERS_2025 = [
-  { tier: 'grand',  name: 'Carl Ivan Baleros', country: '菲律賓', countryEn: 'Philippines', url: 'https://www.facebook.com/share/r/1BAzhDi4uE/' },
-  { tier: 'second', name: 'Frans Wu',          country: '印尼',   countryEn: 'Indonesia',   url: 'https://www.facebook.com/share/v/1HnqmavPVW/' },
-  { tier: 'second', name: 'Jenny Wu／吳冠儀',   country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.facebook.com/share/r/1EXbfkLULi/' },
-  { tier: 'third',  name: 'REVO ODIZA',         country: '菲律賓', countryEn: 'Philippines', url: 'https://www.facebook.com/share/r/1HPg9N69f6/' },
-  { tier: 'third',  name: 'the TimeTour',       country: '德國',   countryEn: 'Germany',     url: 'https://www.facebook.com/share/r/1E9j9Sj6a2/' },
-  { tier: 'third',  name: 'VietGang',           country: '越南',   countryEn: 'Vietnam',     url: 'https://www.facebook.com/share/r/18pyLMfqGx/' },
-  { tier: 'merit',  name: 'Tropang Litratista', country: '菲律賓', countryEn: 'Philippines', url: 'https://www.facebook.com/share/v/1CqecG3Cd5/' },
-  { tier: 'merit',  name: 'Kathy Creator',      country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.facebook.com/share/v/1Jaq9zWXqm/' },
-  { tier: 'merit',  name: '朱彥銘／枺域影像',    country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.facebook.com/share/v/1EqNUHHymh/' },
-  { tier: 'merit',  name: '王振彬',             country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.facebook.com/share/v/1FBv772xXd/' },
+  { tier: 'grand',  name: 'Carl Ivan Baleros', country: '菲律賓', countryEn: 'Philippines', url: 'https://www.facebook.com/share/r/1BAzhDi4uE/', cover: 'assets/img/winners/01-grand-carl.jpg' },
+  { tier: 'second', name: 'Frans Wu',          country: '印尼',   countryEn: 'Indonesia',   url: 'https://www.facebook.com/share/v/1HnqmavPVW/', cover: 'assets/img/winners/02-second-frans.jpg' },
+  { tier: 'second', name: 'Jenny Wu／吳冠儀',   country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.facebook.com/share/r/1EXbfkLULi/', cover: 'assets/img/winners/03-second-jenny.jpg' },
+  { tier: 'third',  name: 'REVO ODIZA',         country: '菲律賓', countryEn: 'Philippines', url: 'https://www.facebook.com/share/r/1HPg9N69f6/', cover: 'assets/img/winners/04-third-revo.jpg' },
+  { tier: 'third',  name: 'the TimeTour',       country: '德國',   countryEn: 'Germany',     url: 'https://www.facebook.com/share/r/1E9j9Sj6a2/', cover: 'assets/img/winners/05-third-timetour.jpg' },
+  { tier: 'third',  name: 'VietGang',           country: '越南',   countryEn: 'Vietnam',     url: 'https://www.facebook.com/share/r/18pyLMfqGx/', cover: 'assets/img/winners/06-third-vietgang.jpg' },
+  { tier: 'merit',  name: 'Tropang Litratista', country: '菲律賓', countryEn: 'Philippines', url: 'https://www.facebook.com/share/v/1CqecG3Cd5/', cover: 'assets/img/winners/07-merit-tropang.jpg' },
+  { tier: 'merit',  name: 'Kathy Creator',      country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.facebook.com/share/v/1Jaq9zWXqm/', cover: 'assets/img/winners/08-merit-kathy.jpg' },
+  { tier: 'merit',  name: '朱彥銘／枺域影像',    country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.facebook.com/share/v/1EqNUHHymh/', cover: 'assets/img/winners/09-merit-zhu.jpg' },
+  { tier: 'merit',  name: '王振彬',             country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.facebook.com/share/v/1FBv772xXd/', cover: 'assets/img/winners/10-merit-wang.jpg' },
   { tier: 'merit',  name: '陳郁珊／汶山',        country: '台灣',   countryEn: 'Taiwan',      url: 'https://www.facebook.com/share/r/18ceizuymf/' },
 ];
 const WIN_TIER_GRAD = {
@@ -1640,6 +1590,70 @@ function txt(id, val) {
 function ph(id, val) {
   const el = document.getElementById(id);
   if (el) el.placeholder = val;
+}
+
+/* ===== hero kicker — typewriter effect ===== */
+let _kickerTimer = null;
+let _kickerStarted = false;
+function typeHeroKicker(text) {
+  const el = document.getElementById('hero-kicker');
+  if (!el) return;
+  el.setAttribute('aria-label', text);
+  el.innerHTML = '<span class="hk-text"></span><span class="hk-caret" aria-hidden="true"></span>';
+  const txtEl = el.querySelector('.hk-text');
+  const caretEl = el.querySelector('.hk-caret');
+  const hideCaret = () => { if (caretEl) caretEl.style.display = 'none'; };
+  // once the banner is home, reveal the headline lockup, phone and cards
+  const revealHero = () => { const hd = document.getElementById('hero-desktop'); if (hd) hd.classList.add('seq-in'); };
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // type the text out one char at a time, calling done() when finished
+  const typeOut = (done) => {
+    if (_kickerTimer) { clearInterval(_kickerTimer); _kickerTimer = null; }
+    const chars = Array.from(text);
+    let i = 0;
+    txtEl.textContent = '';
+    _kickerTimer = setInterval(() => {
+      i++;
+      txtEl.textContent = chars.slice(0, i).join('');
+      if (i >= chars.length) { clearInterval(_kickerTimer); _kickerTimer = null; hideCaret(); if (done) done(); }
+    }, 110);
+  };
+
+  // FLIP: slide the centred banner back to its in-flow home, then reveal the rest
+  const slideHome = () => {
+    const first = el.getBoundingClientRect();
+    el.classList.remove('kicker-center');
+    const last = el.getBoundingClientRect();
+    const dx = first.left - last.left, dy = first.top - last.top;
+    el.style.transition = 'none';
+    el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+    void el.offsetWidth; // commit the start position
+    el.style.transition = 'transform 0.7s cubic-bezier(.5,0,.2,1)';
+    el.style.transform = 'translate(0,0)';
+    let settled = false;
+    const finish = () => { if (settled) return; settled = true; el.style.transition = ''; el.style.transform = ''; revealHero(); };
+    el.addEventListener('transitionend', finish, { once: true });
+    setTimeout(finish, 900); // fallback if transitionend doesn't fire
+  };
+
+  // first load (motion on): pop to centre, type there, pause, then slide home
+  const runIntro = () => {
+    if (reduce) { el.classList.add('kicker-shown'); txtEl.textContent = text; hideCaret(); revealHero(); return; }
+    el.classList.add('kicker-shown', 'kicker-center');
+    typeOut(() => setTimeout(slideHome, 400));
+  };
+
+  if (_kickerStarted) {
+    // language switch: banner already home & revealed — just retype in place
+    el.classList.add('kicker-shown');
+    if (reduce) { txtEl.textContent = text; hideCaret(); }
+    else typeOut(null);
+  } else {
+    _kickerStarted = true;
+    if (reduce) runIntro();
+    else setTimeout(runIntro, 2200); // wait for the cinematic intro to clear
+  }
 }
 
 function render() {
@@ -1681,47 +1695,19 @@ function render() {
   }
   txt('sticky-apply-text', t.apply);
 
-  // registration form
-  const f = t.form;
-  txt('form-title', f.title);
-  txt('form-subtitle', f.subtitle);
-  txt('lbl-name', f.name);   ph('f-name', f.namePh);
-  txt('lbl-phone', f.phone); ph('f-phone', f.phonePh);
-  txt('lbl-email', f.email); ph('f-email', f.emailPh);
-  txt('lbl-url', f.videoUrl); ph('f-url', f.videoUrlPh);
-  txt('hint-url', f.videoUrlHint);
-  txt('lbl-intro', f.intro); ph('f-intro', f.introPh);
-  txt('lbl-agree', f.agree);
-  txt('form-submit', f.submit);
-  txt('success-title', f.successTitle);
-  txt('success-body', f.successBody);
-  txt('success-btn', f.successBtn);
-  document.getElementById('apply-close-btn').setAttribute('aria-label', f.close);
-
-  // hero (desktop)
-  document.getElementById('hero-kicker').textContent = t.heroKicker;
-  const t1base = t.heroT1.replace(/\s*2\.0\s*$/, '');
-  const show20 = /2\.0\s*$/.test(t.heroT1);
-  document.getElementById('hero-title').innerHTML =
-    t1base + (show20 ? '<span class="ht-20">2.0</span>' : '') +
-    '<br><span class="ht-tag">' + t.heroT2 + '</span>' +
-    '<br><span class="ht-l3">' + t.heroT3 + '</span>';
-  txt('hero-tagline', t.mhTagline);
+  // hero (desktop) — kicker uses a typewriter effect
+  typeHeroKicker(t.heroKicker);
+  // hero headline is now the campaign key visual image (assets/kv-lockup.png) — no text title to set
   txt('hero-apply', t.apply + ' →');
-  txt('hero-prize-total', t.prizeTotal);
-  txt('hero-prize-sub', t.prizeSub);
-  txt('hero-live', t.heroLive);
-  txt('hero-phone-label', t.heroPhoneLabel);
+  txt('hero-brochure', t.heroBrochure);
+  txt('hero-deadline', t.heroDeadline);
   txt('hero-scroll', t.heroScroll);
 
-  // mobile hero (#mh)
-  const mhChip = document.getElementById('mh-chip');
-  if (mhChip) mhChip.textContent = t.mhChip;
-  const mhTitle = document.getElementById('mh-title');
-  if (mhTitle) mhTitle.innerHTML =
-    t.heroT1 + '<br><span style="color:#38e58c; font-family:\'Montserrat\'; font-style:italic; font-weight:900; font-size:22px; letter-spacing:0.01em;">' + t.heroT2 + '</span><br>' + t.heroT3;
+  // mobile hero (#mh) — lockup is an image; wire the text bits + CTA
   const mhTagline = document.getElementById('mh-tagline');
   if (mhTagline) mhTagline.textContent = t.mhTagline;
+  const mhDeadline = document.getElementById('mh-deadline');
+  if (mhDeadline) mhDeadline.textContent = t.heroDeadline;
   const mhCta = document.getElementById('mh-cta');
   if (mhCta) mhCta.textContent = t.apply + ' →';
 
@@ -1731,8 +1717,6 @@ function render() {
   txt('about-feature-cap', t.aboutFeatureCap);
   txt('about-p1', t.aboutP1);
   txt('about-p2', t.aboutP2);
-  txt('about-gallery-cap', t.aboutGalleryCap);
-  txt('about-gallery-credit', t.aboutGalleryCredit);
 
   const statsGrid = document.getElementById('stats-grid');
   statsGrid.innerHTML = '';
@@ -1805,23 +1789,19 @@ function render() {
 
   const awMain = document.getElementById('awards-main');
   awMain.innerHTML = '';
-  t.awardsMain.forEach((a, i) => {
-    const card = document.createElement('div');
-    card.className = 'award-card' + (a.top ? ' is-top' : '');
-    card.innerHTML =
-      '<span class="ac-rank">' + (i + 1) + '</span>' +
-      '<span class="ac-place"></span>' +
-      '<span class="ac-count"></span>' +
-      '<span class="ac-amount"></span>';
-    card.querySelector('.ac-place').textContent = a.p;
-    card.querySelector('.ac-count').textContent = a.c;
-    card.querySelector('.ac-amount').textContent = a.a;
-    awMain.appendChild(card);
+  t.awardsMain.forEach((a) => {
+    const row = document.createElement('div');
+    row.className = 'award-srow' + (a.top ? ' is-top' : '');
+    row.innerHTML =
+      '<span class="as-left"><span class="as-place"></span><span class="as-count"></span></span>' +
+      '<span class="as-amount"></span>';
+    row.querySelector('.as-place').textContent = a.p;
+    row.querySelector('.as-count').textContent = a.c;
+    row.querySelector('.as-amount').textContent = a.a;
+    awMain.appendChild(row);
   });
 
   txt('awards-special-label', t.awardsSpecialLabel);
-  txt('awards-special-intro', t.awardsSpecialIntro);
-  txt('awards-special-desc', t.awardsSpecialDesc);
   const awLink = document.getElementById('awards-special-link');
   if (awLink) {
     awLink.href = t.awardsSpecialUrl;
@@ -1842,22 +1822,37 @@ function render() {
   });
   txt('awards-note', t.awardsNote);
 
-  // rules
-  txt('aw-tag', t.awTag);
-  txt('aw-title', t.awTitle);
-  txt('aw-sub', t.awSub);
-
-  const rulesList = document.getElementById('rules-list');
-  rulesList.innerHTML = '';
-  t.rules.forEach((r) => {
-    const row = document.createElement('div');
-    row.className = 'rule-row';
-    row.innerHTML = '<div class="rule-k"></div><div class="rule-v"></div>';
-    row.querySelector('.rule-k').textContent = r.k;
-    row.querySelector('.rule-v').textContent = r.v;
-    rulesList.appendChild(row);
-  });
-  txt('aw-note', t.awNote);
+  // 光華特別獎 section
+  txt('gh-kicker', t.ghKicker);
+  txt('gh-plate', t.ghPlate);
+  txt('gh-reel-label', t.ghReelLabel);
+  txt('gh-disclaimer', t.ghDisclaimer);
+  const ghLeadEl = document.getElementById('gh-lead');
+  if (ghLeadEl) ghLeadEl.innerHTML = t.ghLead;
+  const ghIntroEl = document.getElementById('gh-intro');
+  if (ghIntroEl) ghIntroEl.innerHTML = t.ghIntro;
+  const ghPrimary = document.getElementById('gh-cta-primary');
+  if (ghPrimary) {
+    ghPrimary.querySelector('span').textContent = t.ghCtaPrimary;
+    ghPrimary.href = t.awardsSpecialUrl;
+  }
+  const ghReel = document.getElementById('gh-reel');
+  if (ghReel) {
+    const cell = (ph) => {
+      const tag = ph.first ? ' · ' + t.ghFirstTag : '';
+      return '<div class="gh-cell" style="position:relative;flex:none;width:200px;height:280px;background:#0d2747;border-left:2px solid #051728;border-right:2px solid #051728;overflow:hidden;">' +
+        '<img src="assets/guanghua/' + ph.f + '.jpg" alt="台灣光華雜誌 ' + ph.d + ' 封面" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;filter:sepia(0.42) contrast(1.04) brightness(0.96) saturate(0.8);">' +
+        '<span style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,35,63,0.10) 0%,transparent 26%,transparent 56%,rgba(5,23,40,0.92) 100%);"></span>' +
+        '<span style="position:absolute;inset:0;box-shadow:inset 0 0 60px 8px rgba(5,23,40,0.45);"></span>' +
+        '<span style="position:absolute;top:8px;right:9px;font-family:\'Space Mono\',monospace;font-size:10px;font-weight:700;color:#aaffd6;letter-spacing:0.08em;text-shadow:0 1px 2px rgba(0,0,0,0.8);">' + ph.y + '</span>' +
+        '<div style="position:absolute;left:11px;right:11px;bottom:12px;">' +
+          '<div style="font-family:\'Noto Sans TC\';font-weight:700;font-size:13px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.85);line-height:1.35;">' + ph.d + tag + '</div>' +
+          '<div style="font-family:\'Space Mono\',monospace;font-size:9px;color:#5fb0ff;letter-spacing:0.1em;margin-top:3px;">' + ph.e + '</div>' +
+        '</div>' +
+      '</div>';
+    };
+    ghReel.innerHTML = GH_REEL.concat(GH_REEL).map(cell).join('');
+  }
 
   // winners
   txt('win-tag', t.winTag);
@@ -1876,7 +1871,11 @@ function render() {
     card.style.cssText = 'position:relative;flex:none;width:clamp(150px,20vw,220px);aspect-ratio:9/16;border-radius:14px;overflow:hidden;text-decoration:none;box-shadow:0 12px 30px rgba(13,59,128,0.18);background:' + WIN_TIER_GRAD[w.tier] + ';transition:transform 0.32s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.32s ease;';
     card.onmouseenter = () => { card.style.transform = 'scale(1.06) translateY(-4px)'; card.style.boxShadow = '0 28px 56px rgba(13,59,128,0.32)'; };
     card.onmouseleave = () => { card.style.transform = ''; card.style.boxShadow = '0 12px 30px rgba(13,59,128,0.18)'; };
+    const coverHtml = w.cover
+      ? '<img src="' + w.cover + '" alt="" loading="lazy" onerror="this.style.display=\'none\'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">'
+      : '';
     card.innerHTML =
+      coverHtml +
       '<span style="position:absolute;top:12px;left:12px;font-family:\'Montserrat\',\'Noto Sans TC\';font-weight:700;font-size:11px;letter-spacing:0.06em;color:#0d2747;background:rgba(255,255,255,0.94);padding:4px 11px;border-radius:999px;">' + tierLabels[w.tier] + '</span>' +
       '<span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">' +
         '<span style="width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.20);backdrop-filter:blur(6px);border:2px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;">' +
@@ -1913,8 +1912,7 @@ function render() {
 
   // coming soon
   const sl = t.soonLabel;
-  txt('soon-label-1', sl); txt('soon-label-2', sl); txt('soon-label-3', sl);
-  txt('judge-tag', t.judgeTag); txt('judge-title', t.judgeTitle); txt('judge-body', t.judgeBody);
+  txt('soon-label-2', sl); txt('soon-label-3', sl);
   txt('news-tag', t.newsTag); txt('news-title', t.newsTitle); txt('news-body', t.newsBody);
   txt('show-tag', t.showTag); txt('show-title', t.showTitle); txt('show-body', t.showBody);
 
@@ -1945,114 +1943,6 @@ function setLang(lang) {
   currentLang = lang;
   render();
 }
-
-/* ===== Registration modal ===== */
-let _lastFocus = null;
-
-function openApplyModal(e) {
-  if (e) e.preventDefault();
-  const modal = document.getElementById('apply-modal');
-  _lastFocus = document.activeElement;
-  // always start on the form view
-  document.getElementById('apply-form-view').style.display = '';
-  document.getElementById('apply-success').style.display = 'none';
-  resetApplyForm();
-  modal.classList.add('open');
-  modal.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
-  setTimeout(() => { const fn = document.getElementById('f-name'); if (fn) fn.focus(); }, 60);
-}
-
-function closeApplyModal() {
-  const modal = document.getElementById('apply-modal');
-  modal.classList.remove('open');
-  modal.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
-  if (_lastFocus && _lastFocus.focus) _lastFocus.focus();
-}
-
-function resetApplyForm() {
-  const form = document.getElementById('apply-form');
-  if (form) form.reset();
-  ['name-field','phone-field','email-field','url-field','agree-field']
-    .forEach(id => document.getElementById(id).classList.remove('invalid'));
-}
-
-function setFieldError(fieldId, errId, msg) {
-  document.getElementById(fieldId).classList.add('invalid');
-  if (errId) txt(errId, msg);
-}
-
-function validateApplyForm() {
-  const f = C[currentLang].form;
-  let ok = true;
-  let firstBad = null;
-  const mark = (fieldId, errId, msg, inputId) => {
-    setFieldError(fieldId, errId, msg);
-    ok = false;
-    if (!firstBad) firstBad = inputId;
-  };
-
-  // clear previous
-  ['name-field','phone-field','email-field','url-field','agree-field']
-    .forEach(id => document.getElementById(id).classList.remove('invalid'));
-
-  const name = document.getElementById('f-name').value.trim();
-  const phone = document.getElementById('f-phone').value.trim();
-  const email = document.getElementById('f-email').value.trim();
-  const url = document.getElementById('f-url').value.trim();
-  const agree = document.getElementById('f-agree').checked;
-
-  if (!name) mark('name-field', 'err-name', f.required, 'f-name');
-  if (!phone) mark('phone-field', 'err-phone', f.required, 'f-phone');
-
-  if (!email) mark('email-field', 'err-email', f.required, 'f-email');
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) mark('email-field', 'err-email', f.invalidEmail, 'f-email');
-
-  if (!url) mark('url-field', 'err-url', f.required, 'f-url');
-  else if (!/^https?:\/\/.+\..+/i.test(url)) mark('url-field', 'err-url', f.invalidUrl, 'f-url');
-
-  if (!agree) mark('agree-field', 'err-agree', f.mustAgree, 'f-agree');
-
-  if (!ok && firstBad) document.getElementById(firstBad).focus();
-  return ok;
-}
-
-function submitApplyForm(e) {
-  e.preventDefault();
-  if (!validateApplyForm()) return;
-  // Front-end demo: no backend — show the success confirmation.
-  const btn = document.getElementById('form-submit');
-  const f = C[currentLang].form;
-  btn.disabled = true;
-  btn.textContent = f.submitting;
-  setTimeout(() => {
-    document.getElementById('apply-form-view').style.display = 'none';
-    document.getElementById('apply-success').style.display = '';
-    btn.disabled = false;
-    btn.textContent = f.submit;
-    // restart the check-draw animation
-    const modal = document.getElementById('apply-modal');
-    modal.classList.remove('open'); void modal.offsetWidth; modal.classList.add('open');
-  }, 550);
-}
-
-function setupApplyForm() {
-  const form = document.getElementById('apply-form');
-  if (form) form.addEventListener('submit', submitApplyForm);
-  // clear a field's error as soon as the user edits it
-  [['f-name','name-field'],['f-phone','phone-field'],['f-email','email-field'],
-   ['f-url','url-field'],['f-agree','agree-field']].forEach(([inp, field]) => {
-    const el = document.getElementById(inp);
-    const ev = inp === 'f-agree' ? 'change' : 'input';
-    if (el) el.addEventListener(ev, () => document.getElementById(field).classList.remove('invalid'));
-  });
-  // Esc closes
-  document.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Escape' && document.getElementById('apply-modal').classList.contains('open')) closeApplyModal();
-  });
-}
-
 
 // scroll reveal
 let _io = null;
@@ -2225,7 +2115,7 @@ function initParticles() {
   step();
 }
 
-// pause off-screen animation loops (mobile hero + winners reel) to keep scrolling smooth
+// pause off-screen animation loops (hero + winners reel) to keep scrolling smooth
 function setupOffscreenPause() {
   if (!('IntersectionObserver' in window)) return;
   const mh = document.getElementById('mh');
@@ -2249,67 +2139,6 @@ function setupOffscreenPause() {
       });
     }, { rootMargin: '120px 0px' }).observe(wGrid);
   }
-}
-
-// load the YouTube IFrame API once
-let _ytApi = null;
-function loadYouTubeAPI() {
-  if (_ytApi) return _ytApi;
-  _ytApi = new Promise((resolve) => {
-    if (window.YT && window.YT.Player) { resolve(); return; }
-    const prev = window.onYouTubeIframeAPIReady;
-    window.onYouTubeIframeAPIReady = () => { if (typeof prev === 'function') prev(); resolve(); };
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    document.head.appendChild(tag);
-  });
-  return _ytApi;
-}
-
-// defer the YouTube embed until the video section is near the viewport (faster first load)
-function setupLazyVideo() {
-  const iframe = document.getElementById('campaign-iframe');
-  const poster = document.getElementById('campaign-poster');
-  if (!iframe || !iframe.dataset.src) return;
-  const hidePoster = () => { if (poster) poster.classList.add('hide'); };
-
-  // On mobile: start 5s in, hide the controls and make it non-interactive (plays like a background reel)
-  const isMobile = window.matchMedia('(max-width:768px)').matches || window.matchMedia('(pointer:coarse)').matches;
-  if (isMobile) {
-    iframe.dataset.src += '&start=5&controls=0&disablekb=1&fs=0&iv_load_policy=3';
-    iframe.style.pointerEvents = 'none';
-    iframe.setAttribute('tabindex', '-1');
-  }
-  iframe.dataset.src += '&enablejsapi=1';
-
-  const load = () => {
-    if (!iframe.dataset.src) return;
-    iframe.src = iframe.dataset.src;
-    delete iframe.dataset.src;
-    // reveal the film only once it is actually playing — no YouTube chrome flash
-    loadYouTubeAPI().then(() => {
-      try {
-        const player = new YT.Player(iframe, {
-          events: { onStateChange: (e) => { if (e.data === YT.PlayerState.PLAYING) hidePoster(); } }
-        });
-        // battery/heat: only let the film play while it's actually on-screen and the tab is visible
-        let onScreen = true;
-        const sync = () => { try { (onScreen && !document.hidden) ? player.playVideo() : player.pauseVideo(); } catch (e) {} };
-        if ('IntersectionObserver' in window) {
-          new IntersectionObserver((es) => { onScreen = es.some(e => e.isIntersecting); sync(); }, { threshold: 0.01 }).observe(iframe);
-        }
-        document.addEventListener('visibilitychange', sync);
-      } catch (err) { hidePoster(); }
-    });
-    // safety net in case the API never reports playback
-    setTimeout(hidePoster, 5000);
-  };
-
-  if (!('IntersectionObserver' in window)) { load(); return; }
-  const io = new IntersectionObserver((entries) => {
-    if (entries.some(e => e.isIntersecting)) { load(); io.disconnect(); }
-  }, { rootMargin: '400px 0px' });
-  io.observe(iframe);
 }
 
 // sticky apply button: show once the hero is scrolled past
@@ -2356,7 +2185,7 @@ function teardownCineIntro() {
     if (!location.hash) window.scrollTo(0, 0);
     document.documentElement.classList.remove('intro-lock');
     cine.remove();
-  }, reduce ? 0 : 3050);
+  }, reduce ? 0 : 2150);
 }
 
 function setupHeaderScroll() {
@@ -2400,9 +2229,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initParticles();
   buildAwardsCollage();
   setupStickyApply();
-  setupLazyVideo();
   setupOffscreenPause();
-  setupApplyForm();
   teardownCineIntro();
   setupHeaderScroll();
   setupMobileMenu();

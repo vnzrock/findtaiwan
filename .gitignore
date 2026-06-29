@@ -6,3 +6,6 @@ package-lock.json
 # Local artifacts
 *.log
 .DS_Store
+.claude/
+*.bak
+*.bak2
