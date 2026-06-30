@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Allow: /?lang=en
+
+Sitemap: https://www.findtaiwan2026.com.tw/sitemap.xml
