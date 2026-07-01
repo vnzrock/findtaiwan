@@ -1581,7 +1581,7 @@ const C = {
     soonLabel: 'Coming Soon',
     newsTag: 'News', newsTitle: 'Latest news', newsBody: 'The latest announcements and news will be posted here.',
     newsItems: [
-      { date: '2026.06.30', tag: 'MOFA press release', title: 'The Ministry of Foreign Affairs launches the #FindingTaiwan_2.0: Where We Connect international short film competition, inviting creatives worldwide to explore Taiwan\'s links with the wider world through the lens!', url: 'https://www.mofa.gov.tw/News_Content.aspx?n=95&sms=73&s=122572' }
+      { date: '2026.06.30', tag: 'MOFA press release', title: 'The Ministry of Foreign Affairs launches the #FindingTaiwan_2.0: Where We Connect', body: 'International short film competition, inviting creatives worldwide to explore Taiwan\'s links with the wider world through the lens!', url: 'https://www.mofa.gov.tw/News_Content.aspx?n=95&sms=73&s=122572' }
     ],
     showTag: 'Video Showcase', showTitle: '2026 Entries', showBody: 'Submitted entries will be available for viewing during the call.',
     footTagline: 'Telling Taiwan\'s story to the world, through film.',
@@ -2007,6 +2007,12 @@ function render() {
         h.textContent = n.title;
       }
       a.appendChild(meta); a.appendChild(h);
+      if (n.body) {
+        const p = document.createElement('p');
+        p.style.cssText = "font-family:'Noto Sans TC';font-size:13.5px;line-height:1.7;color:#5a6a82;margin:6px 0 0;";
+        p.textContent = n.body;
+        a.appendChild(p);
+      }
       newsList.appendChild(a);
     });
   }
