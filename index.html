@@ -1463,7 +1463,7 @@ const C = {
     soonLabel: 'Coming Soon',
     newsTag: '最新消息 / News', newsTitle: '最新消息', newsBody: '最新公告與新聞訊息將於近期更新發布。',
     newsItems: [
-      { date: '2026.06.30', tag: '預計上線 · MOFA 新聞稿', title: '外交部推出「#FindingTAIWAN_2.0：Where We Connect」全球徵片競賽 邀請全球創作者用影像述說台灣與世界的連結' }
+      { date: '2026.06.30', tag: 'MOFA 新聞稿', title: '外交部推出「#FindingTAIWAN_2.0：Where We Connect」全球徵片競賽 邀請全球創作者用影像述說台灣與世界的連結', url: 'https://www.mofa.gov.tw/News_Content.aspx?n=95&sms=73&s=122572' }
     ],
     showTag: '參賽作品 / Video Showcase', showTitle: '本屆報名作品', showBody: '徵件期間將開放瀏覽參賽作品。',
     footTagline: '以影像述說台灣，讓世界看見。',
@@ -1581,7 +1581,7 @@ const C = {
     soonLabel: 'Coming Soon',
     newsTag: 'News', newsTitle: 'Latest news', newsBody: 'The latest announcements and news will be posted here.',
     newsItems: [
-      { date: '2026.06.30', tag: 'Upcoming · MOFA press release', title: 'The Ministry of Foreign Affairs launches the #FindingTaiwan_2.0: Where We Connect international short film competition, inviting creatives worldwide to explore Taiwan\'s links with the wider world through the lens!' }
+      { date: '2026.06.30', tag: 'MOFA press release', title: 'The Ministry of Foreign Affairs launches the #FindingTaiwan_2.0: Where We Connect international short film competition, inviting creatives worldwide to explore Taiwan\'s links with the wider world through the lens!', url: 'https://www.mofa.gov.tw/News_Content.aspx?n=95&sms=73&s=122572' }
     ],
     showTag: 'Video Showcase', showTitle: '2026 Entries', showBody: 'Submitted entries will be available for viewing during the call.',
     footTagline: 'Telling Taiwan\'s story to the world, through film.',
@@ -1995,7 +1995,17 @@ function render() {
       meta.appendChild(metaTxt);
       const h = document.createElement('h4');
       h.style.cssText = "font-family:'Noto Sans TC';font-weight:800;font-size:15.5px;line-height:1.55;color:#0d2747;margin:8px 0 0;";
-      h.textContent = n.title;
+      if (n.url) {
+        const link = document.createElement('a');
+        link.href = n.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
+        link.style.cssText = 'color:inherit;text-decoration:none;border-bottom:2px solid #38e58c;padding-bottom:1px;transition:color .2s;';
+        link.onmouseover = function(){ this.style.color='#1574e6'; };
+        link.onmouseout = function(){ this.style.color='inherit'; };
+        link.textContent = n.title;
+        h.appendChild(link);
+      } else {
+        h.textContent = n.title;
+      }
       a.appendChild(meta); a.appendChild(h);
       newsList.appendChild(a);
     });
