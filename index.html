@@ -1065,7 +1065,7 @@
             <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin:0 0 12px; font-family:'Noto Sans TC'; font-weight:600; font-size:12px; color:rgba(255,255,255,0.9); text-shadow:0 1px 6px rgba(0,0,0,0.3);"><span style="width:7px;height:7px;border-radius:50%;background:#ff5c7a;box-shadow:0 0 8px rgba(255,92,122,0.8);flex:none;"></span><span id="mh-deadline">報名期間：2026/7/1–8/31</span></div>
             <div style="display: flex; gap: 9px;">
               <a id="mh-cta" href="https://forms.gle/JoRh9FvzBjhm4SkSA" target="_blank" rel="noopener" style="position: relative; flex: 1; text-decoration: none; text-align: center; font-family: 'Noto Sans TC'; font-weight: 800; font-size: 14.5px; padding: 16px 0; background: linear-gradient(180deg,#5af2a4 0%,#38e58c 50%,#22c97a 100%); color: #0d3b80; border-radius: 999px; box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset, 0 8px 28px rgba(56,229,140,0.45), 0 0 30px rgba(56,229,140,0.4);">立即報名 →</a>
-              <a href="https://drive.google.com/drive/folders/10ZA3p4uWKFSUD_RmB8p4mZPMovVyj4JR?usp=sharing" target="_blank" rel="noopener noreferrer" style="flex: none; text-decoration: none; text-align: center; font-family: 'Noto Sans TC'; font-weight: 800; font-size: 14.5px; padding: 16px 20px; background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.7); color: #fff; border-radius: 999px;">下載簡章</a>
+              <a id="mh-brochure" href="https://drive.google.com/drive/folders/10ZA3p4uWKFSUD_RmB8p4mZPMovVyj4JR?usp=sharing" target="_blank" rel="noopener noreferrer" style="flex: none; text-decoration: none; text-align: center; font-family: 'Noto Sans TC'; font-weight: 800; font-size: 14.5px; padding: 16px 20px; background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.7); color: #fff; border-radius: 999px;">下載簡章</a>
               
             </div>
           </div>
@@ -1780,6 +1780,8 @@ function render() {
   if (mhDeadline) mhDeadline.textContent = t.heroDeadline;
   const mhCta = document.getElementById('mh-cta');
   if (mhCta) mhCta.textContent = t.apply + ' →';
+  const mhBrochure = document.getElementById('mh-brochure');
+  if (mhBrochure) mhBrochure.textContent = t.heroBrochure;
 
   // about
   txt('about-tag', t.aboutTag);
