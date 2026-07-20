@@ -1795,8 +1795,9 @@ function render() {
     const div = document.createElement('div');
     div.setAttribute('data-reveal', 'scale');
     div.setAttribute('data-inview', '');
-    div.style.cssText = "background:#f3f8ff;border:1px solid #e2edfc;border-radius:16px;padding:26px 24px;";
-    div.innerHTML = '<div style="font-family:\'Noto Sans TC\';font-weight:900;font-size:clamp(24px,3vw,34px);color:#1574e6;line-height:1;">' + st.n + '</div><div style="font-family:\'Noto Sans TC\';font-size:14px;color:#6b7a91;margin-top:8px;">' + st.l + '</div>';
+    div.style.cssText = "background:#f3f8ff;border:1px solid #e2edfc;border-radius:16px;padding:26px 24px;min-width:0;overflow:hidden;";
+    const valFontSize = st.n.length > 8 ? 'clamp(17px,2vw,22px)' : 'clamp(24px,3vw,34px)';
+    div.innerHTML = '<div style="font-family:\'Noto Sans TC\';font-weight:900;font-size:' + valFontSize + ';color:#1574e6;line-height:1.2;overflow-wrap:break-word;word-break:break-word;">' + st.n + '</div><div style="font-family:\'Noto Sans TC\';font-size:14px;color:#6b7a91;margin-top:8px;">' + st.l + '</div>';
     statsGrid.appendChild(div);
   });
 
