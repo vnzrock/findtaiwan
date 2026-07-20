@@ -107,10 +107,9 @@
   /* step cards */
   .step-card { background:#fff; border:1px solid #e2ecfb; border-radius:20px; overflow:hidden; box-shadow:0 10px 30px rgba(13,59,128,0.06); display:flex; flex-direction:column; transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1), box-shadow .32s ease; }
   .step-card:hover { transform:translateY(-7px); box-shadow:0 24px 50px rgba(13,59,128,0.15); }
-  .step-art { position:relative; height:196px; display:flex; align-items:flex-end; justify-content:center; overflow:hidden; }
-  .step-art img { height:178px; width:auto; max-width:92%; object-fit:contain; object-position:bottom center; display:block; filter:drop-shadow(0 10px 16px rgba(13,59,128,0.14)); transition:transform .45s cubic-bezier(.2,.7,.2,1); }
-  .step-card:hover .step-art img { transform:translateY(-5px) scale(1.045); }
-  .step-no { position:absolute; top:14px; left:16px; min-width:40px; height:40px; padding:0 6px; border-radius:12px; color:#fff; font-family:'Montserrat'; font-weight:800; font-size:17px; display:flex; align-items:center; justify-content:center; box-shadow:0 7px 16px rgba(13,59,128,0.28); }
+  .step-art { position:relative; height:196px; overflow:hidden; }
+  .step-art img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; transition:transform .45s cubic-bezier(.2,.7,.2,1); }
+  .step-card:hover .step-art img { transform:scale(1.045); }
   .step-body { padding:20px 24px 26px; }
 
   /* about: text + floating dual photos */
@@ -1816,7 +1815,6 @@ function render() {
     'linear-gradient(160deg,#fff4e8,#ffe6cd)',
     'linear-gradient(160deg,#eef0ff,#dee1ff)'
   ];
-  const STEP_NO_BG = ['#1574e6','#19b56a','#f08a24','#5b6ef0'];
   const stepsGrid = document.getElementById('steps-grid');
   stepsGrid.innerHTML = '';
   t.steps.forEach((step, i) => {
@@ -1826,7 +1824,6 @@ function render() {
     div.style.transitionDelay = (i * 0.14) + 's';
     div.innerHTML =
       '<div class="step-art" style="background:' + STEP_TINTS[i] + ';">' +
-        '<span class="step-no" style="background:' + STEP_NO_BG[i] + ';">' + step.no + '</span>' +
         '<img src="' + STEP_ARTS[i] + '" alt="" loading="lazy">' +
       '</div>' +
       '<div class="step-body">' +
