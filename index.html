@@ -267,6 +267,15 @@
   #winners-grid:hover .win-track, .win-track.paused { animation-play-state:paused; }
   @keyframes winMarquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
 
+  /* 本屆報名作品 — 作品還少，先不自動輪播，改成可以手動左右滑的一排 */
+  #entries-grid { overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scroll-snap-type:x proximity; }
+  #entries-grid::-webkit-scrollbar { height:8px; }
+  #entries-grid::-webkit-scrollbar-track { background:#eaf1fb; border-radius:999px; }
+  #entries-grid::-webkit-scrollbar-thumb { background:#bcd3ef; border-radius:999px; }
+  #entries-grid::-webkit-scrollbar-thumb:hover { background:#95b7e0; }
+  .entry-row { display:flex; gap:16px; width:max-content; padding-bottom:10px; }
+  .entry-row > a { scroll-snap-align:start; }
+
 
   /* === fixed transparent header === */
   /* header scrolls away with the hero, then sticks (fixed) only after the hero */
@@ -1274,21 +1283,20 @@
   </div>
 </section>
 
-<!-- 7-9. COMING SOON -->
-<section id="judges" style="background:#fff;padding:clamp(56px,8vw,96px) clamp(18px,4vw,40px) clamp(24px,4vw,40px);">
+<!-- 7. 2026 ENTRIES SHOWCASE -->
+<section id="showcase" style="background:#fff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);">
   <div style="max-width:1180px;margin:0 auto;">
-    <div data-reveal style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
-
-      <!-- Video Showcase -->
-      <div style="position:relative;border:1.5px dashed #c3d6f0;border-radius:20px;padding:36px 30px;background:#f7faff;">
-        <span id="soon-label-3" style="position:absolute;top:22px;right:22px;font-family:'Montserrat';font-weight:700;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#1574e6;background:#e2edfc;padding:5px 12px;border-radius:999px;"></span>
-        <span style="display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:14px;border:3px solid #1574e6;"><span style="width:0;height:0;border-style:solid;border-width:10px 0 10px 17px;border-color:transparent transparent transparent #1574e6;margin-left:4px;"></span></span>
-        <div id="show-tag" style="font-family:'Montserrat';font-weight:700;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#1574e6;margin-top:22px;"></div>
-        <h3 id="show-title" style="font-family:'Noto Sans TC';font-weight:900;font-size:22px;color:#0d2747;margin:8px 0 10px;"></h3>
-        <p id="show-body" style="font-family:'Noto Sans TC';font-size:14.5px;line-height:1.75;color:#5a6a82;margin:0;"></p>
+    <div style="display:flex;flex-wrap:wrap;gap:22px;align-items:flex-end;justify-content:space-between;">
+      <div style="max-width:640px;">
+        <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#1574e6;">
+          <span style="width:22px;height:2px;background:#38e58c;"></span><span id="show-tag"></span>
+        </div>
+        <h2 id="show-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(26px,3.6vw,42px);color:#0d2747;margin:16px 0 14px;"></h2>
+        <p id="show-body" style="font-family:'Noto Sans TC';font-size:16px;line-height:1.85;color:#5a6a82;margin:0;"></p>
       </div>
-
     </div>
+    <div id="entries-grid" style="margin-top:clamp(30px,4vw,48px);"></div>
+    <div id="entries-note" style="margin-top:clamp(30px,4vw,48px);border:1.5px dashed #c3d6f0;border-radius:20px;padding:36px 30px;background:#f7faff;text-align:center;font-family:'Noto Sans TC';font-size:15px;color:#5a6a82;"></div>
   </div>
 </section>
 
@@ -1464,7 +1472,11 @@ const C = {
     newsItems: [
       { date: '2026.06.30', tag: 'MOFA 新聞稿', title: '外交部推出「#FindingTAIWAN_2.0：Where We Connect」全球徵片競賽 邀請全球創作者用影像述說台灣與世界的連結', url: 'https://www.mofa.gov.tw/News_Content.aspx?n=95&sms=73&s=122572' }
     ],
-    showTag: '參賽作品 / Video Showcase', showTitle: '本屆報名作品', showBody: '徵件期間將開放瀏覽參賽作品。',
+    showTag: '參賽作品 / Video Showcase', showTitle: '本屆報名作品',
+    showBody: '徵件期間持續收到來自世界各地創作者的作品，點擊任一作品即可前往觀賞。',
+    showWatch: '觀看',
+    showLoading: '作品載入中⋯',
+    showEmpty: '徵件期間將開放瀏覽參賽作品。',
     footTagline: '以影像述說台灣，讓世界看見。',
     footRights: '中華民國外交部 Ministry of Foreign Affairs, ROC (Taiwan)',
     footContactLabel: '聯絡方式：',
@@ -1582,7 +1594,11 @@ const C = {
     newsItems: [
       { date: '2026.06.30', tag: 'MOFA press release', title: 'The Ministry of Foreign Affairs launches the #FindingTaiwan_2.0: Where We Connect', body: 'International short film competition, inviting creatives worldwide to explore Taiwan\'s links with the wider world through the lens!', url: 'https://en.mofa.gov.tw/News_Content.aspx?n=1328&s=122587' }
     ],
-    showTag: 'Video Showcase', showTitle: '2026 Entries', showBody: 'Submitted entries will be available for viewing during the call.',
+    showTag: 'Video Showcase', showTitle: '2026 Entries',
+    showBody: 'Entries keep arriving from creators around the world throughout the call — click any entry to watch.',
+    showWatch: 'Watch',
+    showLoading: 'Loading entries…',
+    showEmpty: 'Submitted entries will be available for viewing during the call.',
     footTagline: 'Telling Taiwan\'s story to the world, through film.',
     footRights: 'Ministry of Foreign Affairs, ROC （Taiwan）',
     footContactLabel: 'Contact Email:',
@@ -1648,6 +1664,131 @@ const WIN_TIER_GRAD = {
   third:  'linear-gradient(135deg,#cf9b6b,#a9743f)',
   merit:  'linear-gradient(135deg,#2f7de1,#1559b0)',
 };
+
+// ▼ 本屆報名作品 — 直接讀取 Google 試算表，在試算表新增一列作品就會出現在網站上
+//   欄位順序：編號 / 作品名稱 / 創作者 / 網址連結 / 劇照
+const ENTRIES_CSV_URL = 'https://docs.google.com/spreadsheets/d/1z_KxUsNKGKibThvskpSI79rraMtYHGnJFzmnUiga-As/export?format=csv&gid=0';
+let ENTRIES_2026 = [];
+let entriesState = 'loading'; // loading | ready | error
+
+// RFC4180-ish parser — 作品名稱可能含逗號或換行，不能用 split(',')
+function parseCSV(text) {
+  const rows = []; let row = []; let field = ''; let quoted = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (quoted) {
+      if (c !== '"') { field += c; }
+      else if (text[i + 1] === '"') { field += '"'; i++; }
+      else { quoted = false; }
+    }
+    else if (c === '"') { quoted = true; }
+    else if (c === ',') { row.push(field); field = ''; }
+    else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+    else if (c !== '\r') { field += c; }
+  }
+  if (field !== '' || row.length) { row.push(field); rows.push(row); }
+  return rows;
+}
+
+// 試算表是外部可編輯的來源，網址一律先驗證，只放行 http(s)
+function safeUrl(u) {
+  try {
+    const p = new URL(String(u).trim(), location.href);
+    return (p.protocol === 'http:' || p.protocol === 'https:') ? p.href : '';
+  } catch (e) { return ''; }
+}
+function driveFileId(u) {
+  const s = String(u);
+  const m = s.match(/[?&]id=([\w-]+)/) || s.match(/\/file\/d\/([\w-]+)/);
+  return m ? m[1] : '';
+}
+function youtubeId(u) {
+  const m = String(u).match(/(?:youtu\.be\/|[?&]v=|\/shorts\/|\/embed\/)([\w-]{11})/);
+  return m ? m[1] : '';
+}
+// 優先用試算表的劇照，沒有的話 YouTube 作品退回官方縮圖
+function entryCover(e) {
+  const id = driveFileId(e.still);
+  if (id) return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w480';
+  const y = youtubeId(e.url);
+  return y ? 'https://img.youtube.com/vi/' + y + '/hqdefault.jpg' : '';
+}
+function loadEntries() {
+  fetch(ENTRIES_CSV_URL, { cache: 'no-store' })
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+    .then(text => {
+      const rows = parseCSV(text).filter(r => r.some(c => c.trim() !== ''));
+      rows.shift(); // 標題列
+      ENTRIES_2026 = rows.map(r => ({
+        no:      (r[0] || '').trim(),
+        title:   (r[1] || '').trim(),
+        creator: (r[2] || '').trim(),
+        url:     safeUrl(r[3] || ''),
+        still:   (r[4] || '').trim()
+      })).filter(e => e.title && e.url);
+      entriesState = 'ready';
+    })
+    .catch(() => { ENTRIES_2026 = []; entriesState = 'error'; })
+    .then(() => renderEntries());
+}
+
+function makeEntryCard(e, t) {
+  const card = document.createElement('a');
+  card.className = 'win-card';
+  card.href = e.url; card.target = '_blank'; card.rel = 'noopener noreferrer';
+  card.style.cssText = 'position:relative;flex:none;width:clamp(150px,20vw,220px);aspect-ratio:9/16;border-radius:14px;overflow:hidden;text-decoration:none;box-shadow:0 12px 30px rgba(13,59,128,0.18);background:linear-gradient(135deg,#2f7de1,#1559b0);transition:transform 0.32s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.32s ease;';
+  card.onmouseenter = () => { card.style.transform = 'scale(1.06) translateY(-4px)'; card.style.boxShadow = '0 28px 56px rgba(13,59,128,0.32)'; };
+  card.onmouseleave = () => { card.style.transform = ''; card.style.boxShadow = '0 12px 30px rgba(13,59,128,0.18)'; };
+
+  const cover = entryCover(e);
+  const coverHtml = cover
+    ? '<img src="' + cover + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display=\'none\'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">'
+    : '';
+  // 作品名稱與創作者來自試算表，一律用 textContent 帶入，不進 innerHTML
+  card.innerHTML =
+    coverHtml +
+    '<span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">' +
+      '<span style="width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.20);backdrop-filter:blur(6px);border:2px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;">' +
+        '<span style="width:0;height:0;border-style:solid;border-width:9px 0 9px 17px;border-color:transparent transparent transparent #fff;margin-left:4px;"></span>' +
+      '</span>' +
+    '</span>' +
+    '<span style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.10) 0%,transparent 30%,transparent 50%,rgba(13,40,71,0.92) 100%);"></span>' +
+    '<span style="position:absolute;left:0;right:0;bottom:0;padding:12px 13px 14px;">' +
+      '<span class="ec-title" style="font-family:\'Noto Sans TC\';font-weight:900;font-size:14px;color:#fff;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35;"></span>' +
+      '<span style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:5px;">' +
+        '<span class="ec-creator" style="font-family:\'Noto Sans TC\';font-size:11.5px;color:rgba(255,255,255,0.78);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>' +
+        '<span style="font-family:\'Montserrat\';font-weight:700;font-size:9.5px;color:rgba(255,255,255,0.9);white-space:nowrap;flex:none;">' + t.showWatch + ' ↗</span>' +
+      '</span>' +
+    '</span>';
+  card.querySelector('.ec-title').textContent = e.title;
+  card.querySelector('.ec-creator').textContent = e.creator;
+  return card;
+}
+
+function renderEntries() {
+  const grid = document.getElementById('entries-grid');
+  if (!grid) return;
+  const t = C[currentLang];
+  const note = document.getElementById('entries-note');
+
+  // 還在載入、抓不到試算表或尚無作品時，退回原本的說明卡片
+  if (entriesState !== 'ready' || !ENTRIES_2026.length) {
+    grid.innerHTML = '';
+    if (note) {
+      note.style.display = '';
+      note.textContent = entriesState === 'loading' ? t.showLoading : t.showEmpty;
+    }
+    return;
+  }
+  if (note) note.style.display = 'none';
+
+  // 依試算表順序排一排，作品變多之後再考慮改回自動輪播
+  grid.innerHTML = '';
+  const row = document.createElement('div');
+  row.className = 'entry-row';
+  ENTRIES_2026.forEach(e => row.appendChild(makeEntryCard(e, t)));
+  grid.appendChild(row);
+}
 
 let currentLang = 'zh';
 
@@ -1977,9 +2118,7 @@ function render() {
   wGrid.addEventListener('touchend', resume);
   wGrid.addEventListener('touchcancel', resume);
 
-  // coming soon
-  const sl = t.soonLabel;
-  txt('soon-label-3', sl);
+  // news
   txt('news-tag', t.newsTag); txt('news-title', t.newsTitle); txt('news-body', t.newsBody);
   const newsList = document.getElementById('news-list');
   if (newsList) {
@@ -2017,6 +2156,7 @@ function render() {
     });
   }
   txt('show-tag', t.showTag); txt('show-title', t.showTitle); txt('show-body', t.showBody);
+  renderEntries();
 
   // footer
   txt('foot-tagline', t.footTagline);
@@ -2347,6 +2487,7 @@ document.addEventListener('DOMContentLoaded', () => {
   try { history.replaceState({ lang: currentLang }, '', urlForLang(currentLang) + location.hash); } catch (e) {}
   if (!location.hash) { window.scrollTo(0, 0); }
   render();
+  loadEntries();
   initParticles();
   buildAwardsCollage();
   setupStickyApply();
