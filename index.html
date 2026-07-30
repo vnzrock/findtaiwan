@@ -267,14 +267,13 @@
   #winners-grid:hover .win-track, .win-track.paused { animation-play-state:paused; }
   @keyframes winMarquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
 
-  /* 本屆報名作品 — 作品還少，先不自動輪播，改成可以手動左右滑的一排 */
-  #entries-grid { overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scroll-snap-type:x proximity; }
-  #entries-grid::-webkit-scrollbar { height:8px; }
-  #entries-grid::-webkit-scrollbar-track { background:#eaf1fb; border-radius:999px; }
-  #entries-grid::-webkit-scrollbar-thumb { background:#bcd3ef; border-radius:999px; }
-  #entries-grid::-webkit-scrollbar-thumb:hover { background:#95b7e0; }
-  .entry-row { display:flex; gap:16px; width:max-content; padding-bottom:10px; }
-  .entry-row > a { scroll-snap-align:start; }
+  /* 本屆報名作品 — 響應式方格，作品變多也不會爆版；手機 2 欄 → 桌機最多 5 欄 */
+  #entries-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  @media (min-width:560px) { #entries-grid { grid-template-columns:repeat(3,1fr); } }
+  @media (min-width:768px) { #entries-grid { grid-template-columns:repeat(4,1fr); gap:16px; } }
+  @media (min-width:1024px){ #entries-grid { grid-template-columns:repeat(5,1fr); } }
+  #entries-more { font-family:'Noto Sans TC'; font-weight:700; font-size:15px; padding:13px 34px; border:1.5px solid #1574e6; background:#fff; color:#1574e6; border-radius:999px; cursor:pointer; transition:background .2s,color .2s,transform .2s,box-shadow .2s; }
+  #entries-more:hover { background:#1574e6; color:#fff; transform:translateY(-2px); box-shadow:0 12px 26px rgba(21,116,230,0.28); }
 
 
   /* === fixed transparent header === */
@@ -1296,6 +1295,9 @@
       </div>
     </div>
     <div id="entries-grid" style="margin-top:clamp(30px,4vw,48px);"></div>
+    <div id="entries-more-wrap" style="display:none;text-align:center;margin-top:clamp(26px,3.5vw,40px);">
+      <button id="entries-more" type="button"></button>
+    </div>
     <div id="entries-note" style="margin-top:clamp(30px,4vw,48px);border:1.5px dashed #c3d6f0;border-radius:20px;padding:36px 30px;background:#f7faff;text-align:center;font-family:'Noto Sans TC';font-size:15px;color:#5a6a82;"></div>
   </div>
 </section>
@@ -1670,6 +1672,8 @@ const WIN_TIER_GRAD = {
 const ENTRIES_CSV_URL = 'https://docs.google.com/spreadsheets/d/1z_KxUsNKGKibThvskpSI79rraMtYHGnJFzmnUiga-As/export?format=csv&gid=0';
 let ENTRIES_2026 = [];
 let entriesState = 'loading'; // loading | ready | error
+const ENTRIES_BATCH = 12;     // 一開始顯示、以及每次「載入更多」展開的件數
+let entriesShown = ENTRIES_BATCH;
 
 // RFC4180-ish parser — 作品名稱可能含逗號或換行，不能用 split(',')
 function parseCSV(text) {
@@ -1736,7 +1740,7 @@ function makeEntryCard(e, t) {
   const card = document.createElement('a');
   card.className = 'win-card';
   card.href = e.url; card.target = '_blank'; card.rel = 'noopener noreferrer';
-  card.style.cssText = 'position:relative;flex:none;width:clamp(150px,20vw,220px);aspect-ratio:9/16;border-radius:14px;overflow:hidden;text-decoration:none;box-shadow:0 12px 30px rgba(13,59,128,0.18);background:linear-gradient(135deg,#2f7de1,#1559b0);transition:transform 0.32s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.32s ease;';
+  card.style.cssText = 'position:relative;width:100%;aspect-ratio:9/16;border-radius:14px;overflow:hidden;text-decoration:none;box-shadow:0 12px 30px rgba(13,59,128,0.18);background:linear-gradient(135deg,#2f7de1,#1559b0);transition:transform 0.32s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.32s ease;';
   card.onmouseenter = () => { card.style.transform = 'scale(1.06) translateY(-4px)'; card.style.boxShadow = '0 28px 56px rgba(13,59,128,0.32)'; };
   card.onmouseleave = () => { card.style.transform = ''; card.style.boxShadow = '0 12px 30px rgba(13,59,128,0.18)'; };
 
@@ -1770,10 +1774,13 @@ function renderEntries() {
   if (!grid) return;
   const t = C[currentLang];
   const note = document.getElementById('entries-note');
+  const moreWrap = document.getElementById('entries-more-wrap');
+  const moreBtn = document.getElementById('entries-more');
 
   // 還在載入、抓不到試算表或尚無作品時，退回原本的說明卡片
   if (entriesState !== 'ready' || !ENTRIES_2026.length) {
     grid.innerHTML = '';
+    if (moreWrap) moreWrap.style.display = 'none';
     if (note) {
       note.style.display = '';
       note.textContent = entriesState === 'loading' ? t.showLoading : t.showEmpty;
@@ -1782,12 +1789,36 @@ function renderEntries() {
   }
   if (note) note.style.display = 'none';
 
-  // 依試算表順序排一排，作品變多之後再考慮改回自動輪播
+  const total = ENTRIES_2026.length;
+  // 換語言重新 render 時保留目前已展開的件數，別縮回第一批
+  if (entriesShown > total) entriesShown = total;
+  if (entriesShown < ENTRIES_BATCH) entriesShown = Math.min(ENTRIES_BATCH, total);
+
   grid.innerHTML = '';
-  const row = document.createElement('div');
-  row.className = 'entry-row';
-  ENTRIES_2026.forEach(e => row.appendChild(makeEntryCard(e, t)));
-  grid.appendChild(row);
+  ENTRIES_2026.slice(0, entriesShown).forEach(e => grid.appendChild(makeEntryCard(e, t)));
+  updateEntriesMore();
+
+  if (moreBtn) moreBtn.onclick = () => {
+    const from = entriesShown;
+    entriesShown = Math.min(total, entriesShown + ENTRIES_BATCH);
+    ENTRIES_2026.slice(from, entriesShown).forEach(e => grid.appendChild(makeEntryCard(e, C[currentLang])));
+    updateEntriesMore();
+  };
+}
+
+function updateEntriesMore() {
+  const wrap = document.getElementById('entries-more-wrap');
+  const btn = document.getElementById('entries-more');
+  if (!wrap || !btn) return;
+  const remaining = ENTRIES_2026.length - entriesShown;
+  if (remaining > 0) {
+    wrap.style.display = '';
+    btn.textContent = currentLang === 'en'
+      ? 'Load more (' + remaining + ' left)'
+      : '載入更多（還有 ' + remaining + ' 件）';
+  } else {
+    wrap.style.display = 'none';
+  }
 }
 
 let currentLang = 'zh';
