@@ -2263,7 +2263,9 @@ function render() {
   const newsList = document.getElementById('news-list');
   if (newsList) {
     newsList.innerHTML = '';
-    (t.newsItems || []).forEach((n) => newsList.appendChild(makeNewsCard(n, t)));
+    // 最新的消息排最前面（日期格式 YYYY.MM.DD，字串比較即可）
+    const sortedNews = (t.newsItems || []).slice().sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+    sortedNews.forEach((n) => newsList.appendChild(makeNewsCard(n, t)));
   }
   txt('show-tag', t.showTag); txt('show-title', t.showTitle); txt('show-body', t.showBody);
   renderEntries();
