@@ -1445,7 +1445,7 @@ const C = {
       { d: '2026.07.01', t: '徵件起跑', s: '線上報名與作品上傳開放' },
       { d: '2026.08.31', t: '徵件截止', s: '作品收件最後期限（23:59 GMT+8）' },
       { d: '2026.09', t: '入圍名單公告', s: '入圍名單於官方網站公布' },
-      { d: '2026.09', t: '頒獎典禮', s: '舉行頒獎典禮並公告得獎者' }
+      { d: '2026.09.24', t: '頒獎典禮', s: '舉行頒獎典禮並公告得獎者' }
     ],
     tlNote: '※ 實際日期以主辦單位正式公告為準。',
     awardsTag: '獎項與獎金 / Awards',
@@ -1568,7 +1568,7 @@ const C = {
       { d: '2026.07.01', t: 'Submissions open', s: 'Online registration & uploads begin' },
       { d: '2026.08.31', t: 'Submissions close', s: 'Final deadline (23:59 GMT+8)' },
       { d: '2026.09', t: 'Shortlist announced', s: 'Finalists posted on the official website' },
-      { d: '2026.09', t: 'Ceremony & winners', s: 'Awards ceremony & winners announced' }
+      { d: '2026.09.24', t: 'Ceremony & winners', s: 'Awards ceremony & winners announced' }
     ],
     tlNote: '※ Dates are subject to change. Official announcements by the organizer shall prevail.',
     awardsTag: 'Awards',
@@ -2263,7 +2263,9 @@ function render() {
   const newsList = document.getElementById('news-list');
   if (newsList) {
     newsList.innerHTML = '';
-    (t.newsItems || []).forEach((n) => newsList.appendChild(makeNewsCard(n, t)));
+    // 最新的消息排在最前面（日期由新到舊）
+    const newsSorted = (t.newsItems || []).slice().sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+    newsSorted.forEach((n) => newsList.appendChild(makeNewsCard(n, t)));
   }
   txt('show-tag', t.showTag); txt('show-title', t.showTitle); txt('show-body', t.showBody);
   renderEntries();
