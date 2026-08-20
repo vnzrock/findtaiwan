@@ -284,7 +284,10 @@
   .news-headline { font-family:'Noto Sans TC'; font-weight:800; font-size:clamp(16px,2vw,19px); line-height:1.5; color:#0d2747; margin:12px 0 0; }
   .news-headline a { color:inherit; text-decoration:none; transition:color .2s; }
   .news-card:hover .news-headline a { color:#1574e6; }
-  .news-body { font-family:'Noto Sans TC'; font-size:14px; line-height:1.75; color:#5a6a82; margin:10px 0 0; }
+  .news-body { font-family:'Noto Sans TC'; font-size:14px; line-height:1.9; color:#5a6a82; margin:10px 0 0; }
+  .news-body strong { color:#0d2747; }
+  .news-body a { color:#1574e6; font-weight:700; text-decoration:none; }
+  .news-body a:hover { text-decoration:underline; }
   .news-readmore { display:inline-flex; align-items:center; gap:6px; margin-top:16px; font-family:'Noto Sans TC'; font-weight:700; font-size:14px; color:#1574e6; text-decoration:none; transition:gap .2s; }
   .news-readmore:hover { gap:10px; }
   .news-card-video { display:grid; grid-template-columns:1fr; gap:clamp(14px,3vw,26px); align-items:center; padding:clamp(18px,3vw,26px); }
@@ -1485,8 +1488,9 @@ const C = {
     soonLabel: 'Coming Soon',
     newsTag: 'News', newsTitle: '最新消息', newsBody: '',
     newsItems: [
-      { date: '2026.06.30', tag: 'MOFA 新聞稿', title: '外交部推出「#FindingTAIWAN_2.0：Where We Connect」全球徵片競賽 邀請全球創作者用影像述說台灣與世界的連結', url: 'https://www.mofa.gov.tw/News_Content.aspx?n=95&sms=73&s=122572' },
-      { date: '2026.08.05', tag: '影片', title: '一分鐘看懂競賽！#FindingTAIWAN_2.0全球徵片競賽懶人包', video: 'assets/video/finding-taiwan-guide.mp4', poster: 'assets/video/finding-taiwan-guide-poster.webp' }
+      { date: '2026.08.20', tag: '直播公告', title: '#FindingTAIWAN_2.0：Where We Connect 全球徵片競賽頒獎典禮直播公告', image: 'assets/img/news-awards-ceremony.webp', bodyHtml: '<strong>直播資訊</strong><br>日期及時間｜2026年9月24日（四）下午2時<br>Facebook｜<a href="https://www.facebook.com/mofa.gov.tw?locale=zh_TW" target="_blank" rel="noopener noreferrer">外交部 Ministry of Foreign Affairs, ROC (Taiwan)</a><br>YouTube｜<a href="https://www.youtube.com/@taiwan2theworld" target="_blank" rel="noopener noreferrer">MOFA Taiwan</a>（連結）' },
+      { date: '2026.08.05', tag: '影片', title: '一分鐘看懂競賽！#FindingTAIWAN_2.0全球徵片競賽懶人包', video: 'assets/video/finding-taiwan-guide.mp4', poster: 'assets/video/finding-taiwan-guide-poster.webp' },
+      { date: '2026.06.30', tag: 'MOFA 新聞稿', title: '外交部推出「#FindingTAIWAN_2.0：Where We Connect」全球徵片競賽 邀請全球創作者用影像述說台灣與世界的連結', url: 'https://www.mofa.gov.tw/News_Content.aspx?n=95&sms=73&s=122572' }
     ],
     showTag: '參賽作品 / Video Showcase', showTitle: '本屆報名作品',
     showBody: '徵件期間持續收到來自世界各地創作者的作品，點擊任一作品即可前往觀賞。',
@@ -1608,8 +1612,9 @@ const C = {
     soonLabel: 'Coming Soon',
     newsTag: 'News', newsTitle: 'Latest news', newsBody: 'The latest announcements and news will be posted here.',
     newsItems: [
-      { date: '2026.06.30', tag: 'MOFA press release', title: 'The Ministry of Foreign Affairs launches the #FindingTaiwan_2.0: Where We Connect', body: 'International short film competition, inviting creatives worldwide to explore Taiwan\'s links with the wider world through the lens!', url: 'https://en.mofa.gov.tw/News_Content.aspx?n=1328&s=122587' },
-      { date: '2026.08.05', tag: 'Video', title: 'Your Quick Guide to the #FindingTAIWAN_2.0 International Short Film Competition', video: 'assets/video/finding-taiwan-guide.mp4', poster: 'assets/video/finding-taiwan-guide-poster.webp' }
+      { date: '2026.08.20', tag: 'Livestream Announcement', title: '#FindingTAIWAN_2.0: Where We Connect International Short Film Competition Awards Ceremony Livestream', image: 'assets/img/news-awards-ceremony.webp', bodyHtml: '<strong>Livestream Information</strong><br>Date &amp; Time｜Thursday, September 24, 2026, at 2:00 PM (Taiwan Time)<br>Facebook｜<a href="https://www.facebook.com/mofa.gov.tw?locale=zh_TW" target="_blank" rel="noopener noreferrer">外交部 Ministry of Foreign Affairs, ROC (Taiwan)</a> (Link)<br>YouTube｜<a href="https://www.youtube.com/@taiwan2theworld" target="_blank" rel="noopener noreferrer">MOFA Taiwan</a> (Link)' },
+      { date: '2026.08.05', tag: 'Video', title: 'Your Quick Guide to the #FindingTAIWAN_2.0 International Short Film Competition', video: 'assets/video/finding-taiwan-guide.mp4', poster: 'assets/video/finding-taiwan-guide-poster.webp' },
+      { date: '2026.06.30', tag: 'MOFA press release', title: 'The Ministry of Foreign Affairs launches the #FindingTaiwan_2.0: Where We Connect', body: 'International short film competition, inviting creatives worldwide to explore Taiwan\'s links with the wider world through the lens!', url: 'https://en.mofa.gov.tw/News_Content.aspx?n=1328&s=122587' }
     ],
     showTag: 'Video Showcase', showTitle: '2026 Entries',
     showBody: 'Entries keep arriving from creators around the world throughout the call — click any entry to watch.',
@@ -1860,6 +1865,15 @@ function makeNewsCard(n) {
     h.textContent = n.title;
   }
 
+  function appendBody(container) {
+    if (n.body || n.bodyHtml) {
+      const p = document.createElement('p');
+      p.className = 'news-body';
+      if (n.bodyHtml) { p.innerHTML = n.bodyHtml; } else { p.textContent = n.body; }
+      container.appendChild(p);
+    }
+  }
+
   if (n.video) {
     const grid = document.createElement('div');
     grid.className = 'news-card-video';
@@ -1873,17 +1887,22 @@ function makeNewsCard(n) {
     grid.appendChild(textCol);
     grid.appendChild(makeNewsVideo(n));
     card.appendChild(grid);
+  } else if (n.image) {
+    const grid = document.createElement('div');
+    grid.className = 'news-card-video';
+    const textCol = document.createElement('div');
+    textCol.appendChild(meta);
+    textCol.appendChild(h);
+    appendBody(textCol);
+    grid.appendChild(textCol);
+    grid.appendChild(makeNewsImage(n));
+    card.appendChild(grid);
   } else {
     const inner = document.createElement('div');
     inner.className = 'news-card-inner';
     inner.appendChild(meta);
     inner.appendChild(h);
-    if (n.body) {
-      const p = document.createElement('p');
-      p.className = 'news-body';
-      p.textContent = n.body;
-      inner.appendChild(p);
-    }
+    appendBody(inner);
     if (n.url) {
       const more = document.createElement('a');
       more.className = 'news-readmore';
@@ -1928,6 +1947,18 @@ function makeNewsVideo(n) {
     wrap.onmouseenter = wrap.onmouseleave = null;
   }, { once: true });
   return wrap;
+}
+
+// 最新消息裡的靜態圖片（如活動公告圖）— 方形縮圖，點擊開新分頁看原圖
+function makeNewsImage(n) {
+  const link = document.createElement('a');
+  link.href = n.image; link.target = '_blank'; link.rel = 'noopener noreferrer';
+  link.style.cssText = 'position:relative;display:block;width:100%;max-width:200px;aspect-ratio:1/1;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 14px 34px rgba(13,59,128,0.20);';
+  const img = document.createElement('img');
+  img.src = n.image; img.alt = n.title || ''; img.loading = 'lazy';
+  img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+  link.appendChild(img);
+  return link;
 }
 
 let currentLang = 'zh';
