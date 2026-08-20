@@ -291,8 +291,23 @@
   .news-readmore { display:inline-flex; align-items:center; gap:6px; margin-top:16px; font-family:'Noto Sans TC'; font-weight:700; font-size:14px; color:#1574e6; text-decoration:none; transition:gap .2s; }
   .news-readmore:hover { gap:10px; }
   .news-card-video { display:grid; grid-template-columns:1fr; gap:clamp(14px,3vw,26px); align-items:center; padding:clamp(18px,3vw,26px); }
-  @media (min-width:600px) { .news-card-video { grid-template-columns:1fr 200px; } }
+  @media (min-width:600px) { .news-card-video { grid-template-columns:1fr 260px; } }
   .news-watch-hint { display:inline-block; margin-top:16px; font-family:'Noto Sans TC'; font-weight:700; font-size:13.5px; color:#1574e6; }
+  .news-media-link { position:relative; display:block; width:100%; max-width:260px; aspect-ratio:1/1; margin:0 auto; border-radius:16px; overflow:hidden; box-shadow:0 14px 34px rgba(13,59,128,0.20); cursor:zoom-in; }
+  .news-media-link img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .35s cubic-bezier(.2,.7,.2,1); }
+  .news-media-link:hover img { transform:scale(1.06); }
+  .news-media-zoom { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(13,40,71,0); transition:background .25s ease; }
+  .news-media-link:hover .news-media-zoom { background:rgba(13,40,71,0.22); }
+  .news-media-zoom svg { width:34px; height:34px; opacity:0; transform:scale(.8); transition:opacity .25s ease, transform .25s ease; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.35)); }
+  .news-media-link:hover .news-media-zoom svg { opacity:1; transform:scale(1); }
+
+  /* 最新消息圖片點擊放大 lightbox */
+  #lightbox { position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center; background:rgba(9,28,80,0.92); backdrop-filter:blur(6px); opacity:0; visibility:hidden; padding:60px 20px; transition:opacity .25s ease, visibility .25s ease; }
+  #lightbox.open { opacity:1; visibility:visible; }
+  #lightbox img { max-width:min(90vw,720px); max-height:80vh; border-radius:14px; box-shadow:0 24px 60px rgba(0,0,0,0.4); transform:scale(.96); transition:transform .25s ease; }
+  #lightbox.open img { transform:scale(1); }
+  #lightbox-close { position:absolute; top:20px; right:20px; width:44px; height:44px; border-radius:50%; border:none; background:rgba(255,255,255,0.12); color:#fff; font-size:24px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s; }
+  #lightbox-close:hover { background:rgba(255,255,255,0.24); }
 
 
   /* === fixed transparent header === */
@@ -1949,16 +1964,41 @@ function makeNewsVideo(n) {
   return wrap;
 }
 
-// 最新消息裡的靜態圖片（如活動公告圖）— 方形縮圖，點擊開新分頁看原圖
+// 最新消息裡的靜態圖片（如活動公告圖）— 方形縮圖，hover 放大、點擊開 lightbox
 function makeNewsImage(n) {
   const link = document.createElement('a');
-  link.href = n.image; link.target = '_blank'; link.rel = 'noopener noreferrer';
-  link.style.cssText = 'position:relative;display:block;width:100%;max-width:200px;aspect-ratio:1/1;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 14px 34px rgba(13,59,128,0.20);';
+  link.href = n.image; link.className = 'news-media-link';
   const img = document.createElement('img');
   img.src = n.image; img.alt = n.title || ''; img.loading = 'lazy';
-  img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+  const zoom = document.createElement('span');
+  zoom.className = 'news-media-zoom';
+  zoom.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>';
   link.appendChild(img);
+  link.appendChild(zoom);
+  link.addEventListener('click', (e) => { e.preventDefault(); openLightbox(n.image, n.title); });
   return link;
+}
+
+// 點擊最新消息圖片時的全螢幕放大檢視
+let lightboxEl = null;
+function openLightbox(src, alt) {
+  if (!lightboxEl) {
+    lightboxEl = document.createElement('div');
+    lightboxEl.id = 'lightbox';
+    lightboxEl.innerHTML = '<button id="lightbox-close" aria-label="Close">&times;</button><img id="lightbox-img" alt="">';
+    document.body.appendChild(lightboxEl);
+    lightboxEl.addEventListener('click', (e) => { if (e.target === lightboxEl) closeLightbox(); });
+    lightboxEl.querySelector('#lightbox-close').addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+  }
+  lightboxEl.querySelector('#lightbox-img').src = src;
+  lightboxEl.querySelector('#lightbox-img').alt = alt || '';
+  lightboxEl.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  if (lightboxEl) lightboxEl.classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 let currentLang = 'zh';
