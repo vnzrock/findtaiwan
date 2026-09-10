@@ -310,6 +310,11 @@
   .news-media-zoom svg { width:34px; height:34px; opacity:0; transform:scale(.8); transition:opacity .25s ease, transform .25s ease; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.35)); }
   .news-media-link:hover .news-media-zoom svg { opacity:1; transform:scale(1); }
 
+  /* 最新消息多張圖片（如入圍名單）— 卡片下方橫排方形縮圖，點擊開 lightbox 可左右切換 */
+  .news-gallery { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(10px,2vw,18px); margin-top:20px; }
+  @media (max-width:479px) { .news-gallery { grid-template-columns:1fr 1fr; } .news-gallery .news-media-link:nth-child(3) { grid-column:1 / -1; max-width:calc(50% - 5px); } }
+  .news-gallery .news-media-link { max-width:none; margin:0; border-radius:14px; }
+  .news-gallery-num { position:absolute; left:10px; bottom:10px; z-index:1; padding:3px 9px; border-radius:999px; background:rgba(13,40,71,0.72); color:#fff; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:700; font-size:11px; letter-spacing:0.06em; pointer-events:none; }
   /* 最新消息圖片點擊放大 lightbox */
   #lightbox { position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center; background:rgba(9,28,80,0.92); backdrop-filter:blur(6px); opacity:0; visibility:hidden; padding:60px 20px; transition:opacity .25s ease, visibility .25s ease; }
   #lightbox.open { opacity:1; visibility:visible; }
@@ -317,6 +322,13 @@
   #lightbox.open img { transform:scale(1); }
   #lightbox-close { position:absolute; top:20px; right:20px; width:44px; height:44px; border-radius:50%; border:none; background:rgba(255,255,255,0.12); color:#fff; font-size:24px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s; }
   #lightbox-close:hover { background:rgba(255,255,255,0.24); }
+  .lightbox-nav { position:absolute; z-index:2; top:50%; transform:translateY(-50%); width:46px; height:46px; border-radius:50%; border:none; background:rgba(255,255,255,0.12); color:#fff; font-size:30px; line-height:1; cursor:pointer; display:none; align-items:center; justify-content:center; transition:background .2s; }
+  .lightbox-nav:hover { background:rgba(255,255,255,0.24); }
+  #lightbox.has-nav .lightbox-nav { display:flex; }
+  #lightbox-prev { left:14px; } #lightbox-next { right:14px; }
+  #lightbox-count { position:absolute; bottom:22px; left:50%; transform:translateX(-50%); display:none; color:#fff; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:700; font-size:13px; letter-spacing:0.08em; opacity:.85; }
+  #lightbox.has-nav #lightbox-count { display:block; }
+  @media (max-width:600px) { #lightbox { padding:70px 12px; } #lightbox-prev { left:6px; } #lightbox-next { right:6px; } }
 
 
   /* === fixed transparent header === */
@@ -1512,6 +1524,7 @@ const C = {
     soonLabel: 'Coming Soon',
     newsTag: 'News', newsTitle: '最新消息', newsBody: '',
     newsItems: [
+      { date: '2026.09.10', tag: '入圍名單公告', title: '#FindingTAIWAN_2.0全球徵片競賽決選入圍名單公告', images: ['assets/img/news-shortlist-1.webp', 'assets/img/news-shortlist-2.webp', 'assets/img/news-shortlist-3.webp'], bodyHtml: '本入圍名單係依收件時間順序排列，非依名次排序。<br>Shortlists are listed by submission number, not competition ranking.' },
       { date: '2026.08.20', tag: '直播公告', title: '#FindingTAIWAN_2.0：Where We Connect 全球徵片競賽頒獎典禮直播公告', image: 'assets/img/news-awards-ceremony.webp', bodyHtml: '<strong>直播資訊</strong><br>日期及時間｜2026年9月24日（四）下午2時<br>Facebook｜<a href="https://www.facebook.com/mofa.gov.tw?locale=zh_TW" target="_blank" rel="noopener noreferrer">外交部 Ministry of Foreign Affairs, ROC (Taiwan)</a><br>YouTube｜<a href="https://youtube.com/@mofa_taiwan?si=BmF26x-IY6lUzbBn" target="_blank" rel="noopener noreferrer">MOFA Taiwan</a>' },
       { date: '2026.08.05', tag: '影片', title: '一分鐘看懂競賽！#FindingTAIWAN_2.0全球徵片競賽懶人包', video: 'assets/video/finding-taiwan-guide.mp4', poster: 'assets/video/finding-taiwan-guide-poster.webp' },
       { date: '2026.06.30', tag: 'MOFA 新聞稿', title: '外交部推出「#FindingTAIWAN_2.0：Where We Connect」全球徵片競賽 邀請全球創作者用影像述說台灣與世界的連結', url: 'https://www.mofa.gov.tw/News_Content.aspx?n=95&sms=73&s=122572' }
@@ -1636,6 +1649,7 @@ const C = {
     soonLabel: 'Coming Soon',
     newsTag: 'News', newsTitle: 'Latest news', newsBody: 'The latest announcements and news will be posted here.',
     newsItems: [
+      { date: '2026.09.10', tag: 'Shortlist Announcement', title: '#FindingTAIWAN_2.0 International Short Film Competition Shortlists Announced', images: ['assets/img/news-shortlist-1.webp', 'assets/img/news-shortlist-2.webp', 'assets/img/news-shortlist-3.webp'], bodyHtml: 'Shortlists are listed by submission number, not competition ranking.' },
       { date: '2026.08.20', tag: 'Livestream Announcement', title: '#FindingTAIWAN_2.0: Where We Connect International Short Film Competition Awards Ceremony Livestream', image: 'assets/img/news-awards-ceremony.webp', bodyHtml: '<strong>Livestream Information</strong><br>Date &amp; Time｜Thursday, September 24, 2026, at 2:00 PM (Taiwan Time)<br>Facebook｜<a href="https://www.facebook.com/mofa.gov.tw?locale=zh_TW" target="_blank" rel="noopener noreferrer">外交部 Ministry of Foreign Affairs, ROC (Taiwan)</a><br>YouTube｜<a href="https://youtube.com/@mofa_taiwan?si=BmF26x-IY6lUzbBn" target="_blank" rel="noopener noreferrer">MOFA Taiwan</a>' },
       { date: '2026.08.05', tag: 'Video', title: 'Your Quick Guide to the #FindingTAIWAN_2.0 International Short Film Competition', video: 'assets/video/finding-taiwan-guide.mp4', poster: 'assets/video/finding-taiwan-guide-poster.webp' },
       { date: '2026.06.30', tag: 'MOFA press release', title: 'The Ministry of Foreign Affairs launches the #FindingTaiwan_2.0: Where We Connect', body: 'International short film competition, inviting creatives worldwide to explore Taiwan\'s links with the wider world through the lens!', url: 'https://en.mofa.gov.tw/News_Content.aspx?n=1328&s=122587' }
@@ -1911,6 +1925,14 @@ function makeNewsCard(n) {
     grid.appendChild(textCol);
     grid.appendChild(makeNewsVideo(n));
     card.appendChild(grid);
+  } else if (n.images && n.images.length) {
+    const inner = document.createElement('div');
+    inner.className = 'news-card-inner';
+    inner.appendChild(meta);
+    inner.appendChild(h);
+    appendBody(inner);
+    inner.appendChild(makeNewsGallery(n));
+    card.appendChild(inner);
   } else if (n.image) {
     const grid = document.createElement('div');
     grid.className = 'news-card-video';
@@ -1988,20 +2010,80 @@ function makeNewsImage(n) {
   return link;
 }
 
-// 點擊最新消息圖片時的全螢幕放大檢視
+// 最新消息裡的多張圖片（如入圍名單 1/3、2/3、3/3）— 橫排方形縮圖，點擊開 lightbox 並可左右切換
+function makeNewsGallery(n) {
+  const wrap = document.createElement('div');
+  wrap.className = 'news-gallery';
+  n.images.forEach((src, i) => {
+    const link = document.createElement('a');
+    link.href = src; link.className = 'news-media-link';
+    const img = document.createElement('img');
+    img.src = src; img.alt = (n.title || '') + ' (' + (i + 1) + '/' + n.images.length + ')'; img.loading = 'lazy';
+    const num = document.createElement('span');
+    num.className = 'news-gallery-num';
+    num.textContent = (i + 1) + ' / ' + n.images.length;
+    const zoom = document.createElement('span');
+    zoom.className = 'news-media-zoom';
+    zoom.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>';
+    link.appendChild(img);
+    link.appendChild(num);
+    link.appendChild(zoom);
+    link.addEventListener('click', (e) => { e.preventDefault(); openLightbox(src, n.title, n.images, i); });
+    wrap.appendChild(link);
+  });
+  return wrap;
+}
+
+// 點擊最新消息圖片時的全螢幕放大檢視（傳入 list 時顯示上一張／下一張）
 let lightboxEl = null;
-function openLightbox(src, alt) {
+let lightboxList = null, lightboxIndex = 0, lightboxAlt = '';
+function showLightboxAt(i) {
+  if (!lightboxList) return;
+  lightboxIndex = (i + lightboxList.length) % lightboxList.length;
+  lightboxEl.querySelector('#lightbox-img').src = lightboxList[lightboxIndex];
+  lightboxEl.querySelector('#lightbox-img').alt = lightboxAlt + ' (' + (lightboxIndex + 1) + '/' + lightboxList.length + ')';
+  lightboxEl.querySelector('#lightbox-count').textContent = (lightboxIndex + 1) + ' / ' + lightboxList.length;
+}
+function openLightbox(src, alt, list, index) {
   if (!lightboxEl) {
     lightboxEl = document.createElement('div');
     lightboxEl.id = 'lightbox';
-    lightboxEl.innerHTML = '<button id="lightbox-close" aria-label="Close">&times;</button><img id="lightbox-img" alt="">';
+    lightboxEl.innerHTML = '<button id="lightbox-close" aria-label="Close">&times;</button>'
+      + '<button id="lightbox-prev" class="lightbox-nav" aria-label="Previous">&#8249;</button>'
+      + '<img id="lightbox-img" alt="">'
+      + '<button id="lightbox-next" class="lightbox-nav" aria-label="Next">&#8250;</button>'
+      + '<span id="lightbox-count"></span>';
     document.body.appendChild(lightboxEl);
     lightboxEl.addEventListener('click', (e) => { if (e.target === lightboxEl) closeLightbox(); });
     lightboxEl.querySelector('#lightbox-close').addEventListener('click', closeLightbox);
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+    lightboxEl.querySelector('#lightbox-prev').addEventListener('click', () => showLightboxAt(lightboxIndex - 1));
+    lightboxEl.querySelector('#lightbox-next').addEventListener('click', () => showLightboxAt(lightboxIndex + 1));
+    document.addEventListener('keydown', (e) => {
+      if (!lightboxEl.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      else if (lightboxList && e.key === 'ArrowLeft') showLightboxAt(lightboxIndex - 1);
+      else if (lightboxList && e.key === 'ArrowRight') showLightboxAt(lightboxIndex + 1);
+    });
+    // 手機左右滑動切換
+    let touchX = null;
+    lightboxEl.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+    lightboxEl.addEventListener('touchend', (e) => {
+      if (touchX === null || !lightboxList) return;
+      const dx = e.changedTouches[0].clientX - touchX; touchX = null;
+      if (Math.abs(dx) > 40) showLightboxAt(lightboxIndex + (dx < 0 ? 1 : -1));
+    }, { passive: true });
   }
-  lightboxEl.querySelector('#lightbox-img').src = src;
-  lightboxEl.querySelector('#lightbox-img').alt = alt || '';
+  lightboxAlt = alt || '';
+  if (list && list.length > 1) {
+    lightboxList = list;
+    lightboxEl.classList.add('has-nav');
+    showLightboxAt(index || 0);
+  } else {
+    lightboxList = null;
+    lightboxEl.classList.remove('has-nav');
+    lightboxEl.querySelector('#lightbox-img').src = src;
+    lightboxEl.querySelector('#lightbox-img').alt = lightboxAlt;
+  }
   lightboxEl.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
