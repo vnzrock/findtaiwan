@@ -314,7 +314,6 @@
   .news-gallery { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(10px,2vw,18px); margin-top:20px; }
   @media (max-width:479px) { .news-gallery { grid-template-columns:1fr 1fr; } .news-gallery .news-media-link:nth-child(3) { grid-column:1 / -1; max-width:calc(50% - 5px); } }
   .news-gallery .news-media-link { max-width:none; margin:0; border-radius:14px; }
-  .news-gallery-num { position:absolute; left:10px; bottom:10px; z-index:1; padding:3px 9px; border-radius:999px; background:rgba(13,40,71,0.72); color:#fff; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:700; font-size:11px; letter-spacing:0.06em; pointer-events:none; }
   /* 最新消息圖片點擊放大 lightbox */
   #lightbox { position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center; background:rgba(9,28,80,0.92); backdrop-filter:blur(6px); opacity:0; visibility:hidden; padding:60px 20px; transition:opacity .25s ease, visibility .25s ease; }
   #lightbox.open { opacity:1; visibility:visible; }
@@ -2019,14 +2018,10 @@ function makeNewsGallery(n) {
     link.href = src; link.className = 'news-media-link';
     const img = document.createElement('img');
     img.src = src; img.alt = (n.title || '') + ' (' + (i + 1) + '/' + n.images.length + ')'; img.loading = 'lazy';
-    const num = document.createElement('span');
-    num.className = 'news-gallery-num';
-    num.textContent = (i + 1) + ' / ' + n.images.length;
     const zoom = document.createElement('span');
     zoom.className = 'news-media-zoom';
     zoom.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>';
     link.appendChild(img);
-    link.appendChild(num);
     link.appendChild(zoom);
     link.addEventListener('click', (e) => { e.preventDefault(); openLightbox(src, n.title, n.images, i); });
     wrap.appendChild(link);
