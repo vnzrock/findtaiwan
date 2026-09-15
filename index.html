@@ -279,7 +279,7 @@
   /* 決選入圍名單 — 手機 2 欄 → 桌機 5 欄；卡片 = 滿版劇照框 + 作品名稱 + 創作者 + 入圍徽章 */
   #showcase::before { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(60% 42% at 50% 0%, rgba(21,116,230,0.08), transparent 72%); }
   .sl-wrap { position:relative; }
-  .sl-kicker { display:block; font-family:'Montserrat','Noto Sans TC',sans-serif; font-style:normal; font-weight:800; font-size:.5em; letter-spacing:.01em; color:#1574e6; margin-bottom:8px; }
+  .sl-kicker { display:block; font-family:'Montserrat','Noto Sans TC',sans-serif; font-style:normal; font-weight:800; font-size:.46em; letter-spacing:.01em; color:#1574e6; margin-bottom:8px; }
   #shortlist-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(20px,3vw,30px) 14px; }
   @media (min-width:560px) { #shortlist-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
   @media (min-width:768px) { #shortlist-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(24px,3vw,36px) 18px; } }
@@ -302,12 +302,12 @@
   .sl-badge-ic { width:16px; height:16px; display:block; }
   .sl-card:hover .sl-badge { background:#0d2747; color:#fff; }
   /* 標題右側的入圍徽章 — 發光月桂葉環（assets/img/shortlist-laurel.png，帶透明背景）+ 件數 */
-  .sl-emblem { position:relative; flex:none; display:flex; align-items:center; gap:14px; padding:14px 30px 14px 12px; border-radius:26px; color:#fff; overflow:hidden; border:1px solid rgba(56,229,140,0.30); background:radial-gradient(120% 150% at 0% 50%, rgba(56,229,140,0.22), transparent 56%), radial-gradient(90% 130% at 100% 0%, rgba(21,116,230,0.60), transparent 62%), linear-gradient(150deg,#0e2f5e 0%,#061a3a 100%); box-shadow:0 22px 48px rgba(6,26,58,0.32), inset 0 1px 0 rgba(255,255,255,0.10); }
+  .sl-emblem { position:relative; flex:none; max-width:100%; display:flex; align-items:center; gap:14px; padding:14px 30px 14px 12px; border-radius:26px; color:#fff; overflow:hidden; border:1px solid rgba(56,229,140,0.30); background:radial-gradient(120% 150% at 0% 50%, rgba(56,229,140,0.22), transparent 56%), radial-gradient(90% 130% at 100% 0%, rgba(21,116,230,0.60), transparent 62%), linear-gradient(150deg,#0e2f5e 0%,#061a3a 100%); box-shadow:0 22px 48px rgba(6,26,58,0.32), inset 0 1px 0 rgba(255,255,255,0.10); }
   .sl-emblem::after { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 22% 50%, rgba(56,229,140,0.30), transparent 38%); }
   .sl-emblem-wreath { position:relative; width:160px; height:160px; flex:none; }
   .sl-emblem-img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; display:block; filter:drop-shadow(0 0 16px rgba(56,229,140,0.35)); }
   .sl-emblem-num { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; transform:translateY(-3%); font-family:'Montserrat'; font-weight:900; font-style:italic; font-size:50px; letter-spacing:-.03em; color:#fff; text-shadow:0 0 22px rgba(56,229,140,0.6), 0 2px 10px rgba(0,0,0,0.4); }
-  .sl-emblem-txt { position:relative; }
+  .sl-emblem-txt { position:relative; max-width:250px; }
   .sl-emblem-k { font-family:'Montserrat'; font-weight:700; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:#38e58c; }
   .sl-emblem-t { font-family:'Noto Sans TC'; font-weight:900; font-size:19px; line-height:1.3; margin-top:6px; }
   .sl-emblem-s { font-family:'Noto Sans TC'; font-size:12.5px; color:rgba(255,255,255,0.72); margin-top:6px; }
@@ -1382,7 +1382,7 @@
 <section id="showcase" style="position:relative;background:#fff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);scroll-margin-top:70px;">
   <div class="sl-wrap" style="max-width:1180px;margin:0 auto;">
     <div style="display:flex;flex-wrap:wrap;gap:28px 40px;align-items:flex-end;justify-content:space-between;">
-      <div style="max-width:660px;">
+      <div style="flex:1 1 380px;min-width:0;max-width:660px;">
         <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#1574e6;">
           <span style="width:22px;height:2px;background:#38e58c;"></span><span id="show-tag"></span>
         </div>
@@ -1709,7 +1709,7 @@ const C = {
     showBadge: 'Shortlisted',
     showEmblemK: 'Official Selection 2026',
     showEmblemT: 'films shortlisted',
-    showEmblemS: 'Listed by submission number, not ranking',
+    showEmblemS: 'By submission number, not ranking',
     showNoteHtml: 'The winners will be revealed at the awards ceremony on September 24, 2026. <a href="#news">Livestream details →</a>',
     footTagline: 'Telling Taiwan\'s story to the world, through film.',
     footRights: 'Ministry of Foreign Affairs, ROC （Taiwan）',
