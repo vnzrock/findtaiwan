@@ -279,7 +279,7 @@
   /* 決選入圍名單 — 手機 2 欄 → 桌機 5 欄；卡片 = 滿版劇照框 + 作品名稱 + 創作者 + 入圍徽章 */
   #showcase::before { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(60% 42% at 50% 0%, rgba(21,116,230,0.08), transparent 72%); }
   .sl-wrap { position:relative; }
-  .sl-kicker { display:block; font-family:'Montserrat','Noto Sans TC',sans-serif; font-style:normal; font-weight:800; font-size:.46em; letter-spacing:.01em; color:#1574e6; margin-bottom:8px; }
+  .sl-kicker { display:block; font-family:'Montserrat','Noto Sans TC',sans-serif; font-style:normal; font-weight:800; font-size:.44em; letter-spacing:.01em; color:#1574e6; margin-bottom:8px; }
   #shortlist-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(20px,3vw,30px) 14px; }
   @media (min-width:560px) { #shortlist-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
   @media (min-width:768px) { #shortlist-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(24px,3vw,36px) 18px; } }
@@ -311,6 +311,7 @@
   .sl-emblem-k { font-family:'Montserrat'; font-weight:700; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:#38e58c; }
   .sl-emblem-t { font-family:'Noto Sans TC'; font-weight:900; font-size:19px; line-height:1.3; margin-top:6px; }
   .sl-emblem-s { font-family:'Noto Sans TC'; font-size:12.5px; color:rgba(255,255,255,0.72); margin-top:6px; }
+  @media (max-width:1100px) { .sl-kicker { font-size:.37em; } .sl-emblem-wreath { width:140px; height:140px; } .sl-emblem-num { font-size:44px; } }
   @media (max-width:767px) { .sl-emblem-wreath { width:128px; height:128px; } .sl-emblem-num { font-size:40px; } }
   .sl-note { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:6px 12px; margin-top:clamp(34px,4.5vw,56px); padding:18px 22px; border-radius:16px; background:#f3f8ff; font-family:'Noto Sans TC'; font-size:14.5px; line-height:1.7; color:#0d2747; text-align:center; }
   .sl-note::before { content:''; width:8px; height:8px; border-radius:50%; background:#38e58c; flex:none; }
