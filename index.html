@@ -276,13 +276,57 @@
   #winners-grid:hover .win-track, .win-track.paused { animation-play-state:paused; }
   @keyframes winMarquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
 
-  /* 本屆報名作品 — 響應式方格，作品變多也不會爆版；手機 2 欄 → 桌機最多 5 欄 */
-  #entries-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
-  @media (min-width:560px) { #entries-grid { grid-template-columns:repeat(3,1fr); } }
-  @media (min-width:768px) { #entries-grid { grid-template-columns:repeat(4,1fr); gap:16px; } }
-  @media (min-width:1024px){ #entries-grid { grid-template-columns:repeat(5,1fr); } }
-  #entries-more { font-family:'Noto Sans TC'; font-weight:700; font-size:15px; padding:13px 34px; border:1.5px solid #1574e6; background:#fff; color:#1574e6; border-radius:999px; cursor:pointer; transition:background .2s,color .2s,transform .2s,box-shadow .2s; }
-  #entries-more:hover { background:#1574e6; color:#fff; transform:translateY(-2px); box-shadow:0 12px 26px rgba(21,116,230,0.28); }
+  /* 決選入圍名單 — 手機 2 欄 → 桌機 5 欄；卡片 = 滿版劇照框 + 作品名稱 + 創作者 + 入圍徽章 */
+  #showcase::before { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(60% 42% at 50% 0%, rgba(21,116,230,0.08), transparent 72%); }
+  .sl-wrap { position:relative; }
+  .sl-kicker { display:block; font-family:'Montserrat','Noto Sans TC',sans-serif; font-style:normal; font-weight:800; font-size:.5em; letter-spacing:.01em; color:#1574e6; margin-bottom:8px; }
+  #shortlist-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(20px,3vw,30px) 14px; }
+  @media (min-width:560px) { #shortlist-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+  @media (min-width:768px) { #shortlist-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(24px,3vw,36px) 18px; } }
+  @media (min-width:1024px){ #shortlist-grid { grid-template-columns:repeat(5,minmax(0,1fr)); } }
+  .sl-card { display:block; min-width:0; text-decoration:none; color:inherit; text-align:center; outline:none; }
+  .sl-frame { position:relative; aspect-ratio:4/5; border-radius:18px; overflow:hidden; isolation:isolate; background:linear-gradient(160deg,#173a6b,#0d2747); box-shadow:0 12px 30px rgba(13,59,128,0.16); transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, outline-color .2s; outline:3px solid transparent; outline-offset:3px; }
+  .sl-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 40%; transition:transform .5s cubic-bezier(.2,.7,.2,1); }
+  .sl-no { position:absolute; top:10px; left:10px; padding:4px 9px; border-radius:999px; background:rgba(13,39,71,0.58); backdrop-filter:blur(6px); color:#fff; font-family:'Montserrat'; font-weight:700; font-size:10.5px; letter-spacing:.12em; line-height:1.3; }
+  .sl-play { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(13,40,71,0); transition:background .3s ease; }
+  .sl-play span { width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.22); backdrop-filter:blur(6px); border:2px solid rgba(255,255,255,0.78); display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(.7); transition:opacity .3s ease, transform .38s cubic-bezier(.34,1.56,.64,1); }
+  .sl-play span::after { content:''; width:0; height:0; border-style:solid; border-width:9px 0 9px 16px; border-color:transparent transparent transparent #fff; margin-left:4px; }
+  .sl-card:hover .sl-frame { transform:translateY(-6px); box-shadow:0 26px 50px rgba(13,59,128,0.26); }
+  .sl-card:focus-visible .sl-frame { outline-color:#38e58c; }
+  .sl-card:hover .sl-img { transform:scale(1.04); }
+  .sl-card:hover .sl-play, .sl-card:focus-visible .sl-play { background:rgba(13,40,71,0.22); }
+  .sl-card:hover .sl-play span, .sl-card:focus-visible .sl-play span { opacity:1; transform:scale(1); }
+  .sl-title { font-family:'Noto Sans TC'; font-weight:800; font-size:clamp(13.5px,1.3vw,15.5px); line-height:1.45; min-height:2.9em; color:#0d2747; margin:14px 4px 0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; word-break:break-word; }
+  .sl-creator { font-family:'Noto Sans TC'; font-size:12.5px; line-height:1.5; color:#5a6a82; margin:5px 4px 0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .sl-badge { display:inline-flex; align-items:center; gap:5px; margin-top:10px; padding:4px 10px 4px 7px; border:1.5px solid #0d2747; border-radius:999px; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:700; font-size:10.5px; letter-spacing:.08em; line-height:1.4; color:#0d2747; transition:background .25s, color .25s; }
+  .sl-badge-ic { width:16px; height:16px; display:block; }
+  .sl-card:hover .sl-badge { background:#0d2747; color:#fff; }
+  /* 標題右側的入圍徽章 — 發光月桂葉環（assets/img/shortlist-laurel.png，帶透明背景）+ 件數 */
+  .sl-emblem { position:relative; flex:none; display:flex; align-items:center; gap:14px; padding:14px 30px 14px 12px; border-radius:26px; color:#fff; overflow:hidden; border:1px solid rgba(56,229,140,0.30); background:radial-gradient(120% 150% at 0% 50%, rgba(56,229,140,0.22), transparent 56%), radial-gradient(90% 130% at 100% 0%, rgba(21,116,230,0.60), transparent 62%), linear-gradient(150deg,#0e2f5e 0%,#061a3a 100%); box-shadow:0 22px 48px rgba(6,26,58,0.32), inset 0 1px 0 rgba(255,255,255,0.10); }
+  .sl-emblem::after { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 22% 50%, rgba(56,229,140,0.30), transparent 38%); }
+  .sl-emblem-wreath { position:relative; width:160px; height:160px; flex:none; }
+  .sl-emblem-img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; display:block; filter:drop-shadow(0 0 16px rgba(56,229,140,0.35)); }
+  .sl-emblem-num { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; transform:translateY(-3%); font-family:'Montserrat'; font-weight:900; font-style:italic; font-size:50px; letter-spacing:-.03em; color:#fff; text-shadow:0 0 22px rgba(56,229,140,0.6), 0 2px 10px rgba(0,0,0,0.4); }
+  .sl-emblem-txt { position:relative; }
+  .sl-emblem-k { font-family:'Montserrat'; font-weight:700; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:#38e58c; }
+  .sl-emblem-t { font-family:'Noto Sans TC'; font-weight:900; font-size:19px; line-height:1.3; margin-top:6px; }
+  .sl-emblem-s { font-family:'Noto Sans TC'; font-size:12.5px; color:rgba(255,255,255,0.72); margin-top:6px; }
+  @media (max-width:767px) { .sl-emblem-wreath { width:128px; height:128px; } .sl-emblem-num { font-size:40px; } }
+  .sl-note { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:6px 12px; margin-top:clamp(34px,4.5vw,56px); padding:18px 22px; border-radius:16px; background:#f3f8ff; font-family:'Noto Sans TC'; font-size:14.5px; line-height:1.7; color:#0d2747; text-align:center; }
+  .sl-note::before { content:''; width:8px; height:8px; border-radius:50%; background:#38e58c; flex:none; }
+  .sl-note a { color:#1574e6; font-weight:700; text-decoration:none; white-space:nowrap; }
+  .sl-note a:hover { text-decoration:underline; }
+  /* 最新消息裡的入圍搶先看 — 一次四張，每隔幾秒往下輪轉到下一組；手機 2×2 */
+  .news-sl-strip { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px 12px; margin-top:22px; }
+  @media (min-width:700px) { .news-sl-strip { grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px 14px; } }
+  .news-sl-slot { position:relative; }
+  .news-sl-slot .sl-card { transition:transform .6s cubic-bezier(.2,.7,.2,1), opacity .5s ease; }
+  .news-sl-slot .sl-card.sl-in { transform:translateY(-28px); opacity:0; }
+  .news-sl-slot .sl-card.sl-out { position:absolute; inset:0; transform:translateY(28px); opacity:0; pointer-events:none; }
+  .news-sl-foot { text-align:center; margin-top:24px; }
+  .news-sl-btn { display:inline-flex; align-items:center; gap:8px; padding:12px 30px; border:1.5px solid #1574e6; border-radius:999px; background:#fff; color:#1574e6; font-family:'Noto Sans TC'; font-weight:700; font-size:14.5px; text-decoration:none; transition:background .2s,color .2s,transform .2s,box-shadow .2s; }
+  .news-sl-btn:hover { background:#1574e6; color:#fff; transform:translateY(-2px); box-shadow:0 12px 26px rgba(21,116,230,0.28); }
+  @media (max-width:767px) { .sl-no, .sl-play span { backdrop-filter:none; } .sl-emblem { width:100%; } }
 
   /* 最新消息 — 白色卡片；含影片的那則採左右兩欄 */
   .news-card { background:#fff; border:1px solid #e2ecfb; border-radius:18px; box-shadow:0 10px 30px rgba(13,59,128,0.06); overflow:hidden; transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease; }
@@ -1333,23 +1377,21 @@
   </div>
 </section>
 
-<!-- 7. 2026 ENTRIES SHOWCASE -->
-<section id="showcase" style="background:#fff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);">
-  <div style="max-width:1180px;margin:0 auto;">
-    <div style="display:flex;flex-wrap:wrap;gap:22px;align-items:flex-end;justify-content:space-between;">
-      <div style="max-width:640px;">
+<!-- 7. SHORTLIST — 決選入圍名單 -->
+<section id="showcase" style="position:relative;background:#fff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);scroll-margin-top:70px;">
+  <div class="sl-wrap" style="max-width:1180px;margin:0 auto;">
+    <div style="display:flex;flex-wrap:wrap;gap:28px 40px;align-items:flex-end;justify-content:space-between;">
+      <div style="max-width:660px;">
         <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#1574e6;">
           <span style="width:22px;height:2px;background:#38e58c;"></span><span id="show-tag"></span>
         </div>
-        <h2 id="show-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(26px,3.6vw,42px);color:#0d2747;margin:16px 0 14px;"></h2>
+        <h2 id="show-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(26px,3.6vw,42px);line-height:1.25;color:#0d2747;margin:16px 0 14px;"></h2>
         <p id="show-body" style="font-family:'Noto Sans TC';font-size:16px;line-height:1.85;color:#5a6a82;margin:0;"></p>
       </div>
+      <div id="show-emblem" class="sl-emblem" data-reveal="scale"></div>
     </div>
-    <div id="entries-grid" style="margin-top:clamp(30px,4vw,48px);"></div>
-    <div id="entries-more-wrap" style="display:none;text-align:center;margin-top:clamp(26px,3.5vw,40px);">
-      <button id="entries-more" type="button"></button>
-    </div>
-    <div id="entries-note" style="margin-top:clamp(30px,4vw,48px);border:1.5px dashed #c3d6f0;border-radius:20px;padding:36px 30px;background:#f7faff;text-align:center;font-family:'Noto Sans TC';font-size:15px;color:#5a6a82;"></div>
+    <div id="shortlist-grid" style="margin-top:clamp(34px,4.5vw,56px);"></div>
+    <div id="show-note" class="sl-note"></div>
   </div>
 </section>
 
@@ -1522,17 +1564,22 @@ const C = {
     winWatch: '前往 Instagram 觀賞',
     soonLabel: 'Coming Soon',
     newsTag: 'News', newsTitle: '最新消息', newsBody: '',
+    newsShortlistBtn: '查看完整入圍名單',
     newsItems: [
-      { date: '2026.09.10', tag: '入圍名單公告', title: '#FindingTAIWAN_2.0全球徵片競賽決選入圍名單公告', images: ['assets/img/news-shortlist-1.webp', 'assets/img/news-shortlist-2.webp', 'assets/img/news-shortlist-3.webp'], bodyHtml: '本入圍名單係依收件時間順序排列，非依名次排序。<br>Shortlists are listed by submission number, not competition ranking.' },
+      { date: '2026.09.10', tag: '入圍名單公告', title: '#FindingTAIWAN_2.0全球徵片競賽決選入圍名單公告', bodyHtml: '共 25 部作品進入決選！本入圍名單係依收件時間順序排列，非依名次排序；最終得獎名單將於 9 月 24 日頒獎典禮揭曉。<br>Shortlists are listed by submission number, not competition ranking.', shortlist: true },
       { date: '2026.08.20', tag: '直播公告', title: '#FindingTAIWAN_2.0：Where We Connect 全球徵片競賽頒獎典禮直播公告', image: 'assets/img/news-awards-ceremony.webp', bodyHtml: '<strong>直播資訊</strong><br>日期及時間｜2026年9月24日（四）下午2時<br>Facebook｜<a href="https://www.facebook.com/mofa.gov.tw?locale=zh_TW" target="_blank" rel="noopener noreferrer">外交部 Ministry of Foreign Affairs, ROC (Taiwan)</a><br>YouTube｜<a href="https://youtube.com/@mofa_taiwan?si=BmF26x-IY6lUzbBn" target="_blank" rel="noopener noreferrer">MOFA Taiwan</a>' },
       { date: '2026.08.05', tag: '影片', title: '一分鐘看懂競賽！#FindingTAIWAN_2.0全球徵片競賽懶人包', video: 'assets/video/finding-taiwan-guide.mp4', poster: 'assets/video/finding-taiwan-guide-poster.webp' },
       { date: '2026.06.30', tag: 'MOFA 新聞稿', title: '外交部推出「#FindingTAIWAN_2.0：Where We Connect」全球徵片競賽 邀請全球創作者用影像述說台灣與世界的連結', url: 'https://www.mofa.gov.tw/News_Content.aspx?n=95&sms=73&s=122572' }
     ],
-    showTag: '參賽作品 / Video Showcase', showTitle: '本屆報名作品',
-    showBody: '徵件期間持續收到來自世界各地創作者的作品，點擊任一作品即可前往觀賞。',
-    showWatch: '觀看',
-    showLoading: '作品載入中⋯',
-    showEmpty: '徵件期間將開放瀏覽參賽作品。',
+    showTag: '決選入圍名單 / Shortlist',
+    showTitleHtml: '<span class="sl-kicker">#FindingTAIWAN_2.0 全球徵片競賽</span>決選入圍名單公告',
+    showBody: '恭喜以下 25 部作品脫穎而出，進入決選！入圍名單依報名序號排列，不代表競賽名次。（Shortlists are listed by submission number, not competition ranking.）',
+    showWatch: '觀看作品',
+    showBadge: '決選入圍',
+    showEmblemK: 'Official Selection 2026',
+    showEmblemT: '部作品入圍決選',
+    showEmblemS: '依報名序號排列 · 非競賽名次',
+    showNoteHtml: '最終得獎名單將於 2026 年 9 月 24 日頒獎典禮揭曉，敬請鎖定直播。<a href="#news">直播資訊 →</a>',
     footTagline: '以影像述說台灣，讓世界看見。',
     footRights: '中華民國外交部 Ministry of Foreign Affairs, ROC (Taiwan)',
     footContactLabel: '聯絡方式：',
@@ -1647,17 +1694,22 @@ const C = {
     winWatch: 'Watch on Instagram',
     soonLabel: 'Coming Soon',
     newsTag: 'News', newsTitle: 'Latest news', newsBody: 'The latest announcements and news will be posted here.',
+    newsShortlistBtn: 'See the full shortlist',
     newsItems: [
-      { date: '2026.09.10', tag: 'Shortlist Announcement', title: '#FindingTAIWAN_2.0 International Short Film Competition Shortlists Announced', images: ['assets/img/news-shortlist-1.webp', 'assets/img/news-shortlist-2.webp', 'assets/img/news-shortlist-3.webp'], bodyHtml: 'Shortlists are listed by submission number, not competition ranking.' },
+      { date: '2026.09.10', tag: 'Shortlist Announcement', title: '#FindingTAIWAN_2.0 International Short Film Competition Shortlists Announced', bodyHtml: '25 films have advanced to the final round. Shortlists are listed by submission number, not competition ranking; the winners will be revealed at the awards ceremony on September 24.', shortlist: true },
       { date: '2026.08.20', tag: 'Livestream Announcement', title: '#FindingTAIWAN_2.0: Where We Connect International Short Film Competition Awards Ceremony Livestream', image: 'assets/img/news-awards-ceremony.webp', bodyHtml: '<strong>Livestream Information</strong><br>Date &amp; Time｜Thursday, September 24, 2026, at 2:00 PM (Taiwan Time)<br>Facebook｜<a href="https://www.facebook.com/mofa.gov.tw?locale=zh_TW" target="_blank" rel="noopener noreferrer">外交部 Ministry of Foreign Affairs, ROC (Taiwan)</a><br>YouTube｜<a href="https://youtube.com/@mofa_taiwan?si=BmF26x-IY6lUzbBn" target="_blank" rel="noopener noreferrer">MOFA Taiwan</a>' },
       { date: '2026.08.05', tag: 'Video', title: 'Your Quick Guide to the #FindingTAIWAN_2.0 International Short Film Competition', video: 'assets/video/finding-taiwan-guide.mp4', poster: 'assets/video/finding-taiwan-guide-poster.webp' },
       { date: '2026.06.30', tag: 'MOFA press release', title: 'The Ministry of Foreign Affairs launches the #FindingTaiwan_2.0: Where We Connect', body: 'International short film competition, inviting creatives worldwide to explore Taiwan\'s links with the wider world through the lens!', url: 'https://en.mofa.gov.tw/News_Content.aspx?n=1328&s=122587' }
     ],
-    showTag: 'Video Showcase', showTitle: '2026 Entries',
-    showBody: 'Entries keep arriving from creators around the world throughout the call — click any entry to watch.',
+    showTag: 'Shortlist',
+    showTitleHtml: '<span class="sl-kicker">#FindingTAIWAN_2.0 International Short Film Competition</span>Shortlists Announced',
+    showBody: 'Congratulations to the 25 films advancing to the final round. Shortlists are listed by submission number, not competition ranking.',
     showWatch: 'Watch',
-    showLoading: 'Loading entries…',
-    showEmpty: 'Submitted entries will be available for viewing during the call.',
+    showBadge: 'Shortlisted',
+    showEmblemK: 'Official Selection 2026',
+    showEmblemT: 'films shortlisted',
+    showEmblemS: 'Listed by submission number, not ranking',
+    showNoteHtml: 'The winners will be revealed at the awards ceremony on September 24, 2026. <a href="#news">Livestream details →</a>',
     footTagline: 'Telling Taiwan\'s story to the world, through film.',
     footRights: 'Ministry of Foreign Affairs, ROC （Taiwan）',
     footContactLabel: 'Contact Email:',
@@ -1724,162 +1776,152 @@ const WIN_TIER_GRAD = {
   merit:  'linear-gradient(135deg,#2f7de1,#1559b0)',
 };
 
-// ▼ 本屆報名作品 — 直接讀取 Google 試算表，在試算表新增一列作品就會出現在網站上
-//   欄位順序：編號 / 作品名稱 / 創作者 / 網址連結 / 劇照
-const ENTRIES_CSV_URL = 'https://docs.google.com/spreadsheets/d/1z_KxUsNKGKibThvskpSI79rraMtYHGnJFzmnUiga-As/export?format=csv&gid=0';
-let ENTRIES_2026 = [];
-let entriesState = 'loading'; // loading | ready | error
-const ENTRIES_BATCH = 12;     // 一開始顯示、以及每次「載入更多」展開的件數
-let entriesShown = ENTRIES_BATCH;
+// ▼ 決選入圍名單 — 25 部作品，依報名序號排列（非競賽名次）
+//   no = 報名序號、still = 劇照的 Google Drive 檔案 ID（與參賽試算表相同）、url = 作品連結
+const SHORTLIST = [
+  { no: 13,  title: 'Taiwan, A Thousand Small Moments',                                            creator: 'SilkyRonTheRoad',                          url: 'https://youtu.be/qlyLs-W1SWo',                 still: '1e8XW34Qz1WUFBYZQYu_Jz0oYLoVBDKCo' },
+  { no: 14,  title: 'Nothing was supposed to bring me to Taiwan',                                  creator: 'BASTIAN GABIN',                            url: 'https://www.instagram.com/reel/Db0P3YLysEC/', still: '1ENeJkpPYR-tXLuxYqlAwg5CXl2GOh455' },
+  { no: 23,  title: 'Where the Pulse Leads',                                                       creator: 'Richard Lacambra',                         url: 'https://www.instagram.com/reel/DcA49QOSYjF/', still: '1yclPxtApRra3UpoDasUK2B9uYiWqY3mR' },
+  { no: 27,  title: 'Finding Home',                                                                creator: 'Okefa',                                    url: 'https://www.instagram.com/reel/DcDfNzgTwXz/', still: '19e9pbfXtskFyIGMoJypmAr1cCr7hylKG' },
+  { no: 30,  title: '一起，看見世界｜Closer Than We Think',                                          creator: '德瑞瑪（個人）',                              url: 'https://www.instagram.com/reel/DcGkSrTph1g/', still: '13RtBlrFSoZExzP8N8Q-slKtAaoGP0LGZ' },
+  { no: 35,  title: 'Tea and Sympathy',                                                            creator: 'Justin Smith, Ping-Hai Wu, Chengyang Wu',  url: 'https://www.instagram.com/p/Db8GIm1Sw9-/',    still: '1ibv6HacyWFlJpBIunfARNDRtDvjx60oj' },
+  { no: 39,  title: 'Together / 一起',                                                             creator: 'vegan_taiwan_adventures',                  url: 'https://www.instagram.com/p/DcKVfoAzHMf/',    still: '13JYwuevQ7J0aLqIpKFTJyiBypjoW7Ne3' },
+  { no: 54,  title: 'The Most Beautiful Scenery in Taiwan',                                        creator: '陳昀＆梁嘉軒',                                url: 'https://www.instagram.com/reel/DcS0Tc2SL4u/', still: '1Uw8YJYF0ZeDNUvtvBNL2htfqFrQt1nIp' },
+  { no: 60,  title: 'Taiwanese Iron Horse 臺灣鐵馬',                                                creator: 'TomTom.Recalculating',                     url: 'https://www.instagram.com/reel/DcVcQ9lvfqq/', still: '1rt1eElm5JvFMXF5fYMRyk9r7r9HEeG4H' },
+  { no: 70,  title: '與台灣相連：從異鄉到家鄉 Woven into Taiwan: How a Foreign Land Became Home',       creator: '丹哥',                                      url: 'https://www.instagram.com/reel/DcYjAFbR_t2/', still: '1w54cyoVziLfQfRBh8N98jkQTZ88KNC_G' },
+  { no: 79,  title: '讓世界，記住台灣的香/Let The World Remember The Scent of Taiwan',                creator: '王宣雯、王姿雅',                              url: 'https://www.youtube.com/shorts/MxaNE78lfxA',  still: '1U_Vg8snxBWhZiSMwjh4bVkL45uhZRU1Y' },
+  { no: 86,  title: 'Born in South Africa, Made in Taiwan',                                        creator: 'Albertus van Aswegen',                     url: 'https://www.youtube.com/shorts/MWw9DYscu14',  still: '1lNj5TrWMkJYn8CQvY68g9kqWWSWLP6vE' },
+  { no: 94,  title: '《遠方》A Distant Place',                                                      creator: '漫步霜旅 Frost ya',                          url: 'https://www.instagram.com/reel/DceV66RTsC-/', still: '1aSWKI6Phc-BeQ-4f1X2gvvPrgN5e0I9B' },
+  { no: 108, title: 'What I\'d Redo in Taiwan // 如果能重來，我會在台灣',                             creator: 'Jorge Benavente Rico (班尼可)',              url: 'https://youtu.be/GDbyDhr6OWg',                 still: '1Wc6R317s1D6TdxTRBPv-SsL42O3dGxQp' },
+  { no: 130, title: 'Taiwan\'s Champagne-Rice Valley 米中的香檳',                                    creator: 'Reece Andrew Ayers 倪瑞森',                  url: 'https://www.instagram.com/reel/DcnCHnxxxag/', still: '1zyHePKVMrOSkbVqNO5ryT-ltCjlM2v-t' },
+  { no: 134, title: '我們沒有台灣的血統，但我們有台灣的家 / No Taiwanese blood, but a Taiwanese family', creator: '一家人 GA family',                            url: 'https://www.instagram.com/reel/Dck56rhJViI/', still: '1Xn8MJqyqh_JPybjWOP5yLLyWCMkgqmB7' },
+  { no: 144, title: '【台灣麻芛的餐桌記憶】Taiwanese Ma-wei：Tabletop Memories',                        creator: '黃信諾',                                    url: 'https://youtu.be/H28paNN1EIc',                 still: '1Jr27vcvRJ0U_73KOGzZhWW0vLEkzFG7h' },
+  { no: 147, title: 'Small Island, Big Heart 小小的島 大大的心',                                      creator: 'chrislovesbeefnoodles',                    url: 'https://www.instagram.com/reel/DcnyHj6JkQN/', still: '1atMmRJaYaD2umNAXRjQLGkCmEbiBrqGb' },
+  { no: 149, title: '如果人生是一個寶箱，你會在台灣找到什麼？',                                          creator: '波蘭Anna',                                  url: 'https://www.instagram.com/p/Dcpmt0Cp2dE/',    still: '1WVvnCd-NElwkgq3erB5UMtV1dOxyfWJB' },
+  { no: 170, title: 'How Taiwan Followed Me Across the World台灣一路跟著我到世界另一端',                 creator: 'Jonathan Kidd',                            url: 'https://www.instagram.com/p/DcqvskwRw5t/',    still: '1iKFWc_pWTjyhw_LKZMz9BeO7rBEDNFbZ' },
+  { no: 182, title: '習以為常 / Nobody Had To',                                                     creator: 'statusKuo',                                url: 'https://youtu.be/ibLv5SaC6kw',                 still: '1T8IgtK3_dRNw1Qvjfv3a_efTX3Dcep02' },
+  { no: 184, title: 'Healing through the Taiwan Loop 環島',                                         creator: 'Brendan Sutton',                           url: 'https://www.instagram.com/reel/Dcrr3K3SCzV/', still: '1FcYQ3jP4gMYu-RVa2NXz41pbRiTn5F31' },
+  { no: 198, title: 'Written in Taiwan 寫在台灣',                                                   creator: 'Team Nitro',                               url: 'https://youtu.be/sxbMQvCwwMg',                 still: '1KSRMXC7eJa8ssOCJKCb1y5UzkZXPap_T' },
+  { no: 203, title: 'TAIWAN: BEYOND THE ISLAND',                                                   creator: 'Céline & Sacha',                           url: 'https://www.instagram.com/reel/DcsoH94sf2z/', still: '1ILpit2Qnze1etr7U_gFbzJ6us2kmZ8fs' },
+  { no: 210, title: '臺灣我的家',                                                                   creator: 'Florian Payrou (福洛里安）',                  url: 'https://youtu.be/l6DAkAG4OZA',                 still: '1cdNcLbFzTZm_4HEcixpOiw0RXp64Gh0k' },
+];
+const SHORTLIST_COLS = 5; // 桌機欄數，用來算卡片進場的交錯延遲
 
-// RFC4180-ish parser — 作品名稱可能含逗號或換行，不能用 split(',')
-function parseCSV(text) {
-  const rows = []; let row = []; let field = ''; let quoted = false;
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i];
-    if (quoted) {
-      if (c !== '"') { field += c; }
-      else if (text[i + 1] === '"') { field += '"'; i++; }
-      else { quoted = false; }
-    }
-    else if (c === '"') { quoted = true; }
-    else if (c === ',') { row.push(field); field = ''; }
-    else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
-    else if (c !== '\r') { field += c; }
-  }
-  if (field !== '' || row.length) { row.push(field); rows.push(row); }
-  return rows;
-}
+function shortlistCover(id) { return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w640'; }
+function pad3(n) { return String(n).padStart(3, '0'); }
 
-// 試算表是外部可編輯的來源，網址一律先驗證，只放行 http(s)
-function safeUrl(u) {
-  try {
-    const p = new URL(String(u).trim(), location.href);
-    return (p.protocol === 'http:' || p.protocol === 'https:') ? p.href : '';
-  } catch (e) { return ''; }
-}
-function driveFileId(u) {
-  const s = String(u);
-  const m = s.match(/[?&]id=([\w-]+)/) || s.match(/\/file\/d\/([\w-]+)/);
-  return m ? m[1] : '';
-}
-function youtubeId(u) {
-  const m = String(u).match(/(?:youtu\.be\/|[?&]v=|\/shorts\/|\/embed\/)([\w-]{11})/);
-  return m ? m[1] : '';
-}
-// 優先用試算表的劇照，沒有的話 YouTube 作品退回官方縮圖
-function entryCover(e) {
-  const id = driveFileId(e.still);
-  if (id) return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w480';
-  const y = youtubeId(e.url);
-  return y ? 'https://img.youtube.com/vi/' + y + '/hqdefault.jpg' : '';
-}
-function loadEntries() {
-  fetch(ENTRIES_CSV_URL, { cache: 'no-store' })
-    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
-    .then(text => {
-      const rows = parseCSV(text).filter(r => r.some(c => c.trim() !== ''));
-      rows.shift(); // 標題列
-      ENTRIES_2026 = rows.map(r => ({
-        no:      (r[0] || '').trim(),
-        title:   (r[1] || '').trim(),
-        creator: (r[2] || '').trim(),
-        url:     safeUrl(r[3] || ''),
-        still:   (r[4] || '').trim()
-      })).filter(e => e.title && e.url);
-      entriesState = 'ready';
-    })
-    .catch(() => { ENTRIES_2026 = []; entriesState = 'error'; })
-    .then(() => renderEntries());
-}
-
-function makeEntryCard(e, t) {
+function makeShortlistCard(e, t, i, opts) {
   const card = document.createElement('a');
-  card.className = 'win-card';
+  card.className = 'sl-card';
   card.href = e.url; card.target = '_blank'; card.rel = 'noopener noreferrer';
-  card.style.cssText = 'position:relative;width:100%;aspect-ratio:9/16;border-radius:14px;overflow:hidden;text-decoration:none;box-shadow:0 12px 30px rgba(13,59,128,0.18);background:linear-gradient(135deg,#2f7de1,#1559b0);transition:transform 0.32s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.32s ease;';
-  card.onmouseenter = () => { card.style.transform = 'scale(1.06) translateY(-4px)'; card.style.boxShadow = '0 28px 56px rgba(13,59,128,0.32)'; };
-  card.onmouseleave = () => { card.style.transform = ''; card.style.boxShadow = '0 12px 30px rgba(13,59,128,0.18)'; };
+  if (!opts || opts.reveal !== false) { // 主名單用捲動進場；最新消息的輪轉卡片自己管動畫
+    card.setAttribute('data-reveal', 'scale');
+    card.style.transitionDelay = ((i % SHORTLIST_COLS) * 70) + 'ms';
+  }
+  card.setAttribute('aria-label', t.showWatch + (currentLang === 'en' ? ': ' : '：') + e.title + ' — ' + e.creator);
 
-  const cover = entryCover(e);
-  const coverHtml = cover
-    ? '<img src="' + cover + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display=\'none\'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">'
-    : '';
-  // 作品名稱與創作者來自試算表，一律用 textContent 帶入，不進 innerHTML
-  card.innerHTML =
-    coverHtml +
-    '<span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">' +
-      '<span style="width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.20);backdrop-filter:blur(6px);border:2px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;">' +
-        '<span style="width:0;height:0;border-style:solid;border-width:9px 0 9px 17px;border-color:transparent transparent transparent #fff;margin-left:4px;"></span>' +
-      '</span>' +
-    '</span>' +
-    '<span style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.10) 0%,transparent 30%,transparent 50%,rgba(13,40,71,0.92) 100%);"></span>' +
-    '<span style="position:absolute;left:0;right:0;bottom:0;padding:12px 13px 14px;">' +
-      '<span class="ec-title" style="font-family:\'Noto Sans TC\';font-weight:900;font-size:14px;color:#fff;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35;"></span>' +
-      '<span style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:5px;">' +
-        '<span class="ec-creator" style="font-family:\'Noto Sans TC\';font-size:11.5px;color:rgba(255,255,255,0.78);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>' +
-        '<span style="font-family:\'Montserrat\';font-weight:700;font-size:9.5px;color:rgba(255,255,255,0.9);white-space:nowrap;flex:none;">' + t.showWatch + ' ↗</span>' +
-      '</span>' +
-    '</span>';
-  card.querySelector('.ec-title').textContent = e.title;
-  card.querySelector('.ec-creator').textContent = e.creator;
+  const cover = shortlistCover(e.still);
+  const frame = document.createElement('div');
+  frame.className = 'sl-frame';
+  frame.innerHTML =
+    '<img class="sl-img" alt="" loading="lazy" referrerpolicy="no-referrer">' +
+    '<span class="sl-no"></span>' +
+    '<span class="sl-play" aria-hidden="true"><span></span></span>';
+  const img = frame.querySelector('.sl-img');
+  img.onerror = () => { img.remove(); }; // 劇照抓不到就留深藍底
+  img.src = cover; img.alt = e.title;
+  frame.querySelector('.sl-no').textContent = 'NO.' + pad3(e.no);
+
+  const title = document.createElement('div');
+  title.className = 'sl-title';
+  title.textContent = e.title;
+  const creator = document.createElement('div');
+  creator.className = 'sl-creator';
+  creator.textContent = e.creator;
+  const badge = document.createElement('span');
+  badge.className = 'sl-badge';
+  badge.innerHTML = '<img class="sl-badge-ic" src="assets/img/shortlist-laurel-s.png" width="64" height="64" alt="" loading="lazy"><span></span>';
+  badge.querySelector('span').textContent = t.showBadge;
+
+  card.appendChild(frame); card.appendChild(title); card.appendChild(creator); card.appendChild(badge);
   return card;
 }
 
-function renderEntries() {
-  const grid = document.getElementById('entries-grid');
-  if (!grid) return;
+function renderShortlist() {
   const t = C[currentLang];
-  const note = document.getElementById('entries-note');
-  const moreWrap = document.getElementById('entries-more-wrap');
-  const moreBtn = document.getElementById('entries-more');
-
-  // 還在載入、抓不到試算表或尚無作品時，退回原本的說明卡片
-  if (entriesState !== 'ready' || !ENTRIES_2026.length) {
-    grid.innerHTML = '';
-    if (moreWrap) moreWrap.style.display = 'none';
-    if (note) {
-      note.style.display = '';
-      note.textContent = entriesState === 'loading' ? t.showLoading : t.showEmpty;
-    }
-    return;
-  }
-  if (note) note.style.display = 'none';
-
-  const total = ENTRIES_2026.length;
-  // 換語言重新 render 時保留目前已展開的件數，別縮回第一批
-  if (entriesShown > total) entriesShown = total;
-  if (entriesShown < ENTRIES_BATCH) entriesShown = Math.min(ENTRIES_BATCH, total);
-
+  const grid = document.getElementById('shortlist-grid');
+  if (!grid) return;
   grid.innerHTML = '';
-  ENTRIES_2026.slice(0, entriesShown).forEach(e => grid.appendChild(makeEntryCard(e, t)));
-  updateEntriesMore();
+  SHORTLIST.forEach((e, i) => grid.appendChild(makeShortlistCard(e, t, i)));
 
-  if (moreBtn) moreBtn.onclick = () => {
-    const from = entriesShown;
-    entriesShown = Math.min(total, entriesShown + ENTRIES_BATCH);
-    ENTRIES_2026.slice(from, entriesShown).forEach(e => grid.appendChild(makeEntryCard(e, C[currentLang])));
-    updateEntriesMore();
-  };
-}
-
-function updateEntriesMore() {
-  const wrap = document.getElementById('entries-more-wrap');
-  const btn = document.getElementById('entries-more');
-  if (!wrap || !btn) return;
-  const remaining = ENTRIES_2026.length - entriesShown;
-  if (remaining > 0) {
-    wrap.style.display = '';
-    btn.textContent = currentLang === 'en'
-      ? 'Load more (' + remaining + ' left)'
-      : '載入更多（還有 ' + remaining + ' 件）';
-  } else {
-    wrap.style.display = 'none';
+  const em = document.getElementById('show-emblem');
+  if (em) {
+    em.innerHTML =
+      '<div class="sl-emblem-wreath"><img class="sl-emblem-img" src="assets/img/shortlist-laurel.png" width="420" height="420" alt="" loading="lazy"><span class="sl-emblem-num">' + SHORTLIST.length + '</span></div>' +
+      '<div class="sl-emblem-txt"><div class="sl-emblem-k"></div><div class="sl-emblem-t"></div><div class="sl-emblem-s"></div></div>';
+    em.querySelector('.sl-emblem-k').textContent = t.showEmblemK;
+    em.querySelector('.sl-emblem-t').textContent = t.showEmblemT;
+    em.querySelector('.sl-emblem-s').textContent = t.showEmblemS;
   }
+  const note = document.getElementById('show-note');
+  if (note) note.innerHTML = t.showNoteHtml;
 }
 
-// 一則最新消息 = 一張白卡；有影片的用左右兩欄（文字 + 直式播放器），純文字的用單欄
-function makeNewsCard(n) {
+// 最新消息裡的入圍搶先看：一次四張，每 4 秒往下輪轉到下一組；滑過或捲出畫面時暫停
+let newsSlTimer = null, newsSlObs = null;
+const NEWS_SL_COUNT = 4, NEWS_SL_EVERY = 4000;
+function makeNewsShortlistStrip(t) {
+  if (newsSlTimer) { clearInterval(newsSlTimer); newsSlTimer = null; }
+  if (newsSlObs) { newsSlObs.disconnect(); newsSlObs = null; }
+  const strip = document.createElement('div');
+  strip.className = 'news-sl-strip';
+  const slots = [];
+  for (let k = 0; k < NEWS_SL_COUNT; k++) {
+    const slot = document.createElement('div');
+    slot.className = 'news-sl-slot';
+    slot.appendChild(makeShortlistCard(SHORTLIST[k % SHORTLIST.length], t, k, { reveal: false }));
+    strip.appendChild(slot); slots.push(slot);
+  }
+  let head = NEWS_SL_COUNT; // 下一組從第幾件開始
+  // 先把下一組的劇照抓進快取，輪轉時才不會閃白
+  const preload = (from) => {
+    for (let k = 0; k < NEWS_SL_COUNT; k++) {
+      const im = new Image(); im.referrerPolicy = 'no-referrer';
+      im.src = shortlistCover(SHORTLIST[(from + k) % SHORTLIST.length].still);
+    }
+  };
+  preload(head);
+  let hover = false, visible = true;
+  const tick = () => {
+    if (hover || !visible || document.hidden) return;
+    const from = head;
+    head = (head + NEWS_SL_COUNT) % SHORTLIST.length;
+    preload(head);
+    slots.forEach((slot, k) => {
+      setTimeout(() => {
+        const old = slot.querySelector('.sl-card:not(.sl-out)');
+        const next = makeShortlistCard(SHORTLIST[(from + k) % SHORTLIST.length], t, k, { reveal: false });
+        next.classList.add('sl-in');
+        slot.appendChild(next);
+        if (old) { old.classList.add('sl-out'); setTimeout(() => old.remove(), 700); }
+        void next.offsetWidth; // 先套用起始位置，再解除 → 觸發位移動畫
+        requestAnimationFrame(() => next.classList.remove('sl-in'));
+      }, k * 90);
+    });
+  };
+  strip.addEventListener('mouseenter', () => { hover = true; });
+  strip.addEventListener('mouseleave', () => { hover = false; });
+  if ('IntersectionObserver' in window) {
+    newsSlObs = new IntersectionObserver((es) => { es.forEach(e => { visible = e.isIntersecting; }); }, { threshold: 0.2 });
+    newsSlObs.observe(strip);
+  }
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) newsSlTimer = setInterval(tick, NEWS_SL_EVERY);
+  return strip;
+}
+
+// 一則最新消息 = 一張白卡；有影片的用左右兩欄（文字 + 直式播放器），純文字的用單欄；入圍公告多一排輪轉的入圍卡
+function makeNewsCard(n, t) {
   const card = document.createElement('article');
   card.className = 'news-card';
   card.setAttribute('data-reveal', 'scale');
@@ -1911,7 +1953,23 @@ function makeNewsCard(n) {
     }
   }
 
-  if (n.video) {
+  if (n.shortlist) {
+    const inner = document.createElement('div');
+    inner.className = 'news-card-inner';
+    inner.appendChild(meta);
+    inner.appendChild(h);
+    appendBody(inner);
+    inner.appendChild(makeNewsShortlistStrip(t));
+    const foot = document.createElement('div');
+    foot.className = 'news-sl-foot';
+    const btn = document.createElement('a');
+    btn.className = 'news-sl-btn';
+    btn.href = '#showcase';
+    btn.textContent = t.newsShortlistBtn + ' →';
+    foot.appendChild(btn);
+    inner.appendChild(foot);
+    card.appendChild(inner);
+  } else if (n.video) {
     const grid = document.createElement('div');
     grid.className = 'news-card-video';
     const textCol = document.createElement('div');
@@ -2424,8 +2482,10 @@ function render() {
     const newsSorted = (t.newsItems || []).slice().sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
     newsSorted.forEach((n) => newsList.appendChild(makeNewsCard(n, t)));
   }
-  txt('show-tag', t.showTag); txt('show-title', t.showTitle); txt('show-body', t.showBody);
-  renderEntries();
+  txt('show-tag', t.showTag); txt('show-body', t.showBody);
+  const showTitle = document.getElementById('show-title');
+  if (showTitle) showTitle.innerHTML = t.showTitleHtml;
+  renderShortlist();
 
   // footer
   txt('foot-tagline', t.footTagline);
@@ -2756,7 +2816,6 @@ document.addEventListener('DOMContentLoaded', () => {
   try { history.replaceState({ lang: currentLang }, '', urlForLang(currentLang) + location.hash); } catch (e) {}
   if (!location.hash) { window.scrollTo(0, 0); }
   render();
-  loadEntries();
   initParticles();
   buildAwardsCollage();
   setupStickyApply();
