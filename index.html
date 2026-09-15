@@ -339,6 +339,7 @@
   .news-card:hover .news-headline a { color:#1574e6; }
   .news-body { font-family:'Noto Sans TC'; font-size:14px; line-height:1.9; color:#5a6a82; margin:10px 0 0; }
   .news-body strong { color:#0d2747; }
+  .news-note { display:block; font-size:12.5px; line-height:1.7; color:#7a8aa3; }
   .news-body a { color:#1574e6; font-weight:700; text-decoration:none; }
   .news-body a:hover { text-decoration:underline; }
   .news-readmore { display:inline-flex; align-items:center; gap:6px; margin-top:16px; font-family:'Noto Sans TC'; font-weight:700; font-size:14px; color:#1574e6; text-decoration:none; transition:gap .2s; }
@@ -1386,7 +1387,7 @@
           <span style="width:22px;height:2px;background:#38e58c;"></span><span id="show-tag"></span>
         </div>
         <h2 id="show-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(26px,3.6vw,42px);line-height:1.25;color:#0d2747;margin:16px 0 14px;"></h2>
-        <p id="show-body" style="font-family:'Noto Sans TC';font-size:16px;line-height:1.85;color:#5a6a82;margin:0;"></p>
+        <p id="show-body" style="font-family:'Noto Sans TC';font-size:14px;line-height:1.8;color:#7a8aa3;margin:0;"></p>
       </div>
       <div id="show-emblem" class="sl-emblem" data-reveal="scale"></div>
     </div>
@@ -1566,14 +1567,14 @@ const C = {
     newsTag: 'News', newsTitle: '最新消息', newsBody: '',
     newsShortlistBtn: '查看完整入圍名單',
     newsItems: [
-      { date: '2026.09.10', tag: '入圍名單公告', title: '#FindingTAIWAN_2.0全球徵片競賽決選入圍名單公告', bodyHtml: '共 25 部作品進入決選！本入圍名單係依收件時間順序排列，非依名次排序；最終得獎名單將於 9 月 24 日頒獎典禮揭曉。<br>Shortlists are listed by submission number, not competition ranking.', shortlist: true },
+      { date: '2026.09.10', tag: '入圍名單公告', title: '#FindingTAIWAN_2.0全球徵片競賽決選入圍名單公告', bodyHtml: '<span class="news-note">（Shortlists are listed by submission number, not competition ranking.）</span>', shortlist: true },
       { date: '2026.08.20', tag: '直播公告', title: '#FindingTAIWAN_2.0：Where We Connect 全球徵片競賽頒獎典禮直播公告', image: 'assets/img/news-awards-ceremony.webp', bodyHtml: '<strong>直播資訊</strong><br>日期及時間｜2026年9月24日（四）下午2時<br>Facebook｜<a href="https://www.facebook.com/mofa.gov.tw?locale=zh_TW" target="_blank" rel="noopener noreferrer">外交部 Ministry of Foreign Affairs, ROC (Taiwan)</a><br>YouTube｜<a href="https://youtube.com/@mofa_taiwan?si=BmF26x-IY6lUzbBn" target="_blank" rel="noopener noreferrer">MOFA Taiwan</a>' },
       { date: '2026.08.05', tag: '影片', title: '一分鐘看懂競賽！#FindingTAIWAN_2.0全球徵片競賽懶人包', video: 'assets/video/finding-taiwan-guide.mp4', poster: 'assets/video/finding-taiwan-guide-poster.webp' },
       { date: '2026.06.30', tag: 'MOFA 新聞稿', title: '外交部推出「#FindingTAIWAN_2.0：Where We Connect」全球徵片競賽 邀請全球創作者用影像述說台灣與世界的連結', url: 'https://www.mofa.gov.tw/News_Content.aspx?n=95&sms=73&s=122572' }
     ],
     showTag: '決選入圍名單 / Shortlist',
     showTitleHtml: '<span class="sl-kicker">#FindingTAIWAN_2.0 全球徵片競賽</span>決選入圍名單公告',
-    showBody: '恭喜以下 25 部作品脫穎而出，進入決選！入圍名單依報名序號排列，不代表競賽名次。（Shortlists are listed by submission number, not competition ranking.）',
+    showBody: '（Shortlists are listed by submission number, not competition ranking.）',
     showWatch: '觀看作品',
     showBadge: '決選入圍',
     showEmblemK: 'Official Selection 2026',
@@ -1696,14 +1697,14 @@ const C = {
     newsTag: 'News', newsTitle: 'Latest news', newsBody: 'The latest announcements and news will be posted here.',
     newsShortlistBtn: 'See the full shortlist',
     newsItems: [
-      { date: '2026.09.10', tag: 'Shortlist Announcement', title: '#FindingTAIWAN_2.0 International Short Film Competition Shortlists Announced', bodyHtml: '25 films have advanced to the final round. Shortlists are listed by submission number, not competition ranking; the winners will be revealed at the awards ceremony on September 24.', shortlist: true },
+      { date: '2026.09.10', tag: 'Shortlist Announcement', title: '#FindingTAIWAN_2.0 International Short Film Competition Shortlists Announced', bodyHtml: '<span class="news-note">（Shortlists are listed by submission number, not competition ranking.）</span>', shortlist: true },
       { date: '2026.08.20', tag: 'Livestream Announcement', title: '#FindingTAIWAN_2.0: Where We Connect International Short Film Competition Awards Ceremony Livestream', image: 'assets/img/news-awards-ceremony.webp', bodyHtml: '<strong>Livestream Information</strong><br>Date &amp; Time｜Thursday, September 24, 2026, at 2:00 PM (Taiwan Time)<br>Facebook｜<a href="https://www.facebook.com/mofa.gov.tw?locale=zh_TW" target="_blank" rel="noopener noreferrer">外交部 Ministry of Foreign Affairs, ROC (Taiwan)</a><br>YouTube｜<a href="https://youtube.com/@mofa_taiwan?si=BmF26x-IY6lUzbBn" target="_blank" rel="noopener noreferrer">MOFA Taiwan</a>' },
       { date: '2026.08.05', tag: 'Video', title: 'Your Quick Guide to the #FindingTAIWAN_2.0 International Short Film Competition', video: 'assets/video/finding-taiwan-guide.mp4', poster: 'assets/video/finding-taiwan-guide-poster.webp' },
       { date: '2026.06.30', tag: 'MOFA press release', title: 'The Ministry of Foreign Affairs launches the #FindingTaiwan_2.0: Where We Connect', body: 'International short film competition, inviting creatives worldwide to explore Taiwan\'s links with the wider world through the lens!', url: 'https://en.mofa.gov.tw/News_Content.aspx?n=1328&s=122587' }
     ],
     showTag: 'Shortlist',
     showTitleHtml: '<span class="sl-kicker">#FindingTAIWAN_2.0 International Short Film Competition</span>Shortlists Announced',
-    showBody: 'Congratulations to the 25 films advancing to the final round. Shortlists are listed by submission number, not competition ranking.',
+    showBody: '（Shortlists are listed by submission number, not competition ranking.）',
     showWatch: 'Watch',
     showBadge: 'Shortlisted',
     showEmblemK: 'Official Selection 2026',
