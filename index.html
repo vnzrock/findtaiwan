@@ -287,7 +287,6 @@
   .sl-card { display:block; min-width:0; text-decoration:none; color:inherit; text-align:center; outline:none; }
   .sl-frame { position:relative; aspect-ratio:4/5; border-radius:18px; overflow:hidden; isolation:isolate; background:linear-gradient(160deg,#173a6b,#0d2747); box-shadow:0 12px 30px rgba(13,59,128,0.16); transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, outline-color .2s; outline:3px solid transparent; outline-offset:3px; }
   .sl-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 40%; transition:transform .5s cubic-bezier(.2,.7,.2,1); }
-  .sl-no { position:absolute; top:10px; left:10px; padding:4px 9px; border-radius:999px; background:rgba(13,39,71,0.58); backdrop-filter:blur(6px); color:#fff; font-family:'Montserrat'; font-weight:700; font-size:10.5px; letter-spacing:.12em; line-height:1.3; }
   .sl-play { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(13,40,71,0); transition:background .3s ease; }
   .sl-play span { width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.22); backdrop-filter:blur(6px); border:2px solid rgba(255,255,255,0.78); display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(.7); transition:opacity .3s ease, transform .38s cubic-bezier(.34,1.56,.64,1); }
   .sl-play span::after { content:''; width:0; height:0; border-style:solid; border-width:9px 0 9px 16px; border-color:transparent transparent transparent #fff; margin-left:4px; }
@@ -301,18 +300,7 @@
   .sl-badge { display:inline-flex; align-items:center; gap:5px; margin-top:10px; padding:4px 10px 4px 7px; border:1.5px solid #0d2747; border-radius:999px; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:700; font-size:10.5px; letter-spacing:.08em; line-height:1.4; color:#0d2747; transition:background .25s, color .25s; }
   .sl-badge-ic { width:16px; height:16px; display:block; }
   .sl-card:hover .sl-badge { background:#0d2747; color:#fff; }
-  /* 標題右側的入圍徽章 — 發光月桂葉環（assets/img/shortlist-laurel.png，帶透明背景）+ 件數 */
-  .sl-emblem { position:relative; flex:none; max-width:100%; display:flex; align-items:center; gap:14px; padding:14px 30px 14px 12px; border-radius:26px; color:#fff; overflow:hidden; border:1px solid rgba(56,229,140,0.30); background:radial-gradient(120% 150% at 0% 50%, rgba(56,229,140,0.22), transparent 56%), radial-gradient(90% 130% at 100% 0%, rgba(21,116,230,0.60), transparent 62%), linear-gradient(150deg,#0e2f5e 0%,#061a3a 100%); box-shadow:0 22px 48px rgba(6,26,58,0.32), inset 0 1px 0 rgba(255,255,255,0.10); }
-  .sl-emblem::after { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 22% 50%, rgba(56,229,140,0.30), transparent 38%); }
-  .sl-emblem-wreath { position:relative; width:160px; height:160px; flex:none; }
-  .sl-emblem-img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; display:block; filter:drop-shadow(0 0 16px rgba(56,229,140,0.35)); }
-  .sl-emblem-num { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; transform:translateY(-3%); font-family:'Montserrat'; font-weight:900; font-style:italic; font-size:50px; letter-spacing:-.03em; color:#fff; text-shadow:0 0 22px rgba(56,229,140,0.6), 0 2px 10px rgba(0,0,0,0.4); }
-  .sl-emblem-txt { position:relative; max-width:250px; }
-  .sl-emblem-k { font-family:'Montserrat'; font-weight:700; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:#38e58c; }
-  .sl-emblem-t { font-family:'Noto Sans TC'; font-weight:900; font-size:19px; line-height:1.3; margin-top:6px; }
-  .sl-emblem-s { font-family:'Noto Sans TC'; font-size:12.5px; color:rgba(255,255,255,0.72); margin-top:6px; }
-  @media (max-width:1100px) { .sl-kicker { font-size:.37em; } .sl-emblem-wreath { width:140px; height:140px; } .sl-emblem-num { font-size:44px; } }
-  @media (max-width:767px) { .sl-emblem-wreath { width:128px; height:128px; } .sl-emblem-num { font-size:40px; } }
+  @media (max-width:1100px) { .sl-kicker { font-size:.37em; } }
   .sl-note { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:6px 12px; margin-top:clamp(34px,4.5vw,56px); padding:18px 22px; border-radius:16px; background:#f3f8ff; font-family:'Noto Sans TC'; font-size:14.5px; line-height:1.7; color:#0d2747; text-align:center; }
   .sl-note::before { content:''; width:8px; height:8px; border-radius:50%; background:#38e58c; flex:none; }
   .sl-note a { color:#1574e6; font-weight:700; text-decoration:none; white-space:nowrap; }
@@ -327,7 +315,7 @@
   .news-sl-foot { text-align:center; margin-top:24px; }
   .news-sl-btn { display:inline-flex; align-items:center; gap:8px; padding:12px 30px; border:1.5px solid #1574e6; border-radius:999px; background:#fff; color:#1574e6; font-family:'Noto Sans TC'; font-weight:700; font-size:14.5px; text-decoration:none; transition:background .2s,color .2s,transform .2s,box-shadow .2s; }
   .news-sl-btn:hover { background:#1574e6; color:#fff; transform:translateY(-2px); box-shadow:0 12px 26px rgba(21,116,230,0.28); }
-  @media (max-width:767px) { .sl-no, .sl-play span { backdrop-filter:none; } .sl-emblem { width:100%; } }
+  @media (max-width:767px) { .sl-play span { backdrop-filter:none; } }
 
   /* 最新消息 — 白色卡片；含影片的那則採左右兩欄 */
   .news-card { background:#fff; border:1px solid #e2ecfb; border-radius:18px; box-shadow:0 10px 30px rgba(13,59,128,0.06); overflow:hidden; transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease; }
@@ -1390,7 +1378,6 @@
         <h2 id="show-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(26px,3.6vw,42px);line-height:1.25;color:#0d2747;margin:16px 0 14px;"></h2>
         <p id="show-body" style="font-family:'Noto Sans TC';font-size:14px;line-height:1.8;color:#7a8aa3;margin:0;"></p>
       </div>
-      <div id="show-emblem" class="sl-emblem" data-reveal="scale"></div>
     </div>
     <div id="shortlist-grid" style="margin-top:clamp(34px,4.5vw,56px);"></div>
     <div id="show-note" class="sl-note"></div>
@@ -1575,12 +1562,9 @@ const C = {
     ],
     showTag: '決選入圍名單 / Shortlist',
     showTitleHtml: '<span class="sl-kicker">#FindingTAIWAN_2.0 全球徵片競賽</span>決選入圍名單公告',
-    showBody: '（Shortlists are listed by submission number, not competition ranking.）',
+    showBody: '依報名序號排列 · 非競賽名次。',
     showWatch: '觀看作品',
     showBadge: '決選入圍',
-    showEmblemK: 'Official Selection 2026',
-    showEmblemT: '部作品入圍決選',
-    showEmblemS: '依報名序號排列 · 非競賽名次',
     showNoteHtml: '最終得獎名單將於 2026 年 9 月 24 日頒獎典禮揭曉，敬請鎖定直播。<a href="#news">直播資訊 →</a>',
     footTagline: '以影像述說台灣，讓世界看見。',
     footRights: '中華民國外交部 Ministry of Foreign Affairs, ROC (Taiwan)',
@@ -1708,9 +1692,6 @@ const C = {
     showBody: '（Shortlists are listed by submission number, not competition ranking.）',
     showWatch: 'Watch',
     showBadge: 'Shortlisted',
-    showEmblemK: 'Official Selection 2026',
-    showEmblemT: 'films shortlisted',
-    showEmblemS: 'By submission number, not ranking',
     showNoteHtml: 'The winners will be revealed at the awards ceremony on September 24, 2026. <a href="#news">Livestream details →</a>',
     footTagline: 'Telling Taiwan\'s story to the world, through film.',
     footRights: 'Ministry of Foreign Affairs, ROC （Taiwan）',
@@ -1810,7 +1791,6 @@ const SHORTLIST = [
 const SHORTLIST_COLS = 5; // 桌機欄數，用來算卡片進場的交錯延遲
 
 function shortlistCover(id) { return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w640'; }
-function pad3(n) { return String(n).padStart(3, '0'); }
 
 function makeShortlistCard(e, t, i, opts) {
   const card = document.createElement('a');
@@ -1827,12 +1807,10 @@ function makeShortlistCard(e, t, i, opts) {
   frame.className = 'sl-frame';
   frame.innerHTML =
     '<img class="sl-img" alt="" loading="lazy" referrerpolicy="no-referrer">' +
-    '<span class="sl-no"></span>' +
     '<span class="sl-play" aria-hidden="true"><span></span></span>';
   const img = frame.querySelector('.sl-img');
   img.onerror = () => { img.remove(); }; // 劇照抓不到就留深藍底
   img.src = cover; img.alt = e.title;
-  frame.querySelector('.sl-no').textContent = 'NO.' + pad3(e.no);
 
   const title = document.createElement('div');
   title.className = 'sl-title';
@@ -1856,15 +1834,6 @@ function renderShortlist() {
   grid.innerHTML = '';
   SHORTLIST.forEach((e, i) => grid.appendChild(makeShortlistCard(e, t, i)));
 
-  const em = document.getElementById('show-emblem');
-  if (em) {
-    em.innerHTML =
-      '<div class="sl-emblem-wreath"><img class="sl-emblem-img" src="assets/img/shortlist-laurel.png" width="420" height="420" alt="" loading="lazy"><span class="sl-emblem-num">' + SHORTLIST.length + '</span></div>' +
-      '<div class="sl-emblem-txt"><div class="sl-emblem-k"></div><div class="sl-emblem-t"></div><div class="sl-emblem-s"></div></div>';
-    em.querySelector('.sl-emblem-k').textContent = t.showEmblemK;
-    em.querySelector('.sl-emblem-t').textContent = t.showEmblemT;
-    em.querySelector('.sl-emblem-s').textContent = t.showEmblemS;
-  }
   const note = document.getElementById('show-note');
   if (note) note.innerHTML = t.showNoteHtml;
 }
