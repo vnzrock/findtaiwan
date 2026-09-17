@@ -1943,9 +1943,7 @@ function updateEntriesMore() {
   const remaining = ENTRIES_2026.length - entriesShown;
   if (remaining > 0) {
     wrap.style.display = '';
-    btn.textContent = currentLang === 'en'
-      ? 'Load more (' + remaining + ' left)'
-      : '載入更多（還有 ' + remaining + ' 件）';
+    btn.textContent = currentLang === 'en' ? 'More' : '更多';
   } else {
     wrap.style.display = 'none';
   }
