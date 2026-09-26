@@ -354,8 +354,8 @@
 
   /* 最新消息多張圖片（如入圍名單）— 卡片下方橫排方形縮圖，點擊開 lightbox 可左右切換 */
   .news-gallery { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(10px,2vw,18px); margin-top:20px; }
-  .news-gallery.news-gallery-4 { grid-template-columns:repeat(2,1fr); }
-  @media (min-width:700px) { .news-gallery.news-gallery-4 { grid-template-columns:repeat(4,1fr); } }
+  /* 得獎圖卡資訊密度高 — 一律兩張一排（含桌機），卡片才夠大看得清名單 */
+  .news-gallery.news-gallery-4 { grid-template-columns:repeat(2,minmax(0,1fr)); }
   @media (max-width:479px) { .news-gallery { grid-template-columns:1fr 1fr; } .news-gallery:not(.news-gallery-4) .news-media-link:nth-child(3) { grid-column:1 / -1; max-width:calc(50% - 5px); } }
   .news-gallery .news-media-link { max-width:none; margin:0; border-radius:14px; }
   /* 最新消息圖片點擊放大 lightbox */
