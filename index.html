@@ -325,6 +325,28 @@
   .news-sl-btn:hover { background:#1574e6; color:#fff; transform:translateY(-2px); box-shadow:0 12px 26px rgba(21,116,230,0.28); }
   @media (max-width:767px) { .sl-play span { backdrop-filter:none; } }
 
+  /* 2026 得獎名單 — 依獎項分組，每組一列卡片（沿用入圍卡的劇照框），首獎單張放大 */
+  #winners26::before { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(60% 42% at 50% 0%, rgba(246,183,60,0.10), transparent 72%); }
+  .wn-group { margin-top:clamp(30px,4vw,48px); }
+  .wn-group:first-child { margin-top:clamp(24px,3vw,34px); }
+  .wn-head { display:flex; align-items:center; gap:14px; }
+  .wn-head::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,#cfe0f7,rgba(207,224,247,0)); }
+  .wn-label { display:inline-flex; align-items:baseline; gap:9px; padding:8px 18px; border-radius:999px; color:#fff; white-space:nowrap; box-shadow:0 8px 20px rgba(13,59,128,0.16); }
+  .wn-label b { font-family:'Noto Sans TC'; font-weight:900; font-size:15px; letter-spacing:.04em; }
+  .wn-label span { font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:700; font-size:11px; letter-spacing:.07em; opacity:.88; }
+  .wn-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(20px,3vw,30px) 14px; margin-top:clamp(18px,2.4vw,24px); }
+  @media (min-width:560px) { .wn-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+  @media (min-width:768px) { .wn-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(24px,3vw,36px) 18px; } }
+  .wn-grid.wn-solo { grid-template-columns:minmax(0,1fr); max-width:clamp(230px,34vw,340px); }
+  @media (min-width:560px) { .wn-grid.wn-solo { grid-template-columns:minmax(0,1fr); } }
+  .wn-badge { border-color:transparent !important; }
+  .wn-badge .sl-badge-ic { filter:brightness(0) invert(1); }
+  .wn-foot { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:12px; margin-top:clamp(34px,4.5vw,54px); }
+  .wn-foot .news-sl-btn { margin:0; }
+  /* 最新消息裡的得獎搶先看 — 固定四張，不輪轉 */
+  .news-wn-strip { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px 12px; margin-top:22px; }
+  @media (min-width:700px) { .news-wn-strip { grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px 14px; } }
+
   /* 最新消息 — 白色卡片；含影片的那則採左右兩欄 */
   .news-card { background:#fff; border:1px solid #e2ecfb; border-radius:18px; box-shadow:0 10px 30px rgba(13,59,128,0.06); overflow:hidden; transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease; }
   .news-card:hover { transform:translateY(-4px); box-shadow:0 20px 44px rgba(13,59,128,0.12); }
@@ -1357,6 +1379,26 @@
 </section>
 
 <!-- 6. 2025 WINNERS -->
+<!-- 6.5 WINNERS 2026 — 本屆得獎名單 -->
+<section id="winners26" style="position:relative;background:#fff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);scroll-margin-top:70px;">
+  <div class="sl-wrap" style="max-width:1180px;margin:0 auto;">
+    <div style="display:flex;flex-wrap:wrap;gap:28px 40px;align-items:flex-end;justify-content:space-between;">
+      <div style="flex:1 1 380px;min-width:0;max-width:680px;">
+        <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#1574e6;">
+          <span style="width:22px;height:2px;background:#38e58c;"></span><span id="win26-tag"></span>
+        </div>
+        <h2 id="win26-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(26px,3.6vw,42px);line-height:1.25;color:#0d2747;margin:16px 0 14px;"></h2>
+        <p id="win26-body" style="font-family:'Noto Sans TC';font-size:15px;line-height:1.85;color:#5a6a82;margin:0;"></p>
+      </div>
+    </div>
+    <div id="winners26-list" style="margin-top:clamp(28px,3.5vw,40px);"></div>
+    <div class="wn-foot">
+      <a id="win26-shortlist-btn" class="news-sl-btn" href="#showcase"></a>
+      <a id="win26-2025-btn" class="news-sl-btn" href="#winners"></a>
+    </div>
+  </div>
+</section>
+
 <section id="winners" style="background:#f3f8ff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);">
   <div style="max-width:1180px;margin:0 auto;">
     <div style="display:flex;flex-wrap:wrap;gap:22px;align-items:flex-end;justify-content:space-between;">
@@ -1479,7 +1521,7 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
   window.addEventListener('load', toTop);
 })();
 
-const NAV_HREFS = ['#about','#news','#participate','#timeline','#awards','#guanghua','#winners'];
+const NAV_HREFS = ['#about','#news','#participate','#timeline','#awards','#guanghua','#winners26'];
 
 // 光華特別獎 archive reel — vintage Taiwan Panorama / Sinorama covers (assets/guanghua/)
 const GH_REEL = [
@@ -1503,7 +1545,7 @@ const VIDEO_ID = '_koDf0NAnRY'; // 2024 Trending Taiwan Short Film Competition (
 
 const C = {
   zh: {
-    nav: ['關於','最新消息','參加方式','時程','獎項獎金','光華特別獎','精選作品'],
+    nav: ['關於','最新消息','參加方式','時程','獎項獎金','光華特別獎','得獎名單'],
     apply: '立即報名',
     brochure: '下載活動簡章',
     heroKicker: '用鏡頭說出你和台灣的故事！',
@@ -1572,6 +1614,14 @@ const C = {
       { p: '三獎', c: '1 名', a: '新台幣 2 萬元' }
     ],
     awardsNote: '※ 各獎項名額與金額以官方活動簡章公告為準。',
+    win26Tag: '得獎名單 / Winners',
+    win26TitleHtml: '<span class="sl-kicker">#FindingTAIWAN_2.0 全球徵片競賽</span>得獎名單公告',
+    win26Body: '本屆競賽歷時 2 個月，收到來自全球 45 個國家及地區、共 280 件作品，25 件作品進入決選；2026 年 9 月 24 日頒獎典禮揭曉 13 個獎項，總獎金新臺幣 80 萬元。恭喜所有得獎者，也謝謝每一位用鏡頭訴說台灣的創作者。',
+    win26Tiers: { grand: '首獎', second: '貳獎', third: '參獎', merit: '佳作', gh: '光華特別獎' },
+    win26GhRanks: ['壹獎', '貳獎', '參獎'],
+    win26ShortlistBtn: '查看決選入圍名單',
+    win26PrevBtn: '2025 首屆得獎作品',
+    win26NewsBtn: '查看完整得獎名單',
     winTag: '2025 精選作品 / 2025 Winners',
     winTitle: '2025 首屆得獎作品',
     winBody: '首屆競賽得獎作品已於外交部Instagram 專區完整收錄，呈現世界各地創作者鏡頭下的台灣風貌！點擊任一作品即可前往觀賞。',
@@ -1583,6 +1633,7 @@ const C = {
     newsTag: 'News', newsTitle: '最新消息', newsBody: '',
     newsShortlistBtn: '查看完整入圍名單',
     newsItems: [
+      { date: '2026.09.24', tag: '得獎名單公告', title: '#FindingTAIWAN_2.0全球徵片競賽得獎名單公告', winners: true, bodyHtml: '13 個獎項、總獎金新臺幣 80 萬元，已於 2026 年 9 月 24 日頒獎典禮揭曉。<span class="news-note">恭喜所有得獎者，也謝謝來自全球 45 個國家及地區、共 280 件作品的參與。</span>' },
       { date: '2026.09.10', tag: '入圍名單公告', title: '#FindingTAIWAN_2.0全球徵片競賽決選入圍名單公告', bodyHtml: '<span class="news-note">依報名序號排列 · 非競賽名次。</span>', shortlist: true },
       { date: '2026.08.20', tag: '直播公告', title: '#FindingTAIWAN_2.0：Where We Connect 全球徵片競賽頒獎典禮直播公告', image: 'assets/img/news-awards-ceremony.webp', bodyHtml: '<strong>直播資訊</strong><br>日期及時間｜2026年9月24日（四）下午2時<br>Facebook｜<a href="https://www.facebook.com/mofa.gov.tw?locale=zh_TW" target="_blank" rel="noopener noreferrer">外交部 Ministry of Foreign Affairs, ROC (Taiwan)</a><br>YouTube｜<a href="https://youtube.com/@mofa_taiwan?si=BmF26x-IY6lUzbBn" target="_blank" rel="noopener noreferrer">MOFA Taiwan</a>' },
       { date: '2026.08.05', tag: '影片', title: '一分鐘看懂競賽！#FindingTAIWAN_2.0全球徵片競賽懶人包', video: 'assets/video/finding-taiwan-guide.mp4', poster: 'assets/video/finding-taiwan-guide-poster.webp' },
@@ -1593,7 +1644,7 @@ const C = {
     showBody: '依報名序號排列 · 非競賽名次。',
     showWatch: '觀看作品',
     showBadge: '決選入圍',
-    showNoteHtml: '最終得獎名單將於 2026 年 9 月 24 日頒獎典禮揭曉，敬請鎖定直播。<a href="#news">直播資訊 →</a>',
+    showNoteHtml: '得獎名單已於 2026 年 9 月 24 日頒獎典禮揭曉。<a href="#winners26">查看得獎名單 →</a>',
     entTag: '參賽作品 / Video Showcase', entTitle: '本屆報名作品',
     entBody: '徵件期間收到來自世界各地創作者的作品，點擊任一作品即可前往觀賞。',
     entWatch: '觀看',
@@ -1704,6 +1755,14 @@ const C = {
       { p: 'Third Prize', c: '1 Winner', a: 'NT$20,000' }
     ],
     awardsNote: '※ Final award categories and amounts are determined by the official rules.',
+    win26Tag: 'Winners',
+    win26TitleHtml: '<span class="sl-kicker">#FindingTAIWAN_2.0 International Short Film Competition</span>Winners Announcement',
+    win26Body: 'Over two months the competition drew 280 entries from 45 countries and territories, and 25 of them reached the final selection. The 13 awards — a total prize pool of NT$800,000 — were revealed at the awards ceremony on September 24, 2026. Congratulations to every winner, and thank you to everyone who told Taiwan\'s story through the lens.',
+    win26Tiers: { grand: 'Grand Prize', second: 'Second Prize', third: 'Third Prize', merit: 'Honorable Mention', gh: 'Taiwan Panorama Special Award' },
+    win26GhRanks: ['First Prize', 'Second Prize', 'Third Prize'],
+    win26ShortlistBtn: 'See the full shortlist',
+    win26PrevBtn: '2025 inaugural winners',
+    win26NewsBtn: 'See the full winners list',
     winTag: '2025 Winners',
     winTitle: '2025 Inaugural Award Winners',
     winBody: 'Winning entries from the 2025 competition are archived on MOFA\'s dedicated Instagram — click any winner to watch.',
@@ -1715,6 +1774,7 @@ const C = {
     newsTag: 'News', newsTitle: 'Latest news', newsBody: 'The latest announcements and news will be posted here.',
     newsShortlistBtn: 'See the full shortlist',
     newsItems: [
+      { date: '2026.09.24', tag: 'Winners Announcement', title: '#FindingTAIWAN_2.0 International Short Film Competition Winners Announcement', winners: true, bodyHtml: '13 awards with a total prize pool of NT$800,000 were revealed at the awards ceremony on September 24, 2026.<span class="news-note">Congratulations to every winner, and thank you to the 280 entries from 45 countries and territories.</span>' },
       { date: '2026.09.10', tag: 'Shortlist Announcement', title: '#FindingTAIWAN_2.0 International Short Film Competition Shortlists Announced', bodyHtml: '<span class="news-note">（Shortlists are listed by submission number, not competition ranking.）</span>', shortlist: true },
       { date: '2026.08.20', tag: 'Livestream Announcement', title: '#FindingTAIWAN_2.0: Where We Connect International Short Film Competition Awards Ceremony Livestream', image: 'assets/img/news-awards-ceremony.webp', bodyHtml: '<strong>Livestream Information</strong><br>Date &amp; Time｜Thursday, September 24, 2026, at 2:00 PM (Taiwan Time)<br>Facebook｜<a href="https://www.facebook.com/mofa.gov.tw?locale=zh_TW" target="_blank" rel="noopener noreferrer">外交部 Ministry of Foreign Affairs, ROC (Taiwan)</a><br>YouTube｜<a href="https://youtube.com/@mofa_taiwan?si=BmF26x-IY6lUzbBn" target="_blank" rel="noopener noreferrer">MOFA Taiwan</a>' },
       { date: '2026.08.05', tag: 'Video', title: 'Your Quick Guide to the #FindingTAIWAN_2.0 International Short Film Competition', video: 'assets/video/finding-taiwan-guide.mp4', poster: 'assets/video/finding-taiwan-guide-poster.webp' },
@@ -1725,7 +1785,7 @@ const C = {
     showBody: '（Shortlists are listed by submission number, not competition ranking.）',
     showWatch: 'Watch',
     showBadge: 'Shortlisted',
-    showNoteHtml: 'The winners will be revealed at the awards ceremony on September 24, 2026. <a href="#news">Livestream details →</a>',
+    showNoteHtml: 'The winners were revealed at the awards ceremony on September 24, 2026. <a href="#winners26">See the winners →</a>',
     entTag: 'Video Showcase', entTitle: '2026 Entries',
     entBody: 'Entries arrived from creators around the world throughout the call — click any entry to watch.',
     entWatch: 'Watch',
@@ -1980,6 +2040,38 @@ const SHORTLIST = [
 ];
 const SHORTLIST_COLS = 5; // 桌機欄數，用來算卡片進場的交錯延遲
 
+// ▼ 2026 得獎名單 — no 對應上方 SHORTLIST 的報名序號，作品名稱／創作者／劇照／連結都沿用同一筆資料
+//   tier：grand 首獎 / second 貳獎 / third 參獎 / merit 佳作 / gh 光華特別獎（rank = 壹貳參）
+//   ⚠️ no: null 者為得獎圖卡上尚未取得的名次，補上序號即會自動顯示（共 13 個獎項）
+const WINNERS_2026 = [
+  { tier: 'grand',  no: 54 },   // The Most Beautiful Scenery in Taiwan — 陳昀＆梁嘉軒
+  { tier: 'second', no: 13 },   // Taiwan, A Thousand Small Moments — SilkyRonTheRoad
+  { tier: 'second', no: null }, // TODO 貳獎第二名
+  { tier: 'third',  no: 210 },  // 臺灣我的家 — Florian Payrou（福洛里安）
+  { tier: 'third',  no: 198 },  // Written in Taiwan 寫在台灣 — Team Nitro
+  { tier: 'third',  no: 14 },   // Nothing was supposed to bring me to Taiwan — BASTIAN GABIN
+  { tier: 'merit',  no: 147 },  // Small Island, Big Heart 小小的島 大大的心 — chrislovesbeefnoodles
+  { tier: 'merit',  no: 149 },  // 如果人生是一個寶箱，你會在台灣找到什麼？ — 波蘭Anna
+  { tier: 'merit',  no: 108 },  // What I'd Redo in Taiwan — Jorge Benavente Rico（班尼可）
+  { tier: 'merit',  no: null }, // TODO 佳作第四名
+  { tier: 'gh', rank: 1, no: 60 },   // Taiwanese Iron Horse 臺灣鐵馬 — TomTom.Recalculating
+  { tier: 'gh', rank: 2, no: 130 },  // Taiwan's Champagne-Rice Valley 米中的香檳 — Reece Andrew Ayers 倪瑞森
+  { tier: 'gh', rank: 3, no: null }, // TODO 光華特別獎 參獎
+];
+const WIN26_ORDER = ['grand', 'second', 'third', 'merit', 'gh'];
+const WIN26_GRAD = {
+  grand:  'linear-gradient(135deg,#f6b73c,#e98a14)',
+  second: 'linear-gradient(135deg,#9fb2c9,#6f8298)',
+  third:  'linear-gradient(135deg,#cf9b6b,#a9743f)',
+  merit:  'linear-gradient(135deg,#2f7de1,#1559b0)',
+  gh:     'linear-gradient(135deg,#38e58c,#19b56a)',
+};
+// 得獎紀錄 → 入圍名單那筆作品資料；序號還沒補上的先跳過
+function winnerEntry(w) { return w.no ? SHORTLIST.find(e => e.no === w.no) : null; }
+function winnerBadge(w, t) {
+  return { text: w.tier === 'gh' ? t.win26GhRanks[(w.rank || 1) - 1] : t.win26Tiers[w.tier], grad: WIN26_GRAD[w.tier] };
+}
+
 function shortlistCover(id) { return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w640'; }
 
 function makeShortlistCard(e, t, i, opts) {
@@ -2011,7 +2103,14 @@ function makeShortlistCard(e, t, i, opts) {
   const badge = document.createElement('span');
   badge.className = 'sl-badge';
   badge.innerHTML = '<img class="sl-badge-ic" src="assets/img/shortlist-laurel-s.png" width="64" height="64" alt="" loading="lazy"><span></span>';
-  badge.querySelector('span').textContent = t.showBadge;
+  if (opts && opts.badge) { // 得獎卡：桂冠底色換成該獎項的顏色
+    badge.classList.add('wn-badge');
+    badge.style.background = opts.badge.grad;
+    badge.style.color = '#fff';
+    badge.querySelector('span').textContent = opts.badge.text;
+  } else {
+    badge.querySelector('span').textContent = t.showBadge;
+  }
 
   card.appendChild(frame); card.appendChild(title); card.appendChild(creator); card.appendChild(badge);
   return card;
@@ -2026,6 +2125,52 @@ function renderShortlist() {
 
   const note = document.getElementById('show-note');
   if (note) note.innerHTML = t.showNoteHtml;
+}
+
+// 本屆得獎名單 — 依獎項分組，每組一個標籤列 + 一排作品卡
+function renderWinners2026() {
+  const t = C[currentLang];
+  const host = document.getElementById('winners26-list');
+  if (!host) return;
+  host.innerHTML = '';
+  WIN26_ORDER.forEach((tier) => {
+    const rows = WINNERS_2026.filter(w => w.tier === tier && winnerEntry(w));
+    if (!rows.length) return;
+    const group = document.createElement('div');
+    group.className = 'wn-group';
+
+    const head = document.createElement('div');
+    head.className = 'wn-head';
+    const label = document.createElement('span');
+    label.className = 'wn-label';
+    label.style.background = WIN26_GRAD[tier];
+    label.innerHTML = '<b></b><span></span>';
+    label.querySelector('b').textContent = t.win26Tiers[tier];
+    label.querySelector('span').textContent = rows.length > 1 ? '×' + rows.length : '';
+    head.appendChild(label);
+    group.appendChild(head);
+
+    const grid = document.createElement('div');
+    grid.className = 'wn-grid' + (rows.length === 1 ? ' wn-solo' : '');
+    rows.forEach((w, i) => grid.appendChild(makeShortlistCard(winnerEntry(w), t, i, { badge: winnerBadge(w, t) })));
+    group.appendChild(grid);
+    host.appendChild(group);
+  });
+
+  const slBtn = document.getElementById('win26-shortlist-btn');
+  if (slBtn) slBtn.textContent = t.win26ShortlistBtn + ' →';
+  const prevBtn = document.getElementById('win26-2025-btn');
+  if (prevBtn) prevBtn.textContent = t.win26PrevBtn + ' →';
+}
+
+// 最新消息裡的得獎搶先看 — 固定取名單前四件，不輪轉
+function makeNewsWinnersStrip(t) {
+  const strip = document.createElement('div');
+  strip.className = 'news-wn-strip';
+  WINNERS_2026.filter(w => winnerEntry(w)).slice(0, 4).forEach((w, i) => {
+    strip.appendChild(makeShortlistCard(winnerEntry(w), t, i, { reveal: false, badge: winnerBadge(w, t) }));
+  });
+  return strip;
 }
 
 // 最新消息裡的入圍搶先看：一次四張，每 4 秒往下輪轉到下一組；滑過或捲出畫面時暫停
@@ -2127,6 +2272,23 @@ function makeNewsCard(n, t) {
     btn.className = 'news-sl-btn';
     btn.href = '#showcase';
     btn.textContent = t.newsShortlistBtn + ' →';
+    foot.appendChild(btn);
+    inner.appendChild(foot);
+    card.appendChild(inner);
+  } else if (n.winners) {
+    const inner = document.createElement('div');
+    inner.className = 'news-card-inner';
+    inner.appendChild(meta);
+    inner.appendChild(h);
+    appendBody(inner);
+    if (n.images && n.images.length) inner.appendChild(makeNewsGallery(n));
+    inner.appendChild(makeNewsWinnersStrip(t));
+    const foot = document.createElement('div');
+    foot.className = 'news-sl-foot';
+    const btn = document.createElement('a');
+    btn.className = 'news-sl-btn';
+    btn.href = '#winners26';
+    btn.textContent = t.win26NewsBtn + ' →';
     foot.appendChild(btn);
     inner.appendChild(foot);
     card.appendChild(inner);
@@ -2643,6 +2805,11 @@ function render() {
     const newsSorted = (t.newsItems || []).slice().sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
     newsSorted.forEach((n) => newsList.appendChild(makeNewsCard(n, t)));
   }
+  txt('win26-tag', t.win26Tag); txt('win26-body', t.win26Body);
+  const win26Title = document.getElementById('win26-title');
+  if (win26Title) win26Title.innerHTML = t.win26TitleHtml;
+  renderWinners2026();
+
   txt('show-tag', t.showTag); txt('show-body', t.showBody);
   const showTitle = document.getElementById('show-title');
   if (showTitle) showTitle.innerHTML = t.showTitleHtml;
