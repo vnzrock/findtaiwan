@@ -190,23 +190,9 @@
   #hero-desktop.seq-in .hd-card.drift-b { animation:heroIn 0.9s cubic-bezier(.2,.7,.2,1) 0.12s both, ad-driftB 9s ease-in-out infinite 1.1s; }
   #hero-desktop.seq-in .hd-card.drift-d { animation:heroIn 0.9s cubic-bezier(.2,.7,.2,1) 0.12s both, ad-driftD 9.5s ease-in-out infinite 1.2s; }
 
-  /* sticky apply button */
-  #sticky-apply { position:fixed; right:clamp(14px,3vw,30px); bottom:clamp(14px,3vw,30px); z-index:55; display:inline-flex; align-items:center; gap:9px; padding:14px 26px; background:#38e58c; color:#0d3b80; font-family:'Noto Sans TC',sans-serif; font-weight:900; font-size:15px; border-radius:999px; text-decoration:none; box-shadow:0 12px 34px rgba(56,229,140,0.5),0 4px 14px rgba(13,59,128,0.22); opacity:0; transform:translateY(22px) scale(0.9); pointer-events:none; transition:opacity .4s ease, transform .4s cubic-bezier(.34,1.56,.64,1); }
-  #sticky-apply.show { opacity:1; transform:none; pointer-events:auto; }
-  #sticky-apply:hover { transform:translateY(-3px) scale(1.05); box-shadow:0 18px 44px rgba(56,229,140,0.62),0 6px 16px rgba(13,59,128,0.24); }
-  #sticky-apply .sa-pulse { position:relative; display:inline-flex; width:9px; height:9px; }
-  #sticky-apply .sa-pulse::before { content:""; position:absolute; inset:0; border-radius:50%; background:#0d3b80; }
-  #sticky-apply .sa-pulse::after { content:""; position:absolute; inset:0; border-radius:50%; background:#0d3b80; animation:saPulse 1.8s ease-out infinite; }
-  #sticky-apply .sa-icon { display:none; }
-  #sticky-apply .sa-icon svg { width:24px; height:24px; display:block; }
-  @keyframes saRing { 0%{transform:scale(1);opacity:.55} 100%{transform:scale(1.7);opacity:0} }
-  @keyframes saPulse { 0%{transform:scale(1);opacity:.6} 100%{transform:scale(3.2);opacity:0} }
-
   @media (prefers-reduced-motion: reduce) {
     #cine-intro { display:none !important; }
     .hero-anim, .kv-in, #hero-title, #hero-kicker, #hero-desktop .hd-phone-col, #hero-desktop .hd-card { opacity:1 !important; animation:none !important; transform:none !important; }
-    #sticky-apply .sa-pulse::after { animation:none !important; }
-    #sticky-apply::after { animation:none !important; }
     .win-track { animation:none !important; }
   }
 
@@ -403,8 +389,6 @@
     #stats-grid{display:none!important;}
     /* each step reveals on its own as it scrolls in (drop the grid stagger that made it flash by) */
     .step-card{transition-delay:0s!important;transition-duration:1s,.7s,.32s!important;}
-    /* labelled green pill on mobile, slightly more compact */
-    #sticky-apply{padding:13px 22px;font-size:14px;}
     #site-header nav{padding:9px clamp(16px,4vw,22px)!important;}
     #site-header img{height:46px!important;}
     /* hide the header logo over the hero; reveal once scrolled past it */
@@ -1465,9 +1449,6 @@
   </div>
 </footer>
 
-<!-- sticky apply button -->
-<a id="sticky-apply" href="https://forms.gle/JoRh9FvzBjhm4SkSA" target="_blank" rel="noopener" aria-label="立即報名"><span class="sa-pulse"></span><span class="sa-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#0d3b80" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"></path><path d="M12 5l7 7-7 7"></path></svg></span><span id="sticky-apply-text"></span></a>
-
 <script>
 // Always open at the very top on (re)load — never restore the previous scroll position
 if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
@@ -2455,7 +2436,6 @@ function render() {
       mobileLinks.appendChild(ma);
     });
   }
-  txt('sticky-apply-text', t.apply);
 
   // hero (desktop) — kicker uses a typewriter effect
   typeHeroKicker(t.heroKicker);
@@ -2941,21 +2921,6 @@ function setupOffscreenPause() {
   }
 }
 
-// sticky apply button: show once the hero is scrolled past
-function setupStickyApply() {
-  const fab = document.getElementById('sticky-apply');
-  if (!fab) return;
-  let ticking = false;
-  const update = () => {
-    ticking = false;
-    // always visible once the hero is scrolled past
-    fab.classList.toggle('show', window.scrollY > window.innerHeight * 0.6);
-  };
-  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-  window.addEventListener('resize', update);
-  update();
-}
-
 // build the Taiwan photo collage backdrop behind the awards section
 function buildAwardsCollage() {
   const wrap = document.getElementById('awards-collage');
@@ -3032,7 +2997,6 @@ document.addEventListener('DOMContentLoaded', () => {
   loadEntries(); // 報名作品從 Google 試算表抓，抓回來後自己重新 render
   initParticles();
   buildAwardsCollage();
-  setupStickyApply();
   setupOffscreenPause();
   teardownCineIntro();
   setupHeaderScroll();
