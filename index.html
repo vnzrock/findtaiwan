@@ -325,6 +325,18 @@
   .news-sl-btn:hover { background:#1574e6; color:#fff; transform:translateY(-2px); box-shadow:0 12px 26px rgba(21,116,230,0.28); }
   @media (max-width:767px) { .sl-play span { backdrop-filter:none; } }
 
+  /* 最新消息裡的 Google Drive 影片 — 滿欄封面 + 播放鍵，點下去才換成 Drive 播放器 */
+  .news-dv { position:relative; width:100%; margin-top:20px; border-radius:16px; overflow:hidden; background:#0d2747; box-shadow:0 14px 34px rgba(13,59,128,0.20); cursor:pointer; aspect-ratio:16/9; }
+  .news-dv img, .news-dv iframe { position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
+  .news-dv img { object-fit:cover; transition:transform .45s cubic-bezier(.2,.7,.2,1); }
+  .news-dv:hover img { transform:scale(1.03); }
+  .news-dv-play { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(13,40,71,0.18); transition:background .25s ease; }
+  .news-dv:hover .news-dv-play { background:rgba(13,40,71,0.06); }
+  .news-dv-play span { width:clamp(56px,7vw,76px); height:clamp(56px,7vw,76px); border-radius:50%; background:rgba(255,255,255,0.24); backdrop-filter:blur(6px); border:2.5px solid rgba(255,255,255,0.78); display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(0,0,0,0.22); transition:transform .3s cubic-bezier(.34,1.56,.64,1); }
+  .news-dv:hover .news-dv-play span { transform:scale(1.08); }
+  .news-dv-play span::after { content:''; width:0; height:0; border-style:solid; border-width:13px 0 13px 23px; border-color:transparent transparent transparent #fff; margin-left:5px; }
+  @media (max-width:767px) { .news-dv-play span { backdrop-filter:none; } }
+
   /* 最新消息 — 白色卡片；含影片的那則採左右兩欄 */
   .news-card { background:#fff; border:1px solid #e2ecfb; border-radius:18px; box-shadow:0 10px 30px rgba(13,59,128,0.06); overflow:hidden; transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease; }
   .news-card:hover { transform:translateY(-4px); box-shadow:0 20px 44px rgba(13,59,128,0.12); }
@@ -1585,6 +1597,7 @@ const C = {
     newsTag: 'News', newsTitle: '最新消息', newsBody: '',
     newsShortlistBtn: '查看完整入圍名單',
     newsItems: [
+      { date: '2026.09.30', tag: '活動花絮', title: '#FindingTAIWAN_2.0：Where We Connect 全球徵片競賽頒獎典禮精彩花絮', driveVideo: '1qHd3c7yD6-VrF-Ob9eEC2emjxA6xASPo', body: '2026 年 9 月 24 日頒獎典禮現場紀錄。' },
       { date: '2026.09.24', tag: '得獎名單公告', title: '#FindingTAIWAN_2.0全球徵片競賽得獎名單公告', images: ['assets/img/winners-2026/01-grand-second.webp', 'assets/img/winners-2026/02-third.webp', 'assets/img/winners-2026/03-honorable-mention.webp', 'assets/img/winners-2026/04-panorama-special.webp'], bodyHtml: '<span class="news-note">首獎、貳獎、參獎、佳作及光華特別獎得獎名單如下，點擊圖卡可放大檢視。</span>' },
       { date: '2026.09.10', tag: '入圍名單公告', title: '#FindingTAIWAN_2.0全球徵片競賽決選入圍名單公告', bodyHtml: '<span class="news-note">依報名序號排列 · 非競賽名次。</span>', shortlist: true },
       { date: '2026.08.20', tag: '直播公告', title: '#FindingTAIWAN_2.0：Where We Connect 全球徵片競賽頒獎典禮直播公告', image: 'assets/img/news-awards-ceremony.webp', bodyHtml: '<strong>直播資訊</strong><br>日期及時間｜2026年9月24日（四）下午2時<br>Facebook｜<a href="https://www.facebook.com/mofa.gov.tw?locale=zh_TW" target="_blank" rel="noopener noreferrer">外交部 Ministry of Foreign Affairs, ROC (Taiwan)</a><br>YouTube｜<a href="https://youtube.com/@mofa_taiwan?si=BmF26x-IY6lUzbBn" target="_blank" rel="noopener noreferrer">MOFA Taiwan</a>' },
@@ -1718,6 +1731,7 @@ const C = {
     newsTag: 'News', newsTitle: 'Latest news', newsBody: 'The latest announcements and news will be posted here.',
     newsShortlistBtn: 'See the full shortlist',
     newsItems: [
+      { date: '2026.09.30', tag: 'Highlights', title: '#FindingTAIWAN_2.0: Where We Connect International Short Film Competition — Awards Ceremony Highlights', driveVideo: '1qHd3c7yD6-VrF-Ob9eEC2emjxA6xASPo', body: 'Filmed at the awards ceremony on September 24, 2026.' },
       { date: '2026.09.24', tag: 'Winners Announcement', title: '#FindingTAIWAN_2.0 International Short Film Competition Winners Announcement', images: ['assets/img/winners-2026/01-grand-second.webp', 'assets/img/winners-2026/02-third.webp', 'assets/img/winners-2026/03-honorable-mention.webp', 'assets/img/winners-2026/04-panorama-special.webp'], bodyHtml: '<span class="news-note">The Grand, Second, Third, Honorable Mention and Taiwan Panorama Special Award winners are listed below — click any card to enlarge.</span>' },
       { date: '2026.09.10', tag: 'Shortlist Announcement', title: '#FindingTAIWAN_2.0 International Short Film Competition Shortlists Announced', bodyHtml: '<span class="news-note">（Shortlists are listed by submission number, not competition ranking.）</span>', shortlist: true },
       { date: '2026.08.20', tag: 'Livestream Announcement', title: '#FindingTAIWAN_2.0: Where We Connect International Short Film Competition Awards Ceremony Livestream', image: 'assets/img/news-awards-ceremony.webp', bodyHtml: '<strong>Livestream Information</strong><br>Date &amp; Time｜Thursday, September 24, 2026, at 2:00 PM (Taiwan Time)<br>Facebook｜<a href="https://www.facebook.com/mofa.gov.tw?locale=zh_TW" target="_blank" rel="noopener noreferrer">外交部 Ministry of Foreign Affairs, ROC (Taiwan)</a><br>YouTube｜<a href="https://youtube.com/@mofa_taiwan?si=BmF26x-IY6lUzbBn" target="_blank" rel="noopener noreferrer">MOFA Taiwan</a>' },
@@ -2147,6 +2161,18 @@ function makeNewsCard(n, t) {
     grid.appendChild(textCol);
     grid.appendChild(makeNewsVideo(n));
     card.appendChild(grid);
+  } else if (n.driveVideo) {
+    const inner = document.createElement('div');
+    inner.className = 'news-card-inner';
+    inner.appendChild(meta);
+    inner.appendChild(h);
+    appendBody(inner);
+    const dvHint = document.createElement('span');
+    dvHint.className = 'news-watch-hint';
+    dvHint.textContent = currentLang === 'en' ? '▶ Click to play' : '▶ 點擊播放影片';
+    inner.appendChild(dvHint);
+    inner.appendChild(makeNewsDriveVideo(n));
+    card.appendChild(inner);
   } else if (n.images && n.images.length) {
     const inner = document.createElement('div');
     inner.className = 'news-card-inner';
@@ -2181,6 +2207,46 @@ function makeNewsCard(n, t) {
     card.appendChild(inner);
   }
   return card;
+}
+
+// 最新消息裡的 Google Drive 影片 — 先放 Drive 縮圖當封面（順便用它的長寬比校正畫框），
+// 點擊才換成 Drive 播放器 iframe，避免一進頁面就載入播放器
+function driveVideoPoster(id) { return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w1280'; }
+function makeNewsDriveVideo(n) {
+  const wrap = document.createElement('div');
+  wrap.className = 'news-dv';
+  const img = document.createElement('img');
+  img.alt = n.title || ''; img.loading = 'lazy'; img.referrerPolicy = 'no-referrer';
+  // 縮圖尺寸 = 影片比例，載到了就照它調整畫框，直式影片才不會被裁掉
+  img.onload = () => {
+    const w = img.naturalWidth, h = img.naturalHeight;
+    if (!w || !h) return;
+    wrap.style.aspectRatio = w + '/' + h;
+    // 直式影片若佔滿整欄會變成超高一塊，限制寬度讓它維持在一個螢幕高度內並置中
+    if (h > w) { wrap.style.maxWidth = Math.round(520 * (w / h)) + 'px'; wrap.style.marginInline = 'auto'; }
+  };
+  img.onerror = () => { img.remove(); };
+  img.src = driveVideoPoster(n.driveVideo);
+  const overlay = document.createElement('span');
+  overlay.className = 'news-dv-play';
+  overlay.innerHTML = '<span></span>';
+  wrap.appendChild(img); wrap.appendChild(overlay);
+  wrap.setAttribute('role', 'button');
+  wrap.setAttribute('tabindex', '0');
+  const play = () => {
+    const frame = document.createElement('iframe');
+    frame.src = 'https://drive.google.com/file/d/' + n.driveVideo + '/preview';
+    frame.title = n.title || '';
+    frame.allow = 'autoplay; fullscreen';
+    frame.setAttribute('allowfullscreen', '');
+    wrap.innerHTML = '';
+    wrap.appendChild(frame);
+    wrap.style.cursor = 'default';
+    wrap.removeAttribute('role'); wrap.removeAttribute('tabindex');
+  };
+  wrap.addEventListener('click', play, { once: true });
+  wrap.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); } }, { once: true });
+  return wrap;
 }
 
 // 最新消息裡的嵌入影片 — 直式封面 + 播放鍵，點擊才載入自架影片（原生播放器、省流量）
