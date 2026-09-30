@@ -281,8 +281,8 @@
   @media (min-width:560px) { #entries-grid { grid-template-columns:repeat(3,1fr); } }
   @media (min-width:768px) { #entries-grid { grid-template-columns:repeat(4,1fr); gap:16px; } }
   @media (min-width:1024px){ #entries-grid { grid-template-columns:repeat(5,1fr); } }
-  #entries-more { font-family:'Noto Sans TC'; font-weight:700; font-size:15px; padding:13px 34px; border:1.5px solid #1574e6; background:#fff; color:#1574e6; border-radius:999px; cursor:pointer; transition:background .2s,color .2s,transform .2s,box-shadow .2s; }
-  #entries-more:hover { background:#1574e6; color:#fff; transform:translateY(-2px); box-shadow:0 12px 26px rgba(21,116,230,0.28); }
+  #entries-more, #news-more { font-family:'Noto Sans TC'; font-weight:700; font-size:15px; padding:13px 34px; border:1.5px solid #1574e6; background:#fff; color:#1574e6; border-radius:999px; cursor:pointer; transition:background .2s,color .2s,transform .2s,box-shadow .2s; }
+  #entries-more:hover, #news-more:hover { background:#1574e6; color:#fff; transform:translateY(-2px); box-shadow:0 12px 26px rgba(21,116,230,0.28); }
 
   /* 決選入圍名單 — 手機 2 欄 → 桌機 5 欄；卡片 = 滿版劇照框 + 作品名稱 + 創作者 + 入圍徽章 */
   #showcase::before { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(60% 42% at 50% 0%, rgba(21,116,230,0.08), transparent 72%); }
@@ -1214,6 +1214,9 @@
     <h2 id="news-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(28px,4vw,46px);color:#0d2747;margin:18px 0 6px;"></h2>
     <p id="news-body" style="font-family:'Noto Sans TC';font-size:16px;line-height:1.7;color:#5a6a82;margin:0;"></p>
     <div id="news-list" style="margin-top:clamp(28px,4vw,40px);display:flex;flex-direction:column;gap:18px;"></div>
+    <div id="news-more-wrap" style="display:none;text-align:center;margin-top:clamp(22px,3vw,32px);">
+      <button id="news-more" type="button"></button>
+    </div>
   </div>
 </section>
 
@@ -1942,6 +1945,22 @@ function renderEntries() {
   };
 }
 
+// 最新消息一開始只露出最新幾則，其餘按「更多」才展開（換語言時保留已展開的則數）
+const NEWS_BATCH = 3;
+let newsShown = NEWS_BATCH;
+
+function updateNewsMore(total) {
+  const wrap = document.getElementById('news-more-wrap');
+  const btn = document.getElementById('news-more');
+  if (!wrap || !btn) return;
+  if (total - newsShown > 0) {
+    wrap.style.display = '';
+    btn.textContent = currentLang === 'en' ? 'More' : '更多';
+  } else {
+    wrap.style.display = 'none';
+  }
+}
+
 function updateEntriesMore() {
   const wrap = document.getElementById('entries-more-wrap');
   const btn = document.getElementById('entries-more');
@@ -2658,7 +2677,20 @@ function render() {
     newsList.innerHTML = '';
     // 最新的消息排在最前面（日期由新到舊）
     const newsSorted = (t.newsItems || []).slice().sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
-    newsSorted.forEach((n) => newsList.appendChild(makeNewsCard(n, t)));
+    // 只先放前幾則，其餘收在「更多」後面，News 區塊才不會太長
+    const total = newsSorted.length;
+    if (newsShown > total) newsShown = total;
+    if (newsShown < NEWS_BATCH) newsShown = Math.min(NEWS_BATCH, total);
+    newsSorted.slice(0, newsShown).forEach((n) => newsList.appendChild(makeNewsCard(n, t)));
+    updateNewsMore(total);
+    const newsMoreBtn = document.getElementById('news-more');
+    if (newsMoreBtn) newsMoreBtn.onclick = () => {
+      const from = newsShown;
+      newsShown = Math.min(total, newsShown + NEWS_BATCH);
+      newsSorted.slice(from, newsShown).forEach((n) => newsList.appendChild(makeNewsCard(n, C[currentLang])));
+      updateNewsMore(total);
+      setupReveal();
+    };
   }
   txt('show-tag', t.showTag); txt('show-body', t.showBody);
   const showTitle = document.getElementById('show-title');
