@@ -312,7 +312,7 @@
   @media (max-width:767px) { .sl-play span { backdrop-filter:none; } }
 
   /* 最新消息 — 白色卡片；含影片的那則採左右兩欄 */
-  .news-card { background:#fff; border:1px solid #e2ecfb; border-radius:18px; box-shadow:0 10px 30px rgba(13,59,128,0.06); overflow:hidden; transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease; }
+  .news-card { scroll-margin-top:96px; background:#fff; border:1px solid #e2ecfb; border-radius:18px; box-shadow:0 10px 30px rgba(13,59,128,0.06); overflow:hidden; transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease; }
   .news-card:hover { transform:translateY(-4px); box-shadow:0 20px 44px rgba(13,59,128,0.12); }
   .news-card-inner { padding:clamp(20px,3vw,30px) clamp(22px,3vw,32px); }
   .news-meta { display:flex; align-items:center; gap:8px; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:700; font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase; color:#1574e6; }
@@ -568,7 +568,7 @@
     </a>
     <div id="nav-desktop-items" style="display:flex;align-items:center;gap:clamp(12px,2vw,24px);flex-wrap:wrap;">
       <div id="nav-links" style="display:contents;"></div>
-      <a id="nav-apply" href="https://forms.gle/JoRh9FvzBjhm4SkSA" target="_blank" rel="noopener" style="text-decoration:none;padding:9px 20px;background:#FF5A4F;color:#fff;border-radius:999px;font-family:'Noto Sans TC';font-weight:700;font-size:14px;box-shadow:0 4px 16px rgba(255,90,79,0.45);"></a>
+      <a id="nav-apply" href="#winners-2026" style="text-decoration:none;padding:9px 20px;background:#FF5A4F;color:#fff;border-radius:999px;font-family:'Noto Sans TC';font-weight:700;font-size:14px;box-shadow:0 4px 16px rgba(255,90,79,0.45);"></a>
     </div>
     <div style="display:flex;align-items:center;gap:10px;">
       <div style="display:flex;align-items:center;border:1.5px solid rgba(255,255,255,0.45);border-radius:999px;padding:2px;">
@@ -582,7 +582,7 @@
 <!-- mobile fullscreen menu -->
 <div id="nav-mobile-menu" role="dialog" aria-modal="true" aria-label="選單">
   <div id="nav-mobile-links"></div>
-  <a class="nm-apply-btn" href="https://forms.gle/JoRh9FvzBjhm4SkSA" target="_blank" rel="noopener" id="nm-apply" onclick="closeMobileMenu()"></a>
+  <a class="nm-apply-btn" href="#winners-2026" id="nm-apply" onclick="closeMobileMenu()"></a>
 </div>
 
 <!-- HERO -->
@@ -730,7 +730,7 @@
           </span>
         </h1>
         <div class="hd-cta hero-anim" style="--d:3.4s;">
-          <a id="hero-apply" href="https://forms.gle/JoRh9FvzBjhm4SkSA" target="_blank" rel="noopener" class="hd-apply"></a>
+          <a id="hero-apply" href="#winners-2026" class="hd-apply"></a>
           <a id="hero-brochure" href="https://drive.google.com/drive/folders/10ZA3p4uWKFSUD_RmB8p4mZPMovVyj4JR" target="_blank" rel="noopener noreferrer" class="hd-brochure"></a>
         </div>
         <div id="hero-deadline" class="hd-deadline hero-anim" style="--d:3.55s;"></div>
@@ -1153,7 +1153,7 @@
             
             <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin:0 0 12px; font-family:'Noto Sans TC'; font-weight:600; font-size:12px; color:rgba(255,255,255,0.9); text-shadow:0 1px 6px rgba(0,0,0,0.3);"><span style="width:7px;height:7px;border-radius:50%;background:#ff5c7a;box-shadow:0 0 8px rgba(255,92,122,0.8);flex:none;"></span><span id="mh-deadline">報名期間：2026/7/1–8/31</span></div>
             <div style="display: flex; gap: 9px;">
-              <a id="mh-cta" href="https://forms.gle/JoRh9FvzBjhm4SkSA" target="_blank" rel="noopener" style="position: relative; flex: 1; text-decoration: none; text-align: center; font-family: 'Noto Sans TC'; font-weight: 800; font-size: 14.5px; padding: 16px 0; background: linear-gradient(180deg,#5af2a4 0%,#38e58c 50%,#22c97a 100%); color: #0d3b80; border-radius: 999px; box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset, 0 8px 28px rgba(56,229,140,0.45), 0 0 30px rgba(56,229,140,0.4);">立即報名 →</a>
+              <a id="mh-cta" href="#winners-2026" style="position: relative; flex: 1; text-decoration: none; text-align: center; font-family: 'Noto Sans TC'; font-weight: 800; font-size: 14.5px; padding: 16px 0; background: linear-gradient(180deg,#5af2a4 0%,#38e58c 50%,#22c97a 100%); color: #0d3b80; border-radius: 999px; box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset, 0 8px 28px rgba(56,229,140,0.45), 0 0 30px rgba(56,229,140,0.4);">得獎名單 →</a>
               <a id="mh-brochure" href="https://drive.google.com/drive/folders/10ZA3p4uWKFSUD_RmB8p4mZPMovVyj4JR?usp=sharing" target="_blank" rel="noopener noreferrer" style="flex: none; text-decoration: none; text-align: center; font-family: 'Noto Sans TC'; font-weight: 800; font-size: 14.5px; padding: 16px 20px; background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.7); color: #fff; border-radius: 999px;">下載簡章</a>
               
             </div>
@@ -1490,7 +1490,7 @@ const VIDEO_ID = '_koDf0NAnRY'; // 2024 Trending Taiwan Short Film Competition (
 const C = {
   zh: {
     nav: ['關於','最新消息','參加方式','時程','獎項獎金','光華特別獎','精選作品'],
-    apply: '立即報名',
+    winnersCta: '得獎名單',
     brochure: '下載活動簡章',
     heroKicker: '用鏡頭說出你和台灣的故事！',
     heroBrochure: '下載簡章',
@@ -1570,7 +1570,7 @@ const C = {
     newsShortlistBtn: '查看完整入圍名單',
     newsItems: [
       { date: '2026.09.30', tag: '活動花絮', title: '#FindingTAIWAN_2.0：Where We Connect 全球徵片競賽頒獎典禮精彩花絮', video: 'assets/video/awards-ceremony-highlights.mp4', poster: 'assets/video/awards-ceremony-highlights-poster.webp', body: '2026 年 9 月 24 日頒獎典禮現場紀錄。' },
-      { date: '2026.09.24', tag: '得獎名單公告', title: '#FindingTAIWAN_2.0全球徵片競賽得獎名單公告', images: ['assets/img/winners-2026/01-grand-second.webp', 'assets/img/winners-2026/02-third.webp', 'assets/img/winners-2026/03-honorable-mention.webp', 'assets/img/winners-2026/04-panorama-special.webp'], bodyHtml: '<span class="news-note">首獎、貳獎、參獎、佳作及光華特別獎得獎名單如下，點擊圖卡可放大檢視。</span>' },
+      { date: '2026.09.24', anchor: 'winners-2026', tag: '得獎名單公告', title: '#FindingTAIWAN_2.0全球徵片競賽得獎名單公告', images: ['assets/img/winners-2026/01-grand-second.webp', 'assets/img/winners-2026/02-third.webp', 'assets/img/winners-2026/03-honorable-mention.webp', 'assets/img/winners-2026/04-panorama-special.webp'], bodyHtml: '<span class="news-note">首獎、貳獎、參獎、佳作及光華特別獎得獎名單如下，點擊圖卡可放大檢視。</span>' },
       { date: '2026.09.10', tag: '入圍名單公告', title: '#FindingTAIWAN_2.0全球徵片競賽決選入圍名單公告', bodyHtml: '<span class="news-note">依報名序號排列 · 非競賽名次。</span>', shortlist: true },
       { date: '2026.08.20', tag: '直播公告', title: '#FindingTAIWAN_2.0：Where We Connect 全球徵片競賽頒獎典禮直播公告', image: 'assets/img/news-awards-ceremony.webp', bodyHtml: '<strong>直播資訊</strong><br>日期及時間｜2026年9月24日（四）下午2時<br>Facebook｜<a href="https://www.facebook.com/mofa.gov.tw?locale=zh_TW" target="_blank" rel="noopener noreferrer">外交部 Ministry of Foreign Affairs, ROC (Taiwan)</a><br>YouTube｜<a href="https://youtube.com/@mofa_taiwan?si=BmF26x-IY6lUzbBn" target="_blank" rel="noopener noreferrer">MOFA Taiwan</a>' },
       { date: '2026.08.05', tag: '影片', title: '一分鐘看懂競賽！#FindingTAIWAN_2.0全球徵片競賽懶人包', video: 'assets/video/finding-taiwan-guide.mp4', poster: 'assets/video/finding-taiwan-guide-poster.webp' },
@@ -1624,7 +1624,7 @@ const C = {
   },
   en: {
     nav: ['About','News','Participate','Timeline','Awards','Special Award','Winners'],
-    apply: 'Apply Now',
+    winnersCta: '2026 Winners',
     brochure: 'Download',
     heroKicker: 'Tell your Taiwan story through your lens!',
     heroBrochure: 'Download Rules',
@@ -1704,7 +1704,7 @@ const C = {
     newsShortlistBtn: 'See the full shortlist',
     newsItems: [
       { date: '2026.09.30', tag: 'Highlights', title: '#FindingTAIWAN_2.0: Where We Connect International Short Film Competition — Awards Ceremony Highlights', video: 'assets/video/awards-ceremony-highlights.mp4', poster: 'assets/video/awards-ceremony-highlights-poster.webp', body: 'Filmed at the awards ceremony on September 24, 2026.' },
-      { date: '2026.09.24', tag: 'Winners Announcement', title: '#FindingTAIWAN_2.0 International Short Film Competition Winners Announcement', images: ['assets/img/winners-2026/01-grand-second.webp', 'assets/img/winners-2026/02-third.webp', 'assets/img/winners-2026/03-honorable-mention.webp', 'assets/img/winners-2026/04-panorama-special.webp'], bodyHtml: '<span class="news-note">The Grand, Second, Third, Honorable Mention and Taiwan Panorama Special Award winners are listed below — click any card to enlarge.</span>' },
+      { date: '2026.09.24', anchor: 'winners-2026', tag: 'Winners Announcement', title: '#FindingTAIWAN_2.0 International Short Film Competition Winners Announcement', images: ['assets/img/winners-2026/01-grand-second.webp', 'assets/img/winners-2026/02-third.webp', 'assets/img/winners-2026/03-honorable-mention.webp', 'assets/img/winners-2026/04-panorama-special.webp'], bodyHtml: '<span class="news-note">The Grand, Second, Third, Honorable Mention and Taiwan Panorama Special Award winners are listed below — click any card to enlarge.</span>' },
       { date: '2026.09.10', tag: 'Shortlist Announcement', title: '#FindingTAIWAN_2.0 International Short Film Competition Shortlists Announced', bodyHtml: '<span class="news-note">（Shortlists are listed by submission number, not competition ranking.）</span>', shortlist: true },
       { date: '2026.08.20', tag: 'Livestream Announcement', title: '#FindingTAIWAN_2.0: Where We Connect International Short Film Competition Awards Ceremony Livestream', image: 'assets/img/news-awards-ceremony.webp', bodyHtml: '<strong>Livestream Information</strong><br>Date &amp; Time｜Thursday, September 24, 2026, at 2:00 PM (Taiwan Time)<br>Facebook｜<a href="https://www.facebook.com/mofa.gov.tw?locale=zh_TW" target="_blank" rel="noopener noreferrer">外交部 Ministry of Foreign Affairs, ROC (Taiwan)</a><br>YouTube｜<a href="https://youtube.com/@mofa_taiwan?si=BmF26x-IY6lUzbBn" target="_blank" rel="noopener noreferrer">MOFA Taiwan</a>' },
       { date: '2026.08.05', tag: 'Video', title: 'Your Quick Guide to the #FindingTAIWAN_2.0 International Short Film Competition', video: 'assets/video/finding-taiwan-guide.mp4', poster: 'assets/video/finding-taiwan-guide-poster.webp' },
@@ -2092,6 +2092,7 @@ function makeNewsCard(n, t) {
   const card = document.createElement('article');
   card.className = 'news-card';
   card.setAttribute('data-reveal', 'scale');
+  if (n.anchor) card.id = n.anchor;
 
   const meta = document.createElement('div');
   meta.className = 'news-meta';
@@ -2422,8 +2423,8 @@ function render() {
     navLinks.appendChild(a);
   });
 
-  txt('nav-apply', t.apply);
-  txt('nm-apply', t.apply);
+  txt('nav-apply', t.winnersCta);
+  txt('nm-apply', t.winnersCta);
   // populate mobile menu links
   const mobileLinks = document.getElementById('nav-mobile-links');
   if (mobileLinks) {
@@ -2440,7 +2441,7 @@ function render() {
   // hero (desktop) — kicker uses a typewriter effect
   typeHeroKicker(t.heroKicker);
   // hero headline is now the campaign key visual image (assets/kv-lockup.webp) — no text title to set
-  txt('hero-apply', t.apply + ' →');
+  txt('hero-apply', t.winnersCta + ' →');
   txt('hero-brochure', t.heroBrochure);
   txt('hero-deadline', t.heroDeadline);
   txt('hero-scroll', t.heroScroll);
@@ -2451,7 +2452,7 @@ function render() {
   const mhDeadline = document.getElementById('mh-deadline');
   if (mhDeadline) mhDeadline.textContent = t.heroDeadline;
   const mhCta = document.getElementById('mh-cta');
-  if (mhCta) mhCta.textContent = t.apply + ' →';
+  if (mhCta) mhCta.textContent = t.winnersCta + ' →';
   const mhBrochure = document.getElementById('mh-brochure');
   if (mhBrochure) mhBrochure.textContent = t.heroBrochure;
 
