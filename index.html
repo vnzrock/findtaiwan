@@ -39,6 +39,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="assets/winners-2026.js"></script>
+<script>window.WINNERS_2026 = window.WINNERS_2026 || [];</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -284,7 +286,7 @@
   .w26-sidebtn:hover { background:#fdf8ef; color:#0d2747; border-color:#fdf8ef; }
 
   /* 跑馬燈本體 — 滿版出血，兩端淡出；滑過、觸碰、捲出畫面都會停 */
-  .w26-reel { position:relative; margin:clamp(22px,2.8vw,34px) calc(50% - 50vw) 0; min-height:calc(var(--cw) * 0.667 + 136px); overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); }
+  .w26-reel { position:relative; margin:clamp(34px,4.6vw,58px) calc(50% - 50vw) 0; min-height:calc(var(--h) + 136px); overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); }
   .w26-track { display:flex; align-items:flex-start; gap:clamp(14px,1.8vw,24px); width:max-content; padding:0 clamp(18px,4vw,40px); animation:w26Marquee 78s linear infinite; will-change:transform; opacity:0; transition:opacity .45s ease; }
   .w26-track.is-ready { opacity:1; }
   .w26-reel:hover .w26-track, .w26-track.paused { animation-play-state:paused; }
@@ -293,46 +295,21 @@
   /* 一張得獎卡：獎項標籤在圖上方、劇照保留原始比例、片名與創作者在圖片外 */
   /* 卡片寬度 = 固定高度 × 劇照比例，但同時設寬度上限：橫式會壓到上限、高度跟著縮，
      直式維持滿高。兩者面積因此接近，橫的不會一枝獨秀，而且全程不裁切。 */
-  /* 同一層就是同一個獎，卡片一律同尺寸的 3:2 畫框，份量才對等 */
-  .w26-card { flex:none; display:block; text-decoration:none; color:inherit; width:min(var(--cw), 82vw); }
-
-  /* 前三名各自獨立成一層：徽記＋獎項名當層標題，卡片上就不再重複掛標籤 */
-  .w26-tier { margin-top:clamp(38px,5vw,72px); }
-  .w26-tierhead { text-align:center; margin-bottom:clamp(18px,2.4vw,30px); }
-  .w26-crest { display:flex; justify-content:center; align-items:flex-end; gap:7px; height:40px; }
+  .w26-card { flex:none; display:block; text-decoration:none; color:inherit; --maxw:clamp(220px,26.5vw,390px); --fw:min(calc(var(--h) * var(--ar,1.5)), var(--maxw), 80vw); width:max(var(--fw), 190px); }
+  .w26-slot { display:flex; flex-direction:column; justify-content:center; align-items:center; height:calc(var(--h) + 62px); }
+  /* 冠亞季軍的裝飾圖示；其餘獎項留同高的空列，獎項標籤才會對齊同一條線 */
+  .w26-crest { display:flex; align-items:flex-end; gap:5px; height:32px; padding-left:2px; }
   .w26-crest svg { display:block; }
-  .w26-crest .ic-crown { width:clamp(26px,2.6vw,36px); height:clamp(26px,2.6vw,36px); }
-  .w26-crest .ic-star { width:clamp(23px,2.3vw,31px); height:clamp(23px,2.3vw,31px); }
-  .w26-crest .ic-spark { width:clamp(9px,.9vw,12px); height:clamp(9px,.9vw,12px); margin-bottom:clamp(13px,1.4vw,19px); }
+  .w26-crest .ic-crown { width:26px; height:26px; }
+  .w26-crest .ic-star { width:22px; height:22px; margin-bottom:1px; }
+  .w26-crest .ic-spark { width:9px; height:9px; margin-bottom:13px; }
   .w26-crest.t-grand { fill:#ff8a7a; }
   .w26-crest.t-second, .w26-crest.t-third { fill:#fdf8ef; }
-  .w26-tiername { font-family:'Noto Sans TC'; font-weight:900; font-size:clamp(21px,2.7vw,33px); letter-spacing:.1em; color:#fdf8ef; margin-top:10px; }
-  .w26-tiersub { font-family:'Montserrat',sans-serif; font-weight:700; font-size:clamp(10.5px,.85vw,12px); letter-spacing:.22em; text-transform:uppercase; color:rgba(253,248,239,0.6); margin-top:7px; }
-  .w26-row { display:flex; flex-wrap:wrap; justify-content:center; gap:clamp(22px,2.6vw,34px) clamp(14px,2vw,28px); }
-  .w26-tier.t-grand  { --cw:clamp(280px,62vw,720px); }
-  /* 片名跟著名次放大，同一排留兩行高度讓創作者對齊 */
-  .w26-tier.t-grand .w26-cname { font-size:clamp(19px,2vw,26px); }
-  .w26-tier.t-second .w26-cname { font-size:clamp(17px,1.7vw,21px); }
-  .w26-tier.t-second .w26-cname, .w26-tier.t-third .w26-cname { min-height:2.8em; }
-  .w26-tier.t-grand .w26-play { width:clamp(46px,3.9vw,58px); height:clamp(46px,3.9vw,58px); }
-  .w26-tier.t-second { --cw:clamp(230px,33vw,476px); }
-  .w26-tier.t-third  { --cw:clamp(162px,25vw,360px); }
-  /* 手機上參獎與其餘作品的卡片較窄，片名放寬到三行、獎項標籤縮一號才不會整排被截掉 */
-  @media (max-width:600px) {
-    .w26-tier.t-third .w26-cname, .w26-rest .w26-cname { -webkit-line-clamp:3; }
-    .w26-tier.t-third .w26-cname { min-height:4.2em; }
-    .w26-chip { font-size:10px; padding:0 10px; letter-spacing:.03em; }
-  }
-
-  /* 其餘得獎作品 — 小一號的卡片，維持自動輪轉 */
-  .w26-resthead { display:flex; flex-wrap:wrap; align-items:center; gap:10px clamp(14px,2.4vw,26px); margin:clamp(46px,6vw,84px) 0 0; }
-  .w26-resthead h3 { font-family:'Noto Sans TC'; font-weight:900; font-size:clamp(18px,2.1vw,25px); color:#fdf8ef; margin:0; }
-  .w26-resthead .w26-line { flex:1; min-width:28px; height:1px; background:rgba(253,248,239,0.3); }
-  .w26-resthead span.w26-restcount { font-family:'Montserrat',sans-serif; font-weight:700; font-size:12px; letter-spacing:.14em; color:rgba(253,248,239,0.66); white-space:nowrap; }
-  .w26-rest { --cw:clamp(176px,18.5vw,268px); }
-
+  /* 標籤與劇照綁成一組：一起置中、左緣對齊，窄的直式圖在較寬的卡片裡才不會歪 */
+  .w26-stack { width:var(--fw); }
   .w26-chip { display:inline-block; height:30px; line-height:30px; padding:0 14px; background:#fdf8ef; color:#0d2747; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:800; font-size:12px; letter-spacing:0.06em; white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis; }
-  .w26-fig { position:relative; display:block; width:100%; aspect-ratio:3/2; background:linear-gradient(160deg,#173a6b,#0d2747); overflow:hidden; }
+  .w26-stack .w26-chip { max-width:100%; }
+  .w26-fig { position:relative; display:block; width:100%; aspect-ratio:var(--ar,1.5); max-height:var(--h); background:linear-gradient(160deg,#173a6b,#0d2747); overflow:hidden; }
   .w26-fig img { display:block; width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.2,.7,.2,1); }
   .w26-card:hover .w26-fig img { transform:scale(1.04); }
   .w26-cap { display:flex; align-items:center; gap:14px; margin-top:16px; }
@@ -344,7 +321,8 @@
   .w26-card:hover .w26-play { background:#fdf8ef; border-color:#fdf8ef; transform:scale(1.08); }
   .w26-card:hover .w26-play::after { border-left-color:#1450c9; }
 
-  .w26-foot { margin-top:clamp(18px,2.2vw,26px); font-family:'Noto Sans TC'; font-size:13px; color:rgba(253,248,239,0.66); }
+  .w26-foot { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 20px; margin-top:clamp(24px,3vw,36px); font-family:'Noto Sans TC'; font-size:13px; color:rgba(253,248,239,0.7); }
+  .w26-foot b { font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.1em; color:#fdf8ef; }
 
   /* 本屆報名作品 — 響應式方格，作品變多也不會爆版；手機 2 欄 → 桌機最多 5 欄 */
   #entries-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
@@ -1440,18 +1418,13 @@
       </div>
       <div class="w26-side">
         <p id="win26-side-body"></p>
-        <a class="w26-sidebtn" id="win26-side-btn" href="#winners-cards"></a>
+        <a class="w26-sidebtn" id="win26-side-btn" href="/winners"></a>
       </div>
     </div>
-    <div id="win26-podium"></div>
-    <div class="w26-rest">
-      <div class="w26-resthead">
-        <h3 id="win26-rest-title"></h3>
-        <span class="w26-line"></span>
-        <span class="w26-restcount" id="win26-rest-count"></span>
-      </div>
-      <div class="w26-reel" id="win26-reel"></div>
-      <div class="w26-foot" id="win26-hint"></div>
+    <div class="w26-reel" id="win26-reel"></div>
+    <div class="w26-foot">
+      <span id="win26-hint"></span>
+      <b id="win26-count"></b>
     </div>
   </div>
 </section>
@@ -1680,8 +1653,7 @@ const C = {
     win26SideBody: '13 部作品，13 種看見台灣的方式。',
     win26SideBtn: '完整得獎名單',
     win26Hint: '滑過或觸碰即暫停 · 點擊前往觀賞',
-    win26RestTitle: '佳作 ＋ 光華特別獎',
-    win26RestCount: '7 部作品',
+    win26Count: '13 部得獎作品',
     win26Watch: '觀看作品',
     win26TierLabels: { grand: '首獎', second: '貳獎', third: '參獎', merit: '佳作', gh1: '光華特別獎 壹獎', gh2: '光華特別獎 貳獎', gh3: '光華特別獎 參獎' },
     win26TierShort: { grand: '首獎', second: '貳獎', third: '參獎', merit: '佳作', gh1: '光華 壹獎', gh2: '光華 貳獎', gh3: '光華 參獎' },
@@ -1825,8 +1797,7 @@ const C = {
     win26SideBody: 'Thirteen films, thirteen ways of seeing Taiwan.',
     win26SideBtn: 'Full winners list',
     win26Hint: 'Hover or touch to pause · click to watch',
-    win26RestTitle: 'Honorable Mention + Taiwan Panorama Special Award',
-    win26RestCount: '7 films',
+    win26Count: '13 winning films',
     win26Watch: 'Watch',
     win26TierLabels: { grand: 'Grand Prize', second: 'Second Prize', third: 'Third Prize', merit: 'Honorable Mention', gh1: 'Taiwan Panorama Special Award — First', gh2: 'Taiwan Panorama Special Award — Second', gh3: 'Taiwan Panorama Special Award — Third' },
     win26TierShort: { grand: 'Grand Prize', second: 'Second Prize', third: 'Third Prize', merit: 'Honorable Mention', gh1: 'Panorama 1st', gh2: 'Panorama 2nd', gh3: 'Panorama 3rd' },
@@ -1899,23 +1870,7 @@ const WINNER_GRADS = [
   'linear-gradient(150deg,#1574e6,#0a3f87)'
 ];
 
-// ▼ 2026 本屆得獎作品 — 依獎項排序，劇照沿用報名時提供的 Google Drive 檔案
-//   tier：grand 首獎 / second 貳獎 / third 參獎 / merit 佳作 / gh1・gh2・gh3 光華特別獎壹貳參
-const WINNERS_2026 = [
-  { tier: 'grand',  title: 'The Most Beautiful Scenery in Taiwan',                creator: '陳昀＆梁嘉軒',                 url: 'https://www.instagram.com/reel/DcS0Tc2SL4u/', still: '1Uw8YJYF0ZeDNUvtvBNL2htfqFrQt1nIp' },
-  { tier: 'second', title: 'Taiwan, A Thousand Small Moments',                    creator: 'SilkyRonTheRoad',             url: 'https://youtu.be/qlyLs-W1SWo',                still: '1e8XW34Qz1WUFBYZQYu_Jz0oYLoVBDKCo' },
-  { tier: 'second', title: 'Healing through the Taiwan Loop 環島',                 creator: 'Brendan Sutton',              url: 'https://www.instagram.com/reel/Dcrr3K3SCzV/', still: '1FcYQ3jP4gMYu-RVa2NXz41pbRiTn5F31' },
-  { tier: 'third',  title: '臺灣我的家',                                           creator: 'Florian Payrou（福洛里安）',    url: 'https://youtu.be/l6DAkAG4OZA',                still: '1cdNcLbFzTZm_4HEcixpOiw0RXp64Gh0k' },
-  { tier: 'third',  title: 'Written in Taiwan 寫在台灣',                            creator: 'Team Nitro',                  url: 'https://youtu.be/sxbMQvCwwMg',                still: '1KSRMXC7eJa8ssOCJKCb1y5UzkZXPap_T' },
-  { tier: 'third',  title: 'Nothing was supposed to bring me to Taiwan',          creator: 'BASTIAN GABIN',               url: 'https://www.instagram.com/reel/Db0P3YLysEC/', still: '1ENeJkpPYR-tXLuxYqlAwg5CXl2GOh455' },
-  { tier: 'merit',  title: 'Small Island, Big Heart 小小的島 大大的心',              creator: 'chrislovesbeefnoodles',       url: 'https://www.instagram.com/reel/DcnyHj6JkQN/', still: '1atMmRJaYaD2umNAXRjQLGkCmEbiBrqGb' },
-  { tier: 'merit',  title: '如果人生是一個寶箱，你會在台灣找到什麼？',                  creator: '波蘭Anna',                     url: 'https://www.instagram.com/p/Dcpmt0Cp2dE/',    still: '1WVvnCd-NElwkgq3erB5UMtV1dOxyfWJB' },
-  { tier: 'merit',  title: 'Born in South Africa, Made in Taiwan',                creator: 'Albertus van Aswegen',        url: 'https://www.youtube.com/shorts/MWw9DYscu14',  still: '1lNj5TrWMkJYn8CQvY68g9kqWWSWLP6vE' },
-  { tier: 'merit',  title: "What I'd Redo in Taiwan ／ 如果能重來，我會在台灣",        creator: 'Jorge Benavente Rico（班尼可）', url: 'https://youtu.be/GDbyDhr6OWg',                still: '1Wc6R317s1D6TdxTRBPv-SsL42O3dGxQp' },
-  { tier: 'gh1',    title: 'Taiwanese Iron Horse 臺灣鐵馬',                         creator: 'TomTom.Recalculating',        url: 'https://www.instagram.com/reel/DcVcQ9lvfqq/', still: '1rt1eElm5JvFMXF5fYMRyk9r7r9HEeG4H' },
-  { tier: 'gh2',    title: "Taiwan's Champagne-Rice Valley 米中的香檳",             creator: 'Reece Andrew Ayers 倪瑞森',    url: 'https://www.instagram.com/reel/DcnCHnxxxag/', still: '1zyHePKVMrOSkbVqNO5ryT-ltCjlM2v-t' },
-  { tier: 'gh3',    title: '習以為常 / Nobody Had To',                              creator: 'statusKuo',                   url: 'https://youtu.be/ibLv5SaC6kw',                still: '1T8IgtK3_dRNw1Qvjfv3a_efTX3Dcep02' },
-];
+// ▼ 2026 本屆得獎作品 — 名單在 assets/winners-2026.js，與 /winners 得獎名單頁共用
 
 // ▼ 2025 得獎作品 Instagram Reel 連結（留空字串 = 顯示佔位卡）
 const WINNERS_2025 = [
@@ -2177,7 +2132,8 @@ function makeShortlistCard(e, t, i, opts) {
 // 得獎作品劇照 — Drive 縮圖
 function winnerStill(id) { return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w800'; }
 
-// 先把 13 張劇照抓進快取再鋪牌，不然會變成「輪轉進來才開始載圖」。抓太久就直接開跑。
+// 跑馬燈的卡片寬度由劇照比例決定，所以先把 13 張劇照抓回來量好比例再鋪牌，
+// 不然會變成「輪轉進來才載圖、外框再縮一次」。抓太久就先用預設比例開跑。
 let win26StillsReady = false, win26Build = 0;
 function preloadWinnerStills(done) {
   if (win26StillsReady) { done(); return; }
@@ -2191,7 +2147,10 @@ function preloadWinnerStills(done) {
     const im = new Image();
     im.referrerPolicy = 'no-referrer';
     const tick = () => { if (--pending <= 0) finish(); };
-    im.onload = tick;
+    im.onload = () => {
+      if (im.naturalWidth && im.naturalHeight) w.ar = Math.min(Math.max(im.naturalWidth / im.naturalHeight, 0.72), 2.1);
+      tick();
+    };
     im.onerror = tick;
     im.src = winnerStill(w.still);
   });
@@ -2206,7 +2165,7 @@ const W26_ICON = {
   spark: '<svg class="ic-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.9 6.3 4.8 10.2 12 12-7.2 1.8-11.1 5.7-12 12-.9-6.3-4.8-10.2-12-12C7.2 10.2 11.1 6.3 12 0z"/></svg>',
 };
 
-function makeWinnerCard26(w, t, withChip) {
+function makeWinnerCard26(w, t) {
   const card = document.createElement('a');
   card.className = 'w26-card';
   card.href = w.url; card.target = '_blank'; card.rel = 'noopener noreferrer';
@@ -2220,11 +2179,29 @@ function makeWinnerCard26(w, t, withChip) {
 
   const fig = document.createElement('span');
   fig.className = 'w26-fig';
+  // 比例在預載時就量好了，卡片一出生就是正確寬度，不會再縮一次
+  if (w.ar) card.style.setProperty('--ar', w.ar.toFixed(4));
   const img = document.createElement('img');
   img.alt = w.title; img.decoding = 'async'; img.referrerPolicy = 'no-referrer';
-  img.onerror = () => { img.remove(); }; // 抓不到就留深藍底
+  // 預載逾時才會走到這：圖晚到時補上比例，至少不會一直用錯的框
+  if (!w.ar) img.onload = () => {
+    const nw = img.naturalWidth, nh = img.naturalHeight;
+    if (nw && nh) card.style.setProperty('--ar', Math.min(Math.max(nw / nh, 0.72), 2.1).toFixed(4));
+  };
+  img.onerror = () => { img.remove(); }; // 抓不到就留深藍底，維持預設比例
   img.src = winnerStill(w.still);
   fig.appendChild(img);
+  const crest = document.createElement('span');
+  crest.className = 'w26-crest t-' + w.tier;
+  crest.setAttribute('aria-hidden', 'true');
+  crest.innerHTML = (W26_CREST[w.tier] || []).map(k => W26_ICON[k]).join('');
+
+  const stack = document.createElement('span');
+  stack.className = 'w26-stack';
+  stack.appendChild(crest); stack.appendChild(chip); stack.appendChild(fig);
+  const slot = document.createElement('span');
+  slot.className = 'w26-slot';
+  slot.appendChild(stack);
 
   const cap = document.createElement('span');
   cap.className = 'w26-cap';
@@ -2236,8 +2213,7 @@ function makeWinnerCard26(w, t, withChip) {
   const play = document.createElement('span'); play.className = 'w26-play';
   cap.appendChild(capText); cap.appendChild(play);
 
-  if (withChip) card.appendChild(chip);
-  card.appendChild(fig); card.appendChild(cap);
+  card.appendChild(slot); card.appendChild(cap);
   return card;
 }
 
@@ -2260,46 +2236,17 @@ function renderWinners2026() {
   txt('win26-side-body', t.win26SideBody);
   txt('win26-side-btn', t.win26SideBtn + ' \u2197');
   txt('win26-hint', t.win26Hint);
-  txt('win26-rest-title', t.win26RestTitle);
-  txt('win26-rest-count', t.win26RestCount);
+  txt('win26-count', t.win26Count);
 
   const build = ++win26Build;
   preloadWinnerStills(() => {
     if (build !== win26Build) return; // 期間又切過語言就放掉這次
-
-    // 前三名：每個獎項自成一層，徽記與獎項名當層標題，一層比一層小
-    const podium = document.getElementById('win26-podium');
-    if (podium) {
-      podium.innerHTML = '';
-      ['grand', 'second', 'third'].forEach((tier) => {
-        const films = WINNERS_2026.filter(w => w.tier === tier);
-        if (!films.length) return;
-        const block = document.createElement('div');
-        block.className = 'w26-tier t-' + tier;
-        const head = document.createElement('div');
-        head.className = 'w26-tierhead';
-        head.innerHTML =
-          '<div class="w26-crest t-' + tier + '" aria-hidden="true">' + W26_CREST[tier].map(k => W26_ICON[k]).join('') + '</div>' +
-          '<h3 class="w26-tiername"></h3><div class="w26-tiersub"></div>';
-        head.querySelector('.w26-tiername').textContent = t.win26TierShort[tier];
-        // 中文版底下補英文；英文版就不重複一次
-        head.querySelector('.w26-tiersub').textContent = currentLang === 'en' ? '' : C.en.win26TierShort[tier];
-        const row = document.createElement('div');
-        row.className = 'w26-row';
-        films.forEach(w => row.appendChild(makeWinnerCard26(w, t, false)));
-        block.appendChild(head); block.appendChild(row);
-        podium.appendChild(block);
-      });
-    }
-
-    // 其餘得獎作品：小一號的卡片，維持自動輪轉
     reel.innerHTML = '';
-    const rest = WINNERS_2026.filter(w => ['merit', 'gh1', 'gh2', 'gh3'].indexOf(w.tier) >= 0);
     const track = document.createElement('div');
     track.className = 'w26-track';
     for (let pass = 0; pass < 2; pass++) {
-      rest.forEach((w) => {
-        const card = makeWinnerCard26(w, t, true);
+      WINNERS_2026.forEach((w) => {
+        const card = makeWinnerCard26(w, t);
         if (pass === 1) card.setAttribute('aria-hidden', 'true'); // 第二份只是為了接圖，不重複報讀
         track.appendChild(card);
       });

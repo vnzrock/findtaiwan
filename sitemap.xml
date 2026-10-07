@@ -17,4 +17,20 @@
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://www.findingtaiwan2026.com.tw/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.findingtaiwan2026.com.tw/?lang=en"/>
   </url>
+  <url>
+    <loc>https://www.findingtaiwan2026.com.tw/winners</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://www.findingtaiwan2026.com.tw/winners"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.findingtaiwan2026.com.tw/winners?lang=en"/>
+  </url>
+  <url>
+    <loc>https://www.findingtaiwan2026.com.tw/winners?lang=en</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://www.findingtaiwan2026.com.tw/winners"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.findingtaiwan2026.com.tw/winners?lang=en"/>
+  </url>
 </urlset>
