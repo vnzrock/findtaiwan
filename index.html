@@ -263,7 +263,7 @@
   @keyframes winMarquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
 
   /* 2026 得獎作品 — 品牌藍全幅輪轉牆：動法沿用 2025 的自動跑馬燈，片名一律在圖片外 */
-  #winners-2026 { position:relative; background:linear-gradient(160deg,#1a66ea 0%,#1450c9 55%,#1046b4 100%); overflow:hidden; }
+  #winners-2026 { position:relative; --h:clamp(186px,25vw,320px); background:linear-gradient(160deg,#1a66ea 0%,#1450c9 55%,#1046b4 100%); overflow:hidden; }
   #winners-2026::before { content:''; position:absolute; inset:0; pointer-events:none; background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.035) 0 1px,transparent 1px 66px),repeating-linear-gradient(90deg,rgba(255,255,255,0.035) 0 1px,transparent 1px 66px); }
   .w26-wrap { position:relative; max-width:1180px; margin:0 auto; }
   .w26-head { display:grid; grid-template-columns:minmax(0,1fr); gap:clamp(22px,3vw,34px); }
@@ -277,14 +277,15 @@
   .w26-sidebtn:hover { background:#fdf8ef; color:#0d2747; border-color:#fdf8ef; }
 
   /* 跑馬燈本體 — 滿版出血，兩端淡出；滑過、觸碰、捲出畫面都會停 */
-  .w26-reel { position:relative; margin:clamp(34px,4.6vw,58px) calc(50% - 50vw) 0; overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); }
-  .w26-track { display:flex; align-items:flex-start; gap:clamp(14px,1.8vw,24px); width:max-content; padding:0 clamp(18px,4vw,40px); animation:w26Marquee 78s linear infinite; will-change:transform; }
+  .w26-reel { position:relative; margin:clamp(34px,4.6vw,58px) calc(50% - 50vw) 0; min-height:calc(var(--h) + 124px); overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); }
+  .w26-track { display:flex; align-items:flex-start; gap:clamp(14px,1.8vw,24px); width:max-content; padding:0 clamp(18px,4vw,40px); animation:w26Marquee 78s linear infinite; will-change:transform; opacity:0; transition:opacity .45s ease; }
+  .w26-track.is-ready { opacity:1; }
   .w26-reel:hover .w26-track, .w26-track.paused { animation-play-state:paused; }
   @keyframes w26Marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
 
   /* 一張得獎卡：獎項標籤在圖上方、劇照保留原始比例、片名與創作者在圖片外 */
   /* 卡片寬度 = 固定高度 × 劇照本身的長寬比，圖才不會被拉寬留黑邊，也保留原始構圖 */
-  .w26-card { flex:none; display:block; text-decoration:none; color:inherit; --h:clamp(186px,25vw,320px); width:calc(var(--h) * var(--ar,1.5)); max-width:min(80vw,760px); }
+  .w26-card { flex:none; display:block; text-decoration:none; color:inherit; width:calc(var(--h) * var(--ar,1.5)); max-width:min(80vw,760px); }
   .w26-chip { display:inline-block; padding:6px 14px; background:#fdf8ef; color:#0d2747; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:800; font-size:12px; letter-spacing:0.06em; white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis; }
   .w26-fig { position:relative; display:block; height:var(--h); width:100%; background:linear-gradient(160deg,#173a6b,#0d2747); overflow:hidden; }
   .w26-fig img { display:block; width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.2,.7,.2,1); }
@@ -2123,7 +2124,31 @@ function makeShortlistCard(e, t, i, opts) {
 }
 
 // 得獎作品劇照 — Drive 縮圖
-function winnerStill(id) { return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w960'; }
+function winnerStill(id) { return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w800'; }
+
+// 跑馬燈的卡片寬度由劇照比例決定，所以先把 13 張劇照抓回來量好比例再鋪牌，
+// 不然會變成「輪轉進來才載圖、外框再縮一次」。抓太久就先用預設比例開跑。
+let win26StillsReady = false, win26Build = 0;
+function preloadWinnerStills(done) {
+  if (win26StillsReady) { done(); return; }
+  let pending = WINNERS_2026.length, settled = false;
+  const finish = () => {
+    if (settled) return;
+    settled = true; clearTimeout(timer); win26StillsReady = true; done();
+  };
+  const timer = setTimeout(finish, 3000);
+  WINNERS_2026.forEach((w) => {
+    const im = new Image();
+    im.referrerPolicy = 'no-referrer';
+    const tick = () => { if (--pending <= 0) finish(); };
+    im.onload = () => {
+      if (im.naturalWidth && im.naturalHeight) w.ar = Math.min(Math.max(im.naturalWidth / im.naturalHeight, 0.72), 2.1);
+      tick();
+    };
+    im.onerror = tick;
+    im.src = winnerStill(w.still);
+  });
+}
 
 // 一張得獎卡：獎項標籤在圖上方、劇照保留原始比例（固定高度、寬度隨比例）、片名與創作者在圖片外
 function makeWinnerCard26(w, t) {
@@ -2140,10 +2165,12 @@ function makeWinnerCard26(w, t) {
 
   const fig = document.createElement('span');
   fig.className = 'w26-fig';
+  // 比例在預載時就量好了，卡片一出生就是正確寬度，不會再縮一次
+  if (w.ar) card.style.setProperty('--ar', w.ar.toFixed(4));
   const img = document.createElement('img');
-  img.alt = w.title; img.loading = 'lazy'; img.referrerPolicy = 'no-referrer';
-  // 卡片寬度跟著劇照比例走；過扁或過高時收進跑馬燈容得下的範圍
-  img.onload = () => {
+  img.alt = w.title; img.decoding = 'async'; img.referrerPolicy = 'no-referrer';
+  // 預載逾時才會走到這：圖晚到時補上比例，至少不會一直用錯的框
+  if (!w.ar) img.onload = () => {
     const nw = img.naturalWidth, nh = img.naturalHeight;
     if (nw && nh) card.style.setProperty('--ar', Math.min(Math.max(nw / nh, 0.72), 2.1).toFixed(4));
   };
@@ -2182,26 +2209,31 @@ function renderWinners2026() {
   txt('win26-hint', t.win26Hint);
   txt('win26-count', t.win26Count);
 
-  reel.innerHTML = '';
-  const track = document.createElement('div');
-  track.className = 'w26-track';
-  for (let pass = 0; pass < 2; pass++) {
-    WINNERS_2026.forEach((w) => {
-      const card = makeWinnerCard26(w, t);
-      if (pass === 1) card.setAttribute('aria-hidden', 'true'); // 第二份只是為了接圖，不重複報讀
-      track.appendChild(card);
-    });
-  }
-  reel.appendChild(track);
+  const build = ++win26Build;
+  preloadWinnerStills(() => {
+    if (build !== win26Build) return; // 期間又切過語言就放掉這次
+    reel.innerHTML = '';
+    const track = document.createElement('div');
+    track.className = 'w26-track';
+    for (let pass = 0; pass < 2; pass++) {
+      WINNERS_2026.forEach((w) => {
+        const card = makeWinnerCard26(w, t);
+        if (pass === 1) card.setAttribute('aria-hidden', 'true'); // 第二份只是為了接圖，不重複報讀
+        track.appendChild(card);
+      });
+    }
+    reel.appendChild(track);
+    requestAnimationFrame(() => track.classList.add('is-ready'));
 
-  // 滑過（桌機）與觸碰中（手機）暫停，卡片才點得到
-  const pause = () => track.classList.add('paused');
-  const resume = () => track.classList.remove('paused');
-  reel.addEventListener('mouseenter', pause);
-  reel.addEventListener('mouseleave', resume);
-  reel.addEventListener('touchstart', pause, { passive: true });
-  reel.addEventListener('touchend', resume);
-  reel.addEventListener('touchcancel', resume);
+    // 滑過（桌機）與觸碰中（手機）暫停，卡片才點得到
+    const pause = () => track.classList.add('paused');
+    const resume = () => track.classList.remove('paused');
+    reel.addEventListener('mouseenter', pause);
+    reel.addEventListener('mouseleave', resume);
+    reel.addEventListener('touchstart', pause, { passive: true });
+    reel.addEventListener('touchend', resume);
+    reel.addEventListener('touchcancel', resume);
+  });
 }
 
 // 得獎輪轉牆的單張卡片 — 2026 本屆與 2025 首屆共用；2026 傳 4/5 配合橫式劇照，2025 維持 9/16 直式 Reel
