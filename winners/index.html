@@ -34,10 +34,26 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script>
+  // 載入動畫播放中先鎖住捲動；萬一腳本出錯，3.5 秒後自動解鎖
+  document.documentElement.classList.add('intro-lock');
+  setTimeout(function () { document.documentElement.classList.remove('intro-lock'); }, 3500);
+</script>
 <script src="../assets/winners-2026.js"></script>
 <script>window.WINNERS_2026 = window.WINNERS_2026 || [];</script>
 <style>
   *, *::before, *::after { box-sizing:border-box; }
+  /* 進站載入動畫 — 與首頁同一套電影式進場 */
+  html.intro-lock, html.intro-lock body { overflow:hidden !important; height:100%; overscroll-behavior:none; }
+  #cine-intro { position:fixed; inset:0; z-index:9999; pointer-events:none; background:radial-gradient(125% 90% at 50% 42%,#15264e 0%,#0b1430 55%,#070d1e 100%); animation:cineOut 0.7s cubic-bezier(.7,0,.2,1) 1.35s forwards; }
+  #cine-intro .cine-stack { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(13px,2.4vw,20px); padding:0 24px; }
+  #cine-intro .cine-logo { width:clamp(200px,46vw,360px); height:auto; opacity:0; filter:drop-shadow(0 10px 30px rgba(0,0,0,0.45)); animation:cineLogo 1.15s cubic-bezier(.2,.7,.2,1) forwards; }
+  #cine-intro .cine-bar2 { margin-top:8px; width:120px; height:2px; border-radius:2px; background:rgba(255,255,255,0.16); overflow:hidden; opacity:0; animation:cineBarIn .4s ease .35s forwards; }
+  #cine-intro .cine-bar2::after { content:""; display:block; height:100%; width:100%; background:#38e58c; transform-origin:left; transform:scaleX(0); animation:cineBar 1.15s cubic-bezier(.45,0,.2,1) .3s forwards; }
+  @keyframes cineOut { to { opacity:0; transform:scale(1.05); visibility:hidden; } }
+  @keyframes cineLogo { 0%{opacity:0;filter:blur(9px);transform:translateY(10px) scale(.9)} 38%{opacity:1;filter:blur(0);transform:none} 100%{opacity:1;filter:blur(0);transform:none} }
+  @keyframes cineBarIn { to { opacity:1; } }
+  @keyframes cineBar { to { transform:scaleX(1); } }
   html { -webkit-text-size-adjust:100%; }
   body { margin:0; background:#1046b4; font-family:'Noto Sans TC','Montserrat',sans-serif; -webkit-font-smoothing:antialiased; }
   img { max-width:100%; }
@@ -64,7 +80,7 @@
   #winners-2026::before { content:''; position:absolute; inset:0; pointer-events:none; background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.035) 0 1px,transparent 1px 66px),repeating-linear-gradient(90deg,rgba(255,255,255,0.035) 0 1px,transparent 1px 66px); }
   .w26-wrap { position:relative; max-width:1180px; margin:0 auto; }
   .w26-head { display:grid; grid-template-columns:minmax(0,1fr); gap:clamp(22px,3vw,34px); }
-  @media (min-width:900px) { .w26-head { grid-template-columns:minmax(0,1.5fr) minmax(0,0.5fr); align-items:end; gap:48px; } }
+  @media (min-width:900px) { .w26-head { grid-template-columns:minmax(0,1.2fr) minmax(0,0.8fr); align-items:end; gap:48px; } }
   .w26-kicker { display:block; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(253,248,239,0.78); }
   .w26-title { font-family:'Noto Sans TC'; font-weight:900; font-size:clamp(40px,7.4vw,88px); line-height:1.08; letter-spacing:-0.012em; color:#fdf8ef; margin:12px 0 0; }
   .w26-sub { font-family:'Noto Sans TC'; font-weight:700; font-size:clamp(17px,2.1vw,26px); line-height:1.5; color:rgba(253,248,239,0.84); margin:14px 0 0; }
@@ -84,7 +100,7 @@
   .w26-track { display:flex; align-items:flex-start; gap:clamp(14px,1.8vw,24px); width:max-content; padding:0 clamp(18px,4vw,40px); animation:w26Marquee 78s linear infinite; will-change:transform; opacity:0; transition:opacity .45s ease; }
   .w26-track.is-ready { opacity:1; }
   .w26-reel:hover .w26-track, .w26-track.paused { animation-play-state:paused; }
-  @keyframes w26Marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  @keyframes w26Marquee { from { transform:translateX(0); } to { transform:translateX(calc(0px - var(--w26-period,50%))); } }
 
   /* 一張得獎卡：獎項標籤在圖上方、劇照保留原始比例、片名與創作者在圖片外 */
   /* 卡片寬度 = 固定高度 × 劇照比例，但同時設寬度上限：橫式會壓到上限、高度跟著縮，
@@ -100,7 +116,7 @@
   .w26-crest .ic-crown { width:clamp(26px,2.6vw,36px); height:clamp(26px,2.6vw,36px); }
   .w26-crest .ic-star { width:clamp(23px,2.3vw,31px); height:clamp(23px,2.3vw,31px); }
   .w26-crest .ic-spark { width:clamp(9px,.9vw,12px); height:clamp(9px,.9vw,12px); margin-bottom:clamp(13px,1.4vw,19px); }
-  .w26-crest.t-grand { fill:#ff8a7a; }
+  .w26-crest.t-grand { fill:#ffc83d; }
   .w26-crest.t-second, .w26-crest.t-third { fill:#fdf8ef; }
   .w26-tiername { font-family:'Noto Sans TC'; font-weight:900; font-size:clamp(21px,2.7vw,33px); letter-spacing:.1em; color:#fdf8ef; margin-top:10px; }
   .w26-tiersub { font-family:'Montserrat',sans-serif; font-weight:700; font-size:clamp(10.5px,.85vw,12px); letter-spacing:.22em; text-transform:uppercase; color:rgba(253,248,239,0.6); margin-top:7px; }
@@ -143,13 +159,28 @@
   .w26-foot { margin-top:clamp(18px,2.2vw,26px); font-family:'Noto Sans TC'; font-size:13px; color:rgba(253,248,239,0.66); }
 
 
+  @media (max-width:600px) {
+    /* 手機卡片較窄，播放鍵縮小讓出字的空間 */
+    .w26-play { width:34px; height:34px; }
+    .w26-play::after { border-width:6px 0 6px 10px; }
+    .w26-cap { gap:10px; margin-top:12px; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
+    #cine-intro { display:none !important; }
     .w26-track { animation:none !important; }
     .w26-spark { animation:none !important; opacity:1; transform:none; }
   }
 </style>
 </head>
 <body>
+
+<div id="cine-intro" aria-hidden="true">
+  <div class="cine-stack">
+    <img width="455" height="267" class="cine-logo" src="../assets/logo-eye.webp" alt="尋找台灣 2.0 #FindingTAIWAN 2.0">
+    <div class="cine-bar2"></div>
+  </div>
+</div>
 
 <header class="wp-bar">
   <div class="wp-bar-in">
@@ -208,7 +239,7 @@ const C = {
     win26Kicker: 'Finding Taiwan 2.0',
     win26Headline: '2026 得獎名單',
     win26Sub: '世界的鏡頭，看見不同的台灣。',
-    win26SideBody: '13 部作品，13 種看見台灣的方式。',
+    win26SideBody: '本屆競賽得獎作品出爐囉！看看來自全球各地的創作者如何呈現台灣與世界的精采連結！點擊任一作品即可前往觀賞。',
     win26SideBtn: '得獎圖卡',
     win26Hint: '滑過或觸碰即暫停 \u00b7 點擊前往觀賞',
     win26RestTitle: '佳作 \uff0b 光華特別獎',
@@ -223,7 +254,7 @@ const C = {
     win26Kicker: 'Finding Taiwan 2.0',
     win26Headline: '2026 Winners',
     win26Sub: 'A different Taiwan, through the world\u2019s lens.',
-    win26SideBody: 'Thirteen films, thirteen ways of seeing Taiwan.',
+    win26SideBody: 'The winning entries of this year\u2019s competition are here! Discover how creators from around the world showcase the exciting connections between Taiwan and the global community. Click on any entry to watch.',
     win26SideBtn: 'Award cards',
     win26Hint: 'Hover or touch to pause \u00b7 click to watch',
     win26RestTitle: 'Honorable Mention + Taiwan Panorama Special Award',
@@ -372,6 +403,17 @@ function renderWinners2026() {
       });
     }
     reel.appendChild(track);
+    (function () { // 內距與間距不一致時 -50% 每圈會小跳一下，改用實測的一輪距離
+      const cards = track.children, setLen = rest.length;
+      const apply = () => {
+        if (cards.length <= setLen) return;
+        const period = cards[setLen].offsetLeft - cards[0].offsetLeft;
+        if (period) track.style.setProperty('--w26-period', period + 'px');
+      };
+      apply();
+      let t = null;
+      window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(apply, 180); });
+    })();
     requestAnimationFrame(() => track.classList.add('is-ready'));
 
     // 滑過（桌機）與觸碰中（手機）暫停，卡片才點得到
@@ -410,6 +452,19 @@ window.addEventListener('popstate', () => {
 });
 
 render();
+
+// 載入動畫播完就把它移掉並解鎖捲動
+(function teardownCineIntro() {
+  const cine = document.getElementById('cine-intro');
+  if (!cine) { document.documentElement.classList.remove('intro-lock'); return; }
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo(0, 0);
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.classList.remove('intro-lock');
+    cine.remove();
+  }, reduce ? 0 : 2150);
+})();
 
 // 捲出畫面就讓輪轉停下來，省效能
 if ('IntersectionObserver' in window) {
