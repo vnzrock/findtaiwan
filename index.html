@@ -194,6 +194,7 @@
     #cine-intro { display:none !important; }
     .hero-anim, .kv-in, #hero-title, #hero-kicker, #hero-desktop .hd-phone-col, #hero-desktop .hd-card { opacity:1 !important; animation:none !important; transform:none !important; }
     .win-track, .w26-track { animation:none !important; }
+    .w26-spark { animation:none !important; opacity:1; transform:none; }
   }
 
   /* ===== English typography layer =====
@@ -271,7 +272,13 @@
   .w26-kicker { display:block; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(253,248,239,0.78); }
   .w26-title { font-family:'Noto Sans TC'; font-weight:900; font-size:clamp(40px,7.4vw,88px); line-height:1.08; letter-spacing:-0.012em; color:#fdf8ef; margin:12px 0 0; }
   .w26-sub { font-family:'Noto Sans TC'; font-weight:700; font-size:clamp(17px,2.1vw,26px); line-height:1.5; color:rgba(253,248,239,0.84); margin:14px 0 0; }
-  .w26-spark { display:inline-block; width:.38em; height:.38em; margin-left:.2em; fill:#ff8a7a; vertical-align:.3em; }
+  /* 主標旁的三顆活動綠星芒，錯開節奏輪流閃 */
+  .w26-sparks { position:relative; display:inline-block; width:.84em; height:.74em; margin-left:.16em; vertical-align:.18em; }
+  .w26-spark { position:absolute; fill:#38e58c; transform-origin:50% 50%; animation:w26Twinkle 2.8s ease-in-out infinite; }
+  .w26-spark.s1 { width:.40em; height:.40em; left:.17em; top:0; }
+  .w26-spark.s2 { width:.23em; height:.23em; left:0; top:.40em; animation-delay:.62s; }
+  .w26-spark.s3 { width:.17em; height:.17em; left:.55em; top:.42em; animation-delay:1.3s; }
+  @keyframes w26Twinkle { 0%,100% { opacity:.55; transform:scale(.7) rotate(0deg); } 45% { opacity:1; transform:scale(1) rotate(14deg); } }
   .w26-side p { font-family:'Noto Sans TC'; font-size:14.5px; line-height:1.8; color:rgba(253,248,239,0.8); margin:0; }
   .w26-sidebtn { display:inline-flex; align-items:center; gap:8px; margin-top:18px; padding:12px 24px; border:1.5px solid rgba(253,248,239,0.6); color:#fdf8ef; text-decoration:none; font-family:'Noto Sans TC'; font-weight:700; font-size:14px; transition:background .2s,color .2s,border-color .2s; }
   .w26-sidebtn:hover { background:#fdf8ef; color:#0d2747; border-color:#fdf8ef; }
@@ -2202,8 +2209,12 @@ function renderWinners2026() {
   txt('win26-headline', t.win26Headline);
   txt('win26-sub', t.win26Sub);
   const headline = document.getElementById('win26-headline');
-  if (headline) headline.insertAdjacentHTML('beforeend',
-    '<svg class="w26-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.9 6.3 4.8 10.2 12 12-7.2 1.8-11.1 5.7-12 12-.9-6.3-4.8-10.2-12-12C7.2 10.2 11.1 6.3 12 0z"/></svg>');
+  if (headline) {
+    const star = (cls) => '<svg class="w26-spark ' + cls + '" viewBox="0 0 24 24" aria-hidden="true">'
+      + '<path d="M12 0c.9 6.3 4.8 10.2 12 12-7.2 1.8-11.1 5.7-12 12-.9-6.3-4.8-10.2-12-12C7.2 10.2 11.1 6.3 12 0z"/></svg>';
+    headline.insertAdjacentHTML('beforeend',
+      '<span class="w26-sparks" aria-hidden="true">' + star('s1') + star('s2') + star('s3') + '</span>');
+  }
   txt('win26-side-body', t.win26SideBody);
   txt('win26-side-btn', t.win26SideBtn + ' \u2197');
   txt('win26-hint', t.win26Hint);
