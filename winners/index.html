@@ -39,21 +39,19 @@
   document.documentElement.classList.add('intro-lock');
   setTimeout(function () { document.documentElement.classList.remove('intro-lock'); }, 3500);
 </script>
+<link rel="preload" as="image" href="../assets/winners-intro/assets/eye-outline.png">
+<link rel="preload" as="image" href="../assets/winners-intro/assets/eye-iris.png">
 <script src="../assets/winners-2026.js"></script>
 <script>window.WINNERS_2026 = window.WINNERS_2026 || [];</script>
 <style>
   *, *::before, *::after { box-sizing:border-box; }
-  /* 進站載入動畫 — 與首頁同一套電影式進場 */
+  /* 進場動畫 — 全螢幕藍底、動畫 16:9 置中，播完淡出 */
   html.intro-lock, html.intro-lock body { overflow:hidden !important; height:100%; overscroll-behavior:none; }
-  #cine-intro { position:fixed; inset:0; z-index:9999; pointer-events:none; background:radial-gradient(125% 90% at 50% 42%,#15264e 0%,#0b1430 55%,#070d1e 100%); animation:cineOut 0.7s cubic-bezier(.7,0,.2,1) 1.35s forwards; }
-  #cine-intro .cine-stack { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(13px,2.4vw,20px); padding:0 24px; }
-  #cine-intro .cine-logo { width:clamp(200px,46vw,360px); height:auto; opacity:0; filter:drop-shadow(0 10px 30px rgba(0,0,0,0.45)); animation:cineLogo 1.15s cubic-bezier(.2,.7,.2,1) forwards; }
-  #cine-intro .cine-bar2 { margin-top:8px; width:120px; height:2px; border-radius:2px; background:rgba(255,255,255,0.16); overflow:hidden; opacity:0; animation:cineBarIn .4s ease .35s forwards; }
-  #cine-intro .cine-bar2::after { content:""; display:block; height:100%; width:100%; background:#38e58c; transform-origin:left; transform:scaleX(0); animation:cineBar 1.15s cubic-bezier(.45,0,.2,1) .3s forwards; }
-  @keyframes cineOut { to { opacity:0; transform:scale(1.05); visibility:hidden; } }
-  @keyframes cineLogo { 0%{opacity:0;filter:blur(9px);transform:translateY(10px) scale(.9)} 38%{opacity:1;filter:blur(0);transform:none} 100%{opacity:1;filter:blur(0);transform:none} }
-  @keyframes cineBarIn { to { opacity:1; } }
-  @keyframes cineBar { to { transform:scaleX(1); } }
+  #wi-overlay { position:fixed; inset:0; z-index:9999; background:#1574e6; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:opacity .5s ease; }
+  #wi-overlay.is-out { opacity:0; pointer-events:none; }
+  #wi-overlay .wi-frame { width:min(100vw, calc(100vh * 16 / 9)); }
+  #wi-skip { position:absolute; right:clamp(16px,3vw,32px); bottom:clamp(16px,3vw,32px); font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:700; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.72); background:none; border:0; padding:8px; cursor:pointer; }
+  #wi-skip:hover { color:#fff; }
   html { -webkit-text-size-adjust:100%; }
   body { margin:0; background:#1046b4; font-family:'Noto Sans TC','Montserrat',sans-serif; -webkit-font-smoothing:antialiased; }
   img { max-width:100%; }
@@ -96,10 +94,13 @@
   .w26-sidebtn:hover { background:#fdf8ef; color:#0d2747; border-color:#fdf8ef; }
 
   /* 跑馬燈本體 — 滿版出血，兩端淡出；滑過、觸碰、捲出畫面都會停 */
-  .w26-reel { position:relative; margin:clamp(22px,2.8vw,34px) calc(50% - 50vw) 0; min-height:calc(var(--cw) * 0.667 + 136px); overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); }
+  .w26-reel { position:relative; margin:clamp(22px,2.8vw,34px) calc(50% - 50vw) 0; min-height:calc(var(--cw) * 0.667 + 136px); overflow:hidden; touch-action:pan-y; -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); }
   .w26-track { display:flex; align-items:flex-start; gap:clamp(14px,1.8vw,24px); width:max-content; padding:0 clamp(18px,4vw,40px); animation:w26Marquee 78s linear infinite; will-change:transform; opacity:0; transition:opacity .45s ease; }
   .w26-track.is-ready { opacity:1; }
-  .w26-reel:hover .w26-track, .w26-track.paused { animation-play-state:paused; }
+  .w26-track.paused { animation-play-state:paused; }
+  /* 手機點一下也會補發 mouseenter，:hover 會黏住不放，所以 hover 暫停只給真的有游標的裝置 */
+  @media (hover:hover) and (pointer:fine) { .w26-reel:hover .w26-track { animation-play-state:paused; } }
+  .w26-track.is-dragging { animation:none !important; transition:none !important; }
   @keyframes w26Marquee { from { transform:translateX(0); } to { transform:translateX(calc(0px - var(--w26-period,50%))); } }
 
   /* 一張得獎卡：獎項標籤在圖上方、劇照保留原始比例、片名與創作者在圖片外 */
@@ -167,7 +168,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    #cine-intro { display:none !important; }
+    #wi-overlay { display:none !important; }
     .w26-track { animation:none !important; }
     .w26-spark { animation:none !important; opacity:1; transform:none; }
   }
@@ -175,11 +176,9 @@
 </head>
 <body>
 
-<div id="cine-intro" aria-hidden="true">
-  <div class="cine-stack">
-    <img width="455" height="267" class="cine-logo" src="../assets/logo-eye.webp" alt="尋找台灣 2.0 #FindingTAIWAN 2.0">
-    <div class="cine-bar2"></div>
-  </div>
+<div id="wi-overlay" role="presentation">
+  <div class="wi-frame"><div data-winners-intro></div></div>
+  <button id="wi-skip" type="button"></button>
 </div>
 
 <header class="wp-bar">
@@ -234,6 +233,7 @@
 const C = {
   zh: {
     back: '\u2190 回首頁',
+    skip: '跳過',
     footOrg: '#FindingTAIWAN_2.0：Where We Connect 全球徵片競賽｜主辦單位：中華民國外交部',
     footLink: '回活動官網',
     win26Kicker: 'Finding Taiwan 2.0',
@@ -241,7 +241,7 @@ const C = {
     win26Sub: '世界的鏡頭，看見不同的台灣。',
     win26SideBody: '本屆競賽得獎作品出爐囉！看看來自全球各地的創作者如何呈現台灣與世界的精采連結！點擊任一作品即可前往觀賞。',
     win26SideBtn: '得獎圖卡',
-    win26Hint: '滑過或觸碰即暫停 \u00b7 點擊前往觀賞',
+    win26Hint: '滑過或按住即暫停 \u00b7 可左右滑動 \u00b7 點擊前往觀賞',
     win26RestTitle: '佳作 \uff0b 光華特別獎',
     win26RestCount: '7 部作品',
     win26TierLabels: { grand: '首獎', second: '貳獎', third: '參獎', merit: '佳作', gh1: '光華特別獎 壹獎', gh2: '光華特別獎 貳獎', gh3: '光華特別獎 參獎' },
@@ -249,6 +249,7 @@ const C = {
   },
   en: {
     back: '\u2190 Back to home',
+    skip: 'Skip',
     footOrg: '#FindingTAIWAN_2.0: Where We Connect International Short Film Competition｜Organiser: Ministry of Foreign Affairs, ROC (Taiwan)',
     footLink: 'Back to the campaign site',
     win26Kicker: 'Finding Taiwan 2.0',
@@ -256,7 +257,7 @@ const C = {
     win26Sub: 'A different Taiwan, through the world\u2019s lens.',
     win26SideBody: 'The winning entries of this year\u2019s competition are here! Discover how creators from around the world showcase the exciting connections between Taiwan and the global community. Click on any entry to watch.',
     win26SideBtn: 'Award cards',
-    win26Hint: 'Hover or touch to pause \u00b7 click to watch',
+    win26Hint: 'Hover or hold to pause \u00b7 swipe to browse \u00b7 click to watch',
     win26RestTitle: 'Honorable Mention + Taiwan Panorama Special Award',
     win26RestCount: '7 films',
     win26TierLabels: { grand: 'Grand Prize', second: 'Second Prize', third: 'Third Prize', merit: 'Honorable Mention', gh1: 'Taiwan Panorama Special Award \u2014 First', gh2: 'Taiwan Panorama Special Award \u2014 Second', gh3: 'Taiwan Panorama Special Award \u2014 Third' },
@@ -416,18 +417,82 @@ function renderWinners2026() {
     })();
     requestAnimationFrame(() => track.classList.add('is-ready'));
 
-    // 滑過（桌機）與觸碰中（手機）暫停，卡片才點得到
-    const pause = () => track.classList.add('paused');
-    const resume = () => track.classList.remove('paused');
-    reel.addEventListener('mouseenter', pause);
-    reel.addEventListener('mouseleave', resume);
-    reel.addEventListener('touchstart', pause, { passive: true });
-    reel.addEventListener('touchend', resume);
-    reel.addEventListener('touchcancel', resume);
+    // 桌機滑過暫停；手機按住暫停、放開接著轉，也能直接左右滑
+    enableReelInteraction(reel, track, () => ({
+      start: 0,
+      period: parseFloat(track.style.getPropertyValue('--w26-period')) || 0,
+    }), 78);
   });
 }
 
 
+
+// 輪轉牆的互動 —— 桌機滑過暫停；手機「按住才停、放開就接著轉」，而且可以直接左右滑動帶動它。
+//   measure() 要回傳 { start, period }（px）：跑馬燈從 start 走到 start - period 剛好接回原點。
+//   duration 是 CSS 上那段動畫的秒數，放開手指時用負的 animation-delay 從當下位置接續，不會跳格。
+function enableReelInteraction(viewport, track, measure, duration) {
+  const fine = !window.matchMedia || window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (fine) {
+    // 真的有游標才綁 hover；手機點一下也會補發 mouseenter，綁了會永遠停住
+    viewport.addEventListener('mouseenter', () => track.classList.add('paused'));
+    viewport.addEventListener('mouseleave', () => track.classList.remove('paused'));
+    return;
+  }
+
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let from = 0, span = 0, base = 0, startX = 0, startY = 0, dx = 0, mode = null, swiped = false;
+
+  // 讀出動畫跑到哪裡（computed transform 會給當下那一格的矩陣）
+  const currentX = () => {
+    const tr = getComputedStyle(track).transform;
+    if (!tr || tr === 'none') return from;
+    const n = tr.match(/-?[\d.]+/g);
+    if (!n) return from;
+    return parseFloat(n.length >= 16 ? n[12] : n[4]) || 0;
+  };
+  // 位移折回 [start - period, start]，兩份卡片才接得起來、怎麼滑都不會滑到空白
+  const wrap = (x) => { if (!span) return x; const o = (((from - x) % span) + span) % span; return from - o; };
+
+  const settle = () => {
+    const x = wrap(base + dx);
+    if (reduce || !span) { track.style.transform = 'translateX(' + x + 'px)'; track.classList.remove('is-dragging'); return; }
+    track.style.transform = '';
+    track.style.animationDelay = (-((from - x) / span) * duration) + 's';
+    track.classList.remove('is-dragging');
+  };
+
+  // 滑過之後的那一下 click 不算點選，不然滑一滑就被帶去別的分頁
+  track.addEventListener('click', (e) => {
+    if (!swiped) return;
+    swiped = false; e.preventDefault(); e.stopPropagation();
+  }, true);
+
+  viewport.addEventListener('touchstart', (e) => {
+    const g = measure() || {};
+    from = g.start || 0; span = g.period || 0;
+    startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+    dx = 0; mode = 'hold'; swiped = false;
+    base = currentX();
+    track.style.animationDelay = '';
+    track.style.transform = 'translateX(' + base + 'px)';
+    track.classList.add('is-dragging');
+  }, { passive: true });
+
+  viewport.addEventListener('touchmove', (e) => {
+    if (!mode) return;
+    const mx = e.touches[0].clientX - startX, my = e.touches[0].clientY - startY;
+    if (mode === 'hold') {
+      if (Math.abs(my) > Math.abs(mx) && Math.abs(my) > 10) { mode = null; settle(); return; } // 直向：讓給頁面捲動
+      if (Math.abs(mx) > 6) { mode = 'drag'; swiped = true; } else return;
+    }
+    dx = mx;
+    track.style.transform = 'translateX(' + wrap(base + dx) + 'px)';
+  }, { passive: true });
+
+  const release = () => { if (!mode) return; mode = null; settle(); };
+  viewport.addEventListener('touchend', release);
+  viewport.addEventListener('touchcancel', release);
+}
 
 function render() {
   const t = C[currentLang];
@@ -453,17 +518,26 @@ window.addEventListener('popstate', () => {
 
 render();
 
-// 載入動畫播完就把它移掉並解鎖捲動
-(function teardownCineIntro() {
-  const cine = document.getElementById('cine-intro');
-  if (!cine) { document.documentElement.classList.remove('intro-lock'); return; }
+// 進場動畫播完（約 4 秒）就淡出並解鎖捲動；點一下或按任意鍵可以跳過
+(function teardownIntro() {
+  const overlay = document.getElementById('wi-overlay');
+  const unlock = () => document.documentElement.classList.remove('intro-lock');
+  if (!overlay) { unlock(); return; }
+  txt('wi-skip', C[currentLang].skip);
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  window.scrollTo(0, 0);
-  setTimeout(() => {
+  let done = false;
+  const dismiss = () => {
+    if (done) return;
+    done = true;
+    overlay.classList.add('is-out');
+    unlock();
     window.scrollTo(0, 0);
-    document.documentElement.classList.remove('intro-lock');
-    cine.remove();
-  }, reduce ? 0 : 2150);
+    setTimeout(() => overlay.remove(), 600);
+  };
+  window.scrollTo(0, 0);
+  overlay.addEventListener('click', dismiss);
+  window.addEventListener('keydown', dismiss, { once: true });
+  setTimeout(dismiss, reduce ? 0 : 4300);
 })();
 
 // 捲出畫面就讓輪轉停下來，省效能
@@ -477,5 +551,6 @@ if ('IntersectionObserver' in window) {
   }, { rootMargin: '120px 0px' }).observe(reel);
 }
 </script>
+<script src="../assets/winners-intro/winners-intro.js"></script>
 </body>
 </html>

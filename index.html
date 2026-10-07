@@ -260,9 +260,11 @@
   }
 
   /* 2025 得獎作品輪轉牆 — 緩慢自動橫向輪轉，滑過或觸碰時暫停 */
-  #winners-grid { overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent); mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent); }
+  #winners-grid { overflow:hidden; touch-action:pan-y; -webkit-mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent); mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent); }
   .win-track { display:flex; gap:16px; width:max-content; padding-bottom:8px; animation:winMarquee 55s linear infinite; will-change:transform; }
-  #winners-grid:hover .win-track, .win-track.paused { animation-play-state:paused; }
+  .win-track.paused { animation-play-state:paused; }
+  /* 手機點一下也會補發 mouseenter，:hover 會黏住不放，所以 hover 暫停只給真的有游標的裝置 */
+  @media (hover:hover) and (pointer:fine) { #winners-grid:hover .win-track { animation-play-state:paused; } }
   @keyframes winMarquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
 
   /* 2026 得獎作品 — 品牌藍全幅輪轉牆：動法沿用 2025 的自動跑馬燈，片名一律在圖片外 */
@@ -286,10 +288,13 @@
   .w26-sidebtn:hover { background:#fdf8ef; color:#0d2747; border-color:#fdf8ef; }
 
   /* 跑馬燈本體 — 滿版出血，兩端淡出；滑過、觸碰、捲出畫面都會停 */
-  .w26-reel { position:relative; margin:clamp(34px,4.6vw,58px) calc(50% - 50vw) 0; min-height:calc(var(--h) + 136px); overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); }
+  .w26-reel { position:relative; margin:clamp(34px,4.6vw,58px) calc(50% - 50vw) 0; min-height:calc(var(--h) + 136px); overflow:hidden; touch-action:pan-y; -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); }
   .w26-track { display:flex; align-items:flex-start; gap:clamp(14px,1.8vw,24px); width:max-content; padding:0 clamp(18px,4vw,40px); animation:w26Marquee 78s linear infinite; will-change:transform; opacity:0; transition:opacity .45s ease; }
   .w26-track.is-ready { opacity:1; }
-  .w26-reel:hover .w26-track, .w26-track.paused { animation-play-state:paused; }
+  .w26-track.paused { animation-play-state:paused; }
+  @media (hover:hover) and (pointer:fine) { .w26-reel:hover .w26-track { animation-play-state:paused; } }
+  /* 手機拖動中：先停掉動畫，用 inline transform 跟著手指走 */
+  .w26-track.is-dragging, .win-track.is-dragging { animation:none !important; transition:none !important; }
   @keyframes w26Marquee { from { transform:translateX(var(--w26-start,0px)); } to { transform:translateX(calc(var(--w26-start,0px) - var(--w26-period,50%))); } }
 
   /* 一張得獎卡：獎項標籤在圖上方、劇照保留原始比例、片名與創作者在圖片外 */
@@ -1663,7 +1668,7 @@ const C = {
     win26Sub: '世界的鏡頭，看見不同的台灣。',
     win26SideBody: '本屆競賽得獎作品出爐囉！看看來自全球各地的創作者如何呈現台灣與世界的精采連結！點擊任一作品即可前往觀賞。',
     win26SideBtn: '完整得獎名單',
-    win26Hint: '滑過或觸碰即暫停 · 點擊前往觀賞',
+    win26Hint: '滑過或按住即暫停 · 可左右滑動 · 點擊前往觀賞',
     win26Count: '13 部得獎作品',
     win26Watch: '觀看作品',
     win26TierLabels: { grand: '首獎', second: '貳獎', third: '參獎', merit: '佳作', gh1: '光華特別獎 壹獎', gh2: '光華特別獎 貳獎', gh3: '光華特別獎 參獎' },
@@ -1807,7 +1812,7 @@ const C = {
     win26Sub: 'A different Taiwan, through the world\u2019s lens.',
     win26SideBody: 'The winning entries of this year\u2019s competition are here! Discover how creators from around the world showcase the exciting connections between Taiwan and the global community. Click on any entry to watch.',
     win26SideBtn: 'Full winners list',
-    win26Hint: 'Hover or touch to pause · click to watch',
+    win26Hint: 'Hover or hold to pause · swipe to browse · click to watch',
     win26Count: '13 winning films',
     win26Watch: 'Watch',
     win26TierLabels: { grand: 'Grand Prize', second: 'Second Prize', third: 'Third Prize', merit: 'Honorable Mention', gh1: 'Taiwan Panorama Special Award — First', gh2: 'Taiwan Panorama Special Award — Second', gh3: 'Taiwan Panorama Special Award — Third' },
@@ -2244,6 +2249,73 @@ function tuneMarquee(reel, track, setLen, startAtRight) {
   window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(apply, 180); });
 }
 
+// 輪轉牆的互動 —— 桌機滑過暫停；手機「按住才停、放開就接著轉」，而且可以直接左右滑動帶動它。
+//   measure() 要回傳 { start, period }（px）：跑馬燈從 start 走到 start - period 剛好接回原點。
+//   duration 是 CSS 上那段動畫的秒數，放開手指時用負的 animation-delay 從當下位置接續，不會跳格。
+function enableReelInteraction(viewport, track, measure, duration) {
+  const fine = !window.matchMedia || window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (fine) {
+    // 真的有游標才綁 hover；手機點一下也會補發 mouseenter，綁了會永遠停住
+    viewport.addEventListener('mouseenter', () => track.classList.add('paused'));
+    viewport.addEventListener('mouseleave', () => track.classList.remove('paused'));
+    return;
+  }
+
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let from = 0, span = 0, base = 0, startX = 0, startY = 0, dx = 0, mode = null, swiped = false;
+
+  // 讀出動畫跑到哪裡（computed transform 會給當下那一格的矩陣）
+  const currentX = () => {
+    const tr = getComputedStyle(track).transform;
+    if (!tr || tr === 'none') return from;
+    const n = tr.match(/-?[\d.]+/g);
+    if (!n) return from;
+    return parseFloat(n.length >= 16 ? n[12] : n[4]) || 0;
+  };
+  // 位移折回 [start - period, start]，兩份卡片才接得起來、怎麼滑都不會滑到空白
+  const wrap = (x) => { if (!span) return x; const o = (((from - x) % span) + span) % span; return from - o; };
+
+  const settle = () => {
+    const x = wrap(base + dx);
+    if (reduce || !span) { track.style.transform = 'translateX(' + x + 'px)'; track.classList.remove('is-dragging'); return; }
+    track.style.transform = '';
+    track.style.animationDelay = (-((from - x) / span) * duration) + 's';
+    track.classList.remove('is-dragging');
+  };
+
+  // 滑過之後的那一下 click 不算點選，不然滑一滑就被帶去別的分頁
+  track.addEventListener('click', (e) => {
+    if (!swiped) return;
+    swiped = false; e.preventDefault(); e.stopPropagation();
+  }, true);
+
+  viewport.addEventListener('touchstart', (e) => {
+    const g = measure() || {};
+    from = g.start || 0; span = g.period || 0;
+    startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+    dx = 0; mode = 'hold'; swiped = false;
+    base = currentX();
+    track.style.animationDelay = '';
+    track.style.transform = 'translateX(' + base + 'px)';
+    track.classList.add('is-dragging');
+  }, { passive: true });
+
+  viewport.addEventListener('touchmove', (e) => {
+    if (!mode) return;
+    const mx = e.touches[0].clientX - startX, my = e.touches[0].clientY - startY;
+    if (mode === 'hold') {
+      if (Math.abs(my) > Math.abs(mx) && Math.abs(my) > 10) { mode = null; settle(); return; } // 直向：讓給頁面捲動
+      if (Math.abs(mx) > 6) { mode = 'drag'; swiped = true; } else return;
+    }
+    dx = mx;
+    track.style.transform = 'translateX(' + wrap(base + dx) + 'px)';
+  }, { passive: true });
+
+  const release = () => { if (!mode) return; mode = null; settle(); };
+  viewport.addEventListener('touchend', release);
+  viewport.addEventListener('touchcancel', release);
+}
+
 // 2026 得獎作品輪轉牆 — 同一組連放兩次配合 -50% 位移接回原點，動法與 2025 那面牆一致
 function renderWinners2026() {
   const t = C[currentLang];
@@ -2282,14 +2354,11 @@ function renderWinners2026() {
     tuneMarquee(reel, track, WINNERS_2026.length, true);
     requestAnimationFrame(() => track.classList.add('is-ready'));
 
-    // 滑過（桌機）與觸碰中（手機）暫停，卡片才點得到
-    const pause = () => track.classList.add('paused');
-    const resume = () => track.classList.remove('paused');
-    reel.addEventListener('mouseenter', pause);
-    reel.addEventListener('mouseleave', resume);
-    reel.addEventListener('touchstart', pause, { passive: true });
-    reel.addEventListener('touchend', resume);
-    reel.addEventListener('touchcancel', resume);
+    // 桌機滑過暫停；手機按住暫停、放開接著轉，也能直接左右滑
+    enableReelInteraction(reel, track, () => ({
+      start: parseFloat(track.style.getPropertyValue('--w26-start')) || 0,
+      period: parseFloat(track.style.getPropertyValue('--w26-period')) || 0,
+    }), 78);
   });
 }
 
@@ -2336,14 +2405,8 @@ function renderWinnersReel(grid, items) {
   track.className = 'win-track';
   for (let pass = 0; pass < 2; pass++) items.forEach((o) => track.appendChild(makeReelCard(o)));
   grid.appendChild(track);
-  // 滑過（桌機）與觸碰中（手機）暫停，卡片才點得到
-  const pause = () => track.classList.add('paused');
-  const resume = () => track.classList.remove('paused');
-  grid.addEventListener('mouseenter', pause);
-  grid.addEventListener('mouseleave', resume);
-  grid.addEventListener('touchstart', pause, { passive: true });
-  grid.addEventListener('touchend', resume);
-  grid.addEventListener('touchcancel', resume);
+  // 桌機滑過暫停；手機按住暫停、放開接著轉，也能直接左右滑
+  enableReelInteraction(grid, track, () => ({ start: 0, period: track.offsetWidth / 2 }), 55);
 }
 
 function renderShortlist() {
