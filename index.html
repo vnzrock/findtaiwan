@@ -267,12 +267,12 @@
   #winners-2026::before { content:''; position:absolute; inset:0; pointer-events:none; background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.035) 0 1px,transparent 1px 66px),repeating-linear-gradient(90deg,rgba(255,255,255,0.035) 0 1px,transparent 1px 66px); }
   .w26-wrap { position:relative; max-width:1180px; margin:0 auto; }
   .w26-head { display:grid; grid-template-columns:minmax(0,1fr); gap:clamp(22px,3vw,34px); }
-  @media (min-width:900px) { .w26-head { grid-template-columns:minmax(0,1.5fr) minmax(0,0.5fr); align-items:start; gap:48px; } }
+  @media (min-width:900px) { .w26-head { grid-template-columns:minmax(0,1.5fr) minmax(0,0.5fr); align-items:end; gap:48px; } }
   .w26-kicker { display:block; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(253,248,239,0.78); }
-  .w26-title { font-family:'Noto Sans TC'; font-weight:900; font-size:clamp(36px,6.6vw,78px); line-height:1.1; letter-spacing:-0.01em; color:#fdf8ef; margin:14px 0 0; }
+  .w26-title { font-family:'Noto Sans TC'; font-weight:900; font-size:clamp(40px,7.4vw,88px); line-height:1.08; letter-spacing:-0.012em; color:#fdf8ef; margin:12px 0 0; }
+  .w26-sub { font-family:'Noto Sans TC'; font-weight:700; font-size:clamp(17px,2.1vw,26px); line-height:1.5; color:rgba(253,248,239,0.84); margin:14px 0 0; }
   .w26-spark { display:inline-block; width:.38em; height:.38em; margin-left:.2em; fill:#ff8a7a; vertical-align:.3em; }
-  .w26-side h3 { font-family:'Noto Sans TC'; font-weight:900; font-size:clamp(19px,2.1vw,24px); color:#fdf8ef; margin:0; }
-  .w26-side p { font-family:'Noto Sans TC'; font-size:14.5px; line-height:1.8; color:rgba(253,248,239,0.8); margin:9px 0 0; }
+  .w26-side p { font-family:'Noto Sans TC'; font-size:14.5px; line-height:1.8; color:rgba(253,248,239,0.8); margin:0; }
   .w26-sidebtn { display:inline-flex; align-items:center; gap:8px; margin-top:18px; padding:12px 24px; border:1.5px solid rgba(253,248,239,0.6); color:#fdf8ef; text-decoration:none; font-family:'Noto Sans TC'; font-weight:700; font-size:14px; transition:background .2s,color .2s,border-color .2s; }
   .w26-sidebtn:hover { background:#fdf8ef; color:#0d2747; border-color:#fdf8ef; }
 
@@ -1391,9 +1391,9 @@
       <div>
         <span class="w26-kicker" id="win26-kicker"></span>
         <h2 class="w26-title" id="win26-headline" data-reveal></h2>
+        <p class="w26-sub" id="win26-sub"></p>
       </div>
       <div class="w26-side">
-        <h3 id="win26-side-title"></h3>
         <p id="win26-side-body"></p>
         <a class="w26-sidebtn" id="win26-side-btn" href="#winners-cards"></a>
       </div>
@@ -1624,9 +1624,9 @@ const C = {
     winBody: '首屆競賽得獎作品已於外交部Instagram 專區完整收錄，呈現世界各地創作者鏡頭下的台灣風貌！點擊任一作品即可前往觀賞。',
     winBtn: '前往外交部 Instagram 專區',
     winClipLabel: '得獎短片',
-    win26Kicker: 'Finding Taiwan 2.0 / 2026 Winners',
-    win26Headline: '台灣，很有戲。',
-    win26SideTitle: '2026 得獎作品',
+    win26Kicker: 'Finding Taiwan 2.0',
+    win26Headline: '2026 得獎名單',
+    win26Sub: '世界的鏡頭，看見不同的台灣。',
     win26SideBody: '13 部作品，13 種看見台灣的方式。',
     win26SideBtn: '完整得獎名單',
     win26Hint: '滑過或觸碰即暫停 · 點擊前往觀賞',
@@ -1768,9 +1768,9 @@ const C = {
     winBody: 'Winning entries from the 2025 competition are archived on MOFA\'s dedicated Instagram — click any winner to watch.',
     winBtn: 'Visit the MOFA Instagram hub',
     winClipLabel: 'Winning short',
-    win26Kicker: 'Finding Taiwan 2.0 / 2026 Winners',
-    win26Headline: 'Taiwan has a story.',
-    win26SideTitle: '2026 Winners',
+    win26Kicker: 'Finding Taiwan 2.0',
+    win26Headline: '2026 Winners',
+    win26Sub: 'A different Taiwan, through the world\u2019s lens.',
     win26SideBody: 'Thirteen films, thirteen ways of seeing Taiwan.',
     win26SideBtn: 'Full winners list',
     win26Hint: 'Hover or touch to pause · click to watch',
@@ -2173,10 +2173,10 @@ function renderWinners2026() {
 
   txt('win26-kicker', t.win26Kicker);
   txt('win26-headline', t.win26Headline);
+  txt('win26-sub', t.win26Sub);
   const headline = document.getElementById('win26-headline');
   if (headline) headline.insertAdjacentHTML('beforeend',
     '<svg class="w26-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.9 6.3 4.8 10.2 12 12-7.2 1.8-11.1 5.7-12 12-.9-6.3-4.8-10.2-12-12C7.2 10.2 11.1 6.3 12 0z"/></svg>');
-  txt('win26-side-title', t.win26SideTitle);
   txt('win26-side-body', t.win26SideBody);
   txt('win26-side-btn', t.win26SideBtn + ' \u2197');
   txt('win26-hint', t.win26Hint);
