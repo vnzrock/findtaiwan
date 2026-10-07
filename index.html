@@ -291,10 +291,15 @@
   @keyframes w26Marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
 
   /* 一張得獎卡：獎項標籤在圖上方、劇照保留原始比例、片名與創作者在圖片外 */
-  /* 卡片寬度 = 固定高度 × 劇照本身的長寬比，圖才不會被拉寬留黑邊，也保留原始構圖 */
-  .w26-card { flex:none; display:block; text-decoration:none; color:inherit; width:calc(var(--h) * var(--ar,1.5)); max-width:min(80vw,760px); }
-  .w26-chip { display:inline-block; padding:6px 14px; background:#fdf8ef; color:#0d2747; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:800; font-size:12px; letter-spacing:0.06em; white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis; }
-  .w26-fig { position:relative; display:block; height:var(--h); width:100%; background:linear-gradient(160deg,#173a6b,#0d2747); overflow:hidden; }
+  /* 卡片寬度 = 固定高度 × 劇照比例，但同時設寬度上限：橫式會壓到上限、高度跟著縮，
+     直式維持滿高。兩者面積因此接近，橫的不會一枝獨秀，而且全程不裁切。 */
+  .w26-card { flex:none; display:block; text-decoration:none; color:inherit; --maxw:clamp(230px,29vw,430px); --fw:min(calc(var(--h) * var(--ar,1.5)), var(--maxw), 80vw); width:max(var(--fw), 190px); }
+  .w26-slot { display:flex; flex-direction:column; justify-content:center; align-items:center; height:calc(var(--h) + 30px); }
+  /* 標籤與劇照綁成一組：一起置中、左緣對齊，窄的直式圖在較寬的卡片裡才不會歪 */
+  .w26-stack { width:var(--fw); }
+  .w26-chip { display:inline-block; height:30px; line-height:30px; padding:0 14px; background:#fdf8ef; color:#0d2747; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:800; font-size:12px; letter-spacing:0.06em; white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis; }
+  .w26-stack .w26-chip { max-width:100%; }
+  .w26-fig { position:relative; display:block; width:100%; aspect-ratio:var(--ar,1.5); max-height:var(--h); background:linear-gradient(160deg,#173a6b,#0d2747); overflow:hidden; }
   .w26-fig img { display:block; width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.2,.7,.2,1); }
   .w26-card:hover .w26-fig img { transform:scale(1.04); }
   .w26-cap { display:flex; align-items:center; gap:14px; margin-top:16px; }
@@ -2184,6 +2189,12 @@ function makeWinnerCard26(w, t) {
   img.onerror = () => { img.remove(); }; // 抓不到就留深藍底，維持預設比例
   img.src = winnerStill(w.still);
   fig.appendChild(img);
+  const stack = document.createElement('span');
+  stack.className = 'w26-stack';
+  stack.appendChild(chip); stack.appendChild(fig);
+  const slot = document.createElement('span');
+  slot.className = 'w26-slot';
+  slot.appendChild(stack);
 
   const cap = document.createElement('span');
   cap.className = 'w26-cap';
@@ -2195,7 +2206,7 @@ function makeWinnerCard26(w, t) {
   const play = document.createElement('span'); play.className = 'w26-play';
   cap.appendChild(capText); cap.appendChild(play);
 
-  card.appendChild(chip); card.appendChild(fig); card.appendChild(cap);
+  card.appendChild(slot); card.appendChild(cap);
   return card;
 }
 
