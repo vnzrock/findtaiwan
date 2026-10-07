@@ -284,7 +284,7 @@
   .w26-sidebtn:hover { background:#fdf8ef; color:#0d2747; border-color:#fdf8ef; }
 
   /* 跑馬燈本體 — 滿版出血，兩端淡出；滑過、觸碰、捲出畫面都會停 */
-  .w26-reel { position:relative; margin:clamp(34px,4.6vw,58px) calc(50% - 50vw) 0; min-height:calc(var(--h) + 124px); overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); }
+  .w26-reel { position:relative; margin:clamp(34px,4.6vw,58px) calc(50% - 50vw) 0; min-height:calc(var(--h) + 136px); overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); }
   .w26-track { display:flex; align-items:flex-start; gap:clamp(14px,1.8vw,24px); width:max-content; padding:0 clamp(18px,4vw,40px); animation:w26Marquee 78s linear infinite; will-change:transform; opacity:0; transition:opacity .45s ease; }
   .w26-track.is-ready { opacity:1; }
   .w26-reel:hover .w26-track, .w26-track.paused { animation-play-state:paused; }
@@ -293,8 +293,16 @@
   /* 一張得獎卡：獎項標籤在圖上方、劇照保留原始比例、片名與創作者在圖片外 */
   /* 卡片寬度 = 固定高度 × 劇照比例，但同時設寬度上限：橫式會壓到上限、高度跟著縮，
      直式維持滿高。兩者面積因此接近，橫的不會一枝獨秀，而且全程不裁切。 */
-  .w26-card { flex:none; display:block; text-decoration:none; color:inherit; --maxw:clamp(230px,29vw,430px); --fw:min(calc(var(--h) * var(--ar,1.5)), var(--maxw), 80vw); width:max(var(--fw), 190px); }
-  .w26-slot { display:flex; flex-direction:column; justify-content:center; align-items:center; height:calc(var(--h) + 30px); }
+  .w26-card { flex:none; display:block; text-decoration:none; color:inherit; --maxw:clamp(220px,26.5vw,390px); --fw:min(calc(var(--h) * var(--ar,1.5)), var(--maxw), 80vw); width:max(var(--fw), 190px); }
+  .w26-slot { display:flex; flex-direction:column; justify-content:center; align-items:center; height:calc(var(--h) + 62px); }
+  /* 冠亞季軍的裝飾圖示；其餘獎項留同高的空列，獎項標籤才會對齊同一條線 */
+  .w26-crest { display:flex; align-items:flex-end; gap:5px; height:32px; padding-left:2px; }
+  .w26-crest svg { display:block; }
+  .w26-crest .ic-crown { width:26px; height:26px; }
+  .w26-crest .ic-star { width:22px; height:22px; margin-bottom:1px; }
+  .w26-crest .ic-spark { width:9px; height:9px; margin-bottom:13px; }
+  .w26-crest.t-grand { fill:#ff8a7a; }
+  .w26-crest.t-second, .w26-crest.t-third { fill:#fdf8ef; }
   /* 標籤與劇照綁成一組：一起置中、左緣對齊，窄的直式圖在較寬的卡片裡才不會歪 */
   .w26-stack { width:var(--fw); }
   .w26-chip { display:inline-block; height:30px; line-height:30px; padding:0 14px; background:#fdf8ef; color:#0d2747; font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:800; font-size:12px; letter-spacing:0.06em; white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis; }
@@ -2163,6 +2171,14 @@ function preloadWinnerStills(done) {
 }
 
 // 一張得獎卡：獎項標籤在圖上方、劇照保留原始比例（固定高度、寬度隨比例）、片名與創作者在圖片外
+// 冠亞季軍的裝飾圖示：首獎珊瑚色皇冠加一顆小星芒、貳獎皇冠、參獎星星
+const W26_CREST = { grand: ['crown', 'spark'], second: ['crown'], third: ['star'] };
+const W26_ICON = {
+  crown: '<svg class="ic-crown" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.6l3.7 5.6L21.2 5.6 19.4 18H4.6L2.8 5.6 8.3 9.2z"/></svg>',
+  star:  '<svg class="ic-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.4l2.95 5.98 6.6.96-4.78 4.66 1.13 6.57L12 17.47l-5.9 3.1 1.13-6.57L2.45 9.34l6.6-.96z"/></svg>',
+  spark: '<svg class="ic-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.9 6.3 4.8 10.2 12 12-7.2 1.8-11.1 5.7-12 12-.9-6.3-4.8-10.2-12-12C7.2 10.2 11.1 6.3 12 0z"/></svg>',
+};
+
 function makeWinnerCard26(w, t) {
   const card = document.createElement('a');
   card.className = 'w26-card';
@@ -2189,9 +2205,14 @@ function makeWinnerCard26(w, t) {
   img.onerror = () => { img.remove(); }; // 抓不到就留深藍底，維持預設比例
   img.src = winnerStill(w.still);
   fig.appendChild(img);
+  const crest = document.createElement('span');
+  crest.className = 'w26-crest t-' + w.tier;
+  crest.setAttribute('aria-hidden', 'true');
+  crest.innerHTML = (W26_CREST[w.tier] || []).map(k => W26_ICON[k]).join('');
+
   const stack = document.createElement('span');
   stack.className = 'w26-stack';
-  stack.appendChild(chip); stack.appendChild(fig);
+  stack.appendChild(crest); stack.appendChild(chip); stack.appendChild(fig);
   const slot = document.createElement('span');
   slot.className = 'w26-slot';
   slot.appendChild(stack);
