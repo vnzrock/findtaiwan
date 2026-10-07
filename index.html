@@ -256,11 +256,16 @@
     .award-srow { padding:13px 16px; }
   }
 
-  /* 2025 winners — slow auto-scrolling reel, pauses on hover / touch */
-  #winners-grid { overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent); mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent); }
+  /* winners reels（2026 本屆 / 2025 首屆）— 緩慢自動橫向輪轉，滑過或觸碰時暫停 */
+  #winners-grid, #winners26-grid { overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent); mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent); }
   .win-track { display:flex; gap:16px; width:max-content; padding-bottom:8px; animation:winMarquee 55s linear infinite; will-change:transform; }
-  #winners-grid:hover .win-track, .win-track.paused { animation-play-state:paused; }
+  #winners-grid:hover .win-track, #winners26-grid:hover .win-track, .win-track.paused { animation-play-state:paused; }
   @keyframes winMarquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  /* 本屆卡片放的是作品名稱，比 2025 的創作者名字長很多，截到三行為止 */
+  .win-card .wc-name { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; word-break:break-word; }
+  .win-card .wc-country { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }
+  /* 手機卡片只有 150px 寬，標題收成兩行才不會疊到中間的播放鍵 */
+  @media (max-width:600px) { .win-card .wc-name { font-size:13.5px !important; -webkit-line-clamp:2; } .win-card .wc-country { font-size:11px !important; } }
 
   /* 本屆報名作品 — 響應式方格，作品變多也不會爆版；手機 2 欄 → 桌機最多 5 欄 */
   #entries-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
@@ -1345,6 +1350,25 @@
   </div>
 </section>
 
+<!-- 5.5 2026 WINNERS — 本屆得獎作品輪轉牆（所有「得獎名單」CTA 都指到這裡） -->
+<section id="winners-2026" style="background:#fff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);scroll-margin-top:70px;">
+  <div style="max-width:1180px;margin:0 auto;">
+    <div style="display:flex;flex-wrap:wrap;gap:22px;align-items:flex-end;justify-content:space-between;">
+      <div style="max-width:680px;">
+        <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat';font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#1574e6;">
+          <span style="width:22px;height:2px;background:#38e58c;"></span><span id="win26-tag"></span>
+        </div>
+        <h2 id="win26-title" data-reveal style="font-family:'Noto Sans TC';font-weight:900;font-style:italic;font-size:clamp(26px,3.6vw,42px);color:#0d2747;margin:16px 0 14px;"></h2>
+        <p id="win26-body" style="font-family:'Noto Sans TC';font-size:16px;line-height:1.85;color:#5a6a82;margin:0;"></p>
+      </div>
+      <a id="win26-btn" href="#winners-cards" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-family:'Noto Sans TC';font-weight:700;font-size:15px;padding:14px 28px;border:1.5px solid #1574e6;background:#fff;color:#1574e6;border-radius:999px;white-space:nowrap;transition:background .2s,color .2s,transform .2s,box-shadow .2s;" onmouseenter="this.style.background='#1574e6';this.style.color='#fff';this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 26px rgba(21,116,230,0.28)';" onmouseleave="this.style.background='#fff';this.style.color='#1574e6';this.style.transform='';this.style.boxShadow='';">
+        <span id="win26-btn-text"></span> →
+      </a>
+    </div>
+    <div id="winners26-grid" style="margin-top:clamp(30px,4vw,48px);"></div>
+  </div>
+</section>
+
 <!-- 6. 2025 WINNERS -->
 <section id="winners" style="background:#f3f8ff;padding:clamp(60px,8.5vw,116px) clamp(18px,4vw,40px);">
   <div style="max-width:1180px;margin:0 auto;">
@@ -1563,6 +1587,12 @@ const C = {
     winBody: '首屆競賽得獎作品已於外交部Instagram 專區完整收錄，呈現世界各地創作者鏡頭下的台灣風貌！點擊任一作品即可前往觀賞。',
     winBtn: '前往外交部 Instagram 專區',
     winClipLabel: '得獎短片',
+    win26Tag: '2026 得獎作品 / 2026 Winners',
+    win26Title: '2026 得獎作品',
+    win26Body: '本屆競賽得獎作品出爐囉！看看來自全球各地的創作者如何呈現台灣與世界的精采連結！點擊任一作品即可前往觀賞。',
+    win26Btn: '查看得獎圖卡',
+    win26Watch: '觀看作品',
+    win26TierLabels: { grand: '首獎', second: '貳獎', third: '參獎', merit: '佳作', gh1: '光華 壹獎', gh2: '光華 貳獎', gh3: '光華 參獎' },
     winTierLabels: { grand: '首獎', second: '二獎', third: '三獎', merit: '佳作' },
     winWatch: '前往 Instagram 觀賞',
     soonLabel: 'Coming Soon',
@@ -1570,7 +1600,7 @@ const C = {
     newsShortlistBtn: '查看完整入圍名單',
     newsItems: [
       { date: '2026.09.30', tag: '活動花絮', title: '#FindingTAIWAN_2.0：Where We Connect 全球徵片競賽頒獎典禮精彩花絮', video: 'assets/video/awards-ceremony-highlights.mp4', poster: 'assets/video/awards-ceremony-highlights-poster.webp', body: '2026 年 9 月 24 日頒獎典禮現場紀錄。' },
-      { date: '2026.09.24', anchor: 'winners-2026', tag: '得獎名單公告', title: '#FindingTAIWAN_2.0全球徵片競賽得獎名單公告', images: ['assets/img/winners-2026/01-grand-second.webp', 'assets/img/winners-2026/02-third.webp', 'assets/img/winners-2026/03-honorable-mention.webp', 'assets/img/winners-2026/04-panorama-special.webp'], bodyHtml: '<span class="news-note">首獎、貳獎、參獎、佳作及光華特別獎得獎名單如下，點擊圖卡可放大檢視。</span>' },
+      { date: '2026.09.24', anchor: 'winners-cards', tag: '得獎名單公告', title: '#FindingTAIWAN_2.0全球徵片競賽得獎名單公告', images: ['assets/img/winners-2026/01-grand-second.webp', 'assets/img/winners-2026/02-third.webp', 'assets/img/winners-2026/03-honorable-mention.webp', 'assets/img/winners-2026/04-panorama-special.webp'], bodyHtml: '<span class="news-note">首獎、貳獎、參獎、佳作及光華特別獎得獎名單如下，點擊圖卡可放大檢視。</span>' },
       { date: '2026.09.10', tag: '入圍名單公告', title: '#FindingTAIWAN_2.0全球徵片競賽決選入圍名單公告', bodyHtml: '<span class="news-note">依報名序號排列 · 非競賽名次。</span>', shortlist: true },
       { date: '2026.08.20', tag: '直播公告', title: '#FindingTAIWAN_2.0：Where We Connect 全球徵片競賽頒獎典禮直播公告', image: 'assets/img/news-awards-ceremony.webp', bodyHtml: '<strong>直播資訊</strong><br>日期及時間｜2026年9月24日（四）下午2時<br>Facebook｜<a href="https://www.facebook.com/mofa.gov.tw?locale=zh_TW" target="_blank" rel="noopener noreferrer">外交部 Ministry of Foreign Affairs, ROC (Taiwan)</a><br>YouTube｜<a href="https://youtube.com/@mofa_taiwan?si=BmF26x-IY6lUzbBn" target="_blank" rel="noopener noreferrer">MOFA Taiwan</a>' },
       { date: '2026.08.05', tag: '影片', title: '一分鐘看懂競賽！#FindingTAIWAN_2.0全球徵片競賽懶人包', video: 'assets/video/finding-taiwan-guide.mp4', poster: 'assets/video/finding-taiwan-guide-poster.webp' },
@@ -1697,6 +1727,12 @@ const C = {
     winBody: 'Winning entries from the 2025 competition are archived on MOFA\'s dedicated Instagram — click any winner to watch.',
     winBtn: 'Visit the MOFA Instagram hub',
     winClipLabel: 'Winning short',
+    win26Tag: '2026 Winners',
+    win26Title: '2026 Winners',
+    win26Body: 'The winning entries of this year\u2019s competition are here! Discover how creators from around the world showcase the exciting connections between Taiwan and the global community. Click on any entry to watch.',
+    win26Btn: 'See the award cards',
+    win26Watch: 'Watch',
+    win26TierLabels: { grand: 'Grand Prize', second: 'Second Prize', third: 'Third Prize', merit: 'Honorable Mention', gh1: 'Panorama 1st', gh2: 'Panorama 2nd', gh3: 'Panorama 3rd' },
     winTierLabels: { grand: 'Grand Prize', second: 'Second Prize', third: 'Third Prize', merit: 'Honorable Mention' },
     winWatch: 'Watch on Instagram',
     soonLabel: 'Coming Soon',
@@ -1704,7 +1740,7 @@ const C = {
     newsShortlistBtn: 'See the full shortlist',
     newsItems: [
       { date: '2026.09.30', tag: 'Highlights', title: '#FindingTAIWAN_2.0: Where We Connect International Short Film Competition — Awards Ceremony Highlights', video: 'assets/video/awards-ceremony-highlights.mp4', poster: 'assets/video/awards-ceremony-highlights-poster.webp', body: 'Filmed at the awards ceremony on September 24, 2026.' },
-      { date: '2026.09.24', anchor: 'winners-2026', tag: 'Winners Announcement', title: '#FindingTAIWAN_2.0 International Short Film Competition Winners Announcement', images: ['assets/img/winners-2026/01-grand-second.webp', 'assets/img/winners-2026/02-third.webp', 'assets/img/winners-2026/03-honorable-mention.webp', 'assets/img/winners-2026/04-panorama-special.webp'], bodyHtml: '<span class="news-note">The Grand, Second, Third, Honorable Mention and Taiwan Panorama Special Award winners are listed below — click any card to enlarge.</span>' },
+      { date: '2026.09.24', anchor: 'winners-cards', tag: 'Winners Announcement', title: '#FindingTAIWAN_2.0 International Short Film Competition Winners Announcement', images: ['assets/img/winners-2026/01-grand-second.webp', 'assets/img/winners-2026/02-third.webp', 'assets/img/winners-2026/03-honorable-mention.webp', 'assets/img/winners-2026/04-panorama-special.webp'], bodyHtml: '<span class="news-note">The Grand, Second, Third, Honorable Mention and Taiwan Panorama Special Award winners are listed below — click any card to enlarge.</span>' },
       { date: '2026.09.10', tag: 'Shortlist Announcement', title: '#FindingTAIWAN_2.0 International Short Film Competition Shortlists Announced', bodyHtml: '<span class="news-note">（Shortlists are listed by submission number, not competition ranking.）</span>', shortlist: true },
       { date: '2026.08.20', tag: 'Livestream Announcement', title: '#FindingTAIWAN_2.0: Where We Connect International Short Film Competition Awards Ceremony Livestream', image: 'assets/img/news-awards-ceremony.webp', bodyHtml: '<strong>Livestream Information</strong><br>Date &amp; Time｜Thursday, September 24, 2026, at 2:00 PM (Taiwan Time)<br>Facebook｜<a href="https://www.facebook.com/mofa.gov.tw?locale=zh_TW" target="_blank" rel="noopener noreferrer">外交部 Ministry of Foreign Affairs, ROC (Taiwan)</a><br>YouTube｜<a href="https://youtube.com/@mofa_taiwan?si=BmF26x-IY6lUzbBn" target="_blank" rel="noopener noreferrer">MOFA Taiwan</a>' },
       { date: '2026.08.05', tag: 'Video', title: 'Your Quick Guide to the #FindingTAIWAN_2.0 International Short Film Competition', video: 'assets/video/finding-taiwan-guide.mp4', poster: 'assets/video/finding-taiwan-guide-poster.webp' },
@@ -1765,6 +1801,33 @@ const WINNER_GRADS = [
   'linear-gradient(150deg,#8be0b8,#2f93f5)',
   'linear-gradient(150deg,#1574e6,#0a3f87)'
 ];
+
+// ▼ 2026 本屆得獎作品 — 依獎項排序，劇照沿用報名時提供的 Google Drive 檔案
+//   tier：grand 首獎 / second 貳獎 / third 參獎 / merit 佳作 / gh1・gh2・gh3 光華特別獎壹貳參
+const WINNERS_2026 = [
+  { tier: 'grand',  title: 'The Most Beautiful Scenery in Taiwan',                creator: '陳昀＆梁嘉軒',                 url: 'https://www.instagram.com/reel/DcS0Tc2SL4u/', still: '1Uw8YJYF0ZeDNUvtvBNL2htfqFrQt1nIp' },
+  { tier: 'second', title: 'Taiwan, A Thousand Small Moments',                    creator: 'SilkyRonTheRoad',             url: 'https://youtu.be/qlyLs-W1SWo',                still: '1e8XW34Qz1WUFBYZQYu_Jz0oYLoVBDKCo' },
+  { tier: 'second', title: 'Healing through the Taiwan Loop 環島',                 creator: 'Brendan Sutton',              url: 'https://www.instagram.com/reel/Dcrr3K3SCzV/', still: '1FcYQ3jP4gMYu-RVa2NXz41pbRiTn5F31' },
+  { tier: 'third',  title: '臺灣我的家',                                           creator: 'Florian Payrou（福洛里安）',    url: 'https://youtu.be/l6DAkAG4OZA',                still: '1cdNcLbFzTZm_4HEcixpOiw0RXp64Gh0k' },
+  { tier: 'third',  title: 'Written in Taiwan 寫在台灣',                            creator: 'Team Nitro',                  url: 'https://youtu.be/sxbMQvCwwMg',                still: '1KSRMXC7eJa8ssOCJKCb1y5UzkZXPap_T' },
+  { tier: 'third',  title: 'Nothing was supposed to bring me to Taiwan',          creator: 'BASTIAN GABIN',               url: 'https://www.instagram.com/reel/Db0P3YLysEC/', still: '1ENeJkpPYR-tXLuxYqlAwg5CXl2GOh455' },
+  { tier: 'merit',  title: 'Small Island, Big Heart 小小的島 大大的心',              creator: 'chrislovesbeefnoodles',       url: 'https://www.instagram.com/reel/DcnyHj6JkQN/', still: '1atMmRJaYaD2umNAXRjQLGkCmEbiBrqGb' },
+  { tier: 'merit',  title: '如果人生是一個寶箱，你會在台灣找到什麼？',                  creator: '波蘭Anna',                     url: 'https://www.instagram.com/p/Dcpmt0Cp2dE/',    still: '1WVvnCd-NElwkgq3erB5UMtV1dOxyfWJB' },
+  { tier: 'merit',  title: 'Born in South Africa, Made in Taiwan',                creator: 'Albertus van Aswegen',        url: 'https://www.youtube.com/shorts/MWw9DYscu14',  still: '1lNj5TrWMkJYn8CQvY68g9kqWWSWLP6vE' },
+  { tier: 'merit',  title: "What I'd Redo in Taiwan ／ 如果能重來，我會在台灣",        creator: 'Jorge Benavente Rico（班尼可）', url: 'https://youtu.be/GDbyDhr6OWg',                still: '1Wc6R317s1D6TdxTRBPv-SsL42O3dGxQp' },
+  { tier: 'gh1',    title: 'Taiwanese Iron Horse 臺灣鐵馬',                         creator: 'TomTom.Recalculating',        url: 'https://www.instagram.com/reel/DcVcQ9lvfqq/', still: '1rt1eElm5JvFMXF5fYMRyk9r7r9HEeG4H' },
+  { tier: 'gh2',    title: "Taiwan's Champagne-Rice Valley 米中的香檳",             creator: 'Reece Andrew Ayers 倪瑞森',    url: 'https://www.instagram.com/reel/DcnCHnxxxag/', still: '1zyHePKVMrOSkbVqNO5ryT-ltCjlM2v-t' },
+  { tier: 'gh3',    title: '習以為常 / Nobody Had To',                              creator: 'statusKuo',                   url: 'https://youtu.be/ibLv5SaC6kw',                still: '1T8IgtK3_dRNw1Qvjfv3a_efTX3Dcep02' },
+];
+const WIN26_GRAD = {
+  grand:  'linear-gradient(150deg,#f6b73c,#e98a14)',
+  second: 'linear-gradient(150deg,#9fb2c9,#6f8298)',
+  third:  'linear-gradient(150deg,#cf9b6b,#a9743f)',
+  merit:  'linear-gradient(150deg,#2f93f5,#0f63cf)',
+  gh1:    'linear-gradient(150deg,#38e58c,#19b56a)',
+  gh2:    'linear-gradient(150deg,#38e58c,#19b56a)',
+  gh3:    'linear-gradient(150deg,#38e58c,#19b56a)',
+};
 
 // ▼ 2025 得獎作品 Instagram Reel 連結（留空字串 = 顯示佔位卡）
 const WINNERS_2025 = [
@@ -2021,6 +2084,59 @@ function makeShortlistCard(e, t, i, opts) {
 
   card.appendChild(frame); card.appendChild(title); card.appendChild(creator); card.appendChild(badge);
   return card;
+}
+
+// 得獎輪轉牆的單張卡片 — 2026 本屆與 2025 首屆共用；2026 傳 4/5 配合橫式劇照，2025 維持 9/16 直式 Reel
+function makeReelCard(o) {
+  const card = document.createElement('a');
+  card.className = 'win-card';
+  card.href = o.url; card.target = '_blank'; card.rel = 'noopener';
+  card.style.cssText = 'position:relative;flex:none;width:clamp(150px,20vw,220px);aspect-ratio:' + (o.ratio || '9/16') + ';border-radius:14px;overflow:hidden;text-decoration:none;box-shadow:0 12px 30px rgba(13,59,128,0.18);background:' + o.grad + ';transition:transform 0.32s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.32s ease;';
+  card.onmouseenter = () => { card.style.transform = 'scale(1.06) translateY(-4px)'; card.style.boxShadow = '0 28px 56px rgba(13,59,128,0.32)'; };
+  card.onmouseleave = () => { card.style.transform = ''; card.style.boxShadow = '0 12px 30px rgba(13,59,128,0.18)'; };
+  const coverHtml = o.cover
+    ? '<img src="' + o.cover + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display=\'none\'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">'
+    : '';
+  card.innerHTML =
+    coverHtml +
+    '<span class="wc-badge" style="position:absolute;top:12px;left:12px;font-family:\'Montserrat\',\'Noto Sans TC\';font-weight:700;font-size:11px;letter-spacing:0.06em;color:#0d2747;background:rgba(255,255,255,0.94);padding:4px 11px;border-radius:999px;"></span>' +
+    '<span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">' +
+      '<span style="width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.20);backdrop-filter:blur(6px);border:2px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;">' +
+        '<span style="width:0;height:0;border-style:solid;border-width:9px 0 9px 17px;border-color:transparent transparent transparent #fff;margin-left:4px;"></span>' +
+      '</span>' +
+    '</span>' +
+    '<span style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.10) 0%,transparent 30%,transparent 50%,rgba(13,40,71,0.92) 100%);"></span>' +
+    '<span style="position:absolute;left:0;right:0;bottom:0;padding:12px 13px 14px;">' +
+      '<span class="wc-name" style="font-family:\'Noto Sans TC\';font-weight:900;font-size:15px;color:#fff;line-height:1.35;"></span>' +
+      '<span style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:5px;">' +
+        '<span class="wc-country" style="font-family:\'Noto Sans TC\';font-size:11.5px;color:rgba(255,255,255,0.78);"></span>' +
+        '<span class="wc-watch" style="font-family:\'Montserrat\';font-weight:700;font-size:9.5px;color:rgba(255,255,255,0.9);white-space:nowrap;flex:none;"></span>' +
+      '</span>' +
+    '</span>';
+  card.querySelector('.wc-badge').textContent = o.label;
+  card.querySelector('.wc-name').textContent = o.name;
+  card.querySelector('.wc-country').textContent = o.sub;
+  card.querySelector('.wc-watch').textContent = o.watch + ' \u2197';
+  card.setAttribute('aria-label', o.label + ' \u00b7 ' + o.name + ' \u2014 ' + o.sub);
+  return card;
+}
+
+// 把一組卡片鋪成無縫輪轉的跑馬燈：同一組連放兩次，配合 -50% 位移接回原點
+function renderWinnersReel(grid, items) {
+  if (!grid) return;
+  grid.innerHTML = '';
+  const track = document.createElement('div');
+  track.className = 'win-track';
+  for (let pass = 0; pass < 2; pass++) items.forEach((o) => track.appendChild(makeReelCard(o)));
+  grid.appendChild(track);
+  // 滑過（桌機）與觸碰中（手機）暫停，卡片才點得到
+  const pause = () => track.classList.add('paused');
+  const resume = () => track.classList.remove('paused');
+  grid.addEventListener('mouseenter', pause);
+  grid.addEventListener('mouseleave', resume);
+  grid.addEventListener('touchstart', pause, { passive: true });
+  grid.addEventListener('touchend', resume);
+  grid.addEventListener('touchcancel', resume);
 }
 
 function renderShortlist() {
@@ -2596,60 +2712,24 @@ function render() {
   }
 
   // winners
+  txt('win26-tag', t.win26Tag);
+  txt('win26-title', t.win26Title);
+  txt('win26-body', t.win26Body);
+  txt('win26-btn-text', t.win26Btn);
   txt('win-tag', t.winTag);
   txt('win-title', t.winTitle);
   txt('win-body', t.winBody);
   txt('win-btn-text', t.winBtn);
 
-  const wGrid = document.getElementById('winners-grid');
-  wGrid.innerHTML = '';
-  const tierLabels = t.winTierLabels;
-  const makeWinnerCard = (w) => {
-    const country = currentLang === 'en' ? w.countryEn : w.country;
-    const card = document.createElement('a');
-    card.className = 'win-card';
-    card.href = w.url; card.target = '_blank'; card.rel = 'noopener';
-    card.style.cssText = 'position:relative;flex:none;width:clamp(150px,20vw,220px);aspect-ratio:9/16;border-radius:14px;overflow:hidden;text-decoration:none;box-shadow:0 12px 30px rgba(13,59,128,0.18);background:' + WIN_TIER_GRAD[w.tier] + ';transition:transform 0.32s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.32s ease;';
-    card.onmouseenter = () => { card.style.transform = 'scale(1.06) translateY(-4px)'; card.style.boxShadow = '0 28px 56px rgba(13,59,128,0.32)'; };
-    card.onmouseleave = () => { card.style.transform = ''; card.style.boxShadow = '0 12px 30px rgba(13,59,128,0.18)'; };
-    const coverHtml = w.cover
-      ? '<img src="' + w.cover + '" alt="" loading="lazy" onerror="this.style.display=\'none\'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">'
-      : '';
-    card.innerHTML =
-      coverHtml +
-      '<span style="position:absolute;top:12px;left:12px;font-family:\'Montserrat\',\'Noto Sans TC\';font-weight:700;font-size:11px;letter-spacing:0.06em;color:#0d2747;background:rgba(255,255,255,0.94);padding:4px 11px;border-radius:999px;">' + tierLabels[w.tier] + '</span>' +
-      '<span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">' +
-        '<span style="width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.20);backdrop-filter:blur(6px);border:2px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;">' +
-          '<span style="width:0;height:0;border-style:solid;border-width:9px 0 9px 17px;border-color:transparent transparent transparent #fff;margin-left:4px;"></span>' +
-        '</span>' +
-      '</span>' +
-      '<span style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.10) 0%,transparent 30%,transparent 50%,rgba(13,40,71,0.92) 100%);"></span>' +
-      '<span style="position:absolute;left:0;right:0;bottom:0;padding:12px 13px 14px;">' +
-        '<span class="wc-name" style="font-family:\'Noto Sans TC\';font-weight:900;font-size:15px;color:#fff;display:block;line-height:1.35;"></span>' +
-        '<span style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:5px;">' +
-          '<span class="wc-country" style="font-family:\'Noto Sans TC\';font-size:11.5px;color:rgba(255,255,255,0.78);"></span>' +
-          '<span style="font-family:\'Montserrat\';font-weight:700;font-size:9.5px;color:rgba(255,255,255,0.9);white-space:nowrap;">' + t.winWatch + ' ↗</span>' +
-        '</span>' +
-      '</span>';
-    card.querySelector('.wc-name').textContent = w.name;
-    card.querySelector('.wc-country').textContent = country;
-    return card;
-  };
-  const track = document.createElement('div');
-  track.className = 'win-track';
-  // two identical sets so the -50% marquee loops seamlessly
-  for (let pass = 0; pass < 2; pass++) {
-    WINNERS_2025.forEach((w) => track.appendChild(makeWinnerCard(w)));
-  }
-  wGrid.appendChild(track);
-  // pause on hover (desktop) and while touched (mobile) so cards are clickable
-  const pause = () => track.classList.add('paused');
-  const resume = () => track.classList.remove('paused');
-  wGrid.addEventListener('mouseenter', pause);
-  wGrid.addEventListener('mouseleave', resume);
-  wGrid.addEventListener('touchstart', pause, { passive: true });
-  wGrid.addEventListener('touchend', resume);
-  wGrid.addEventListener('touchcancel', resume);
+  renderWinnersReel(document.getElementById('winners26-grid'), WINNERS_2026.map((w) => ({
+    url: w.url, cover: shortlistCover(w.still), grad: WIN26_GRAD[w.tier],
+    label: t.win26TierLabels[w.tier], name: w.title, sub: w.creator, watch: t.win26Watch, ratio: '4/5',
+  })));
+
+  renderWinnersReel(document.getElementById('winners-grid'), WINNERS_2025.map((w) => ({
+    url: w.url, cover: w.cover, grad: WIN_TIER_GRAD[w.tier],
+    label: t.winTierLabels[w.tier], name: w.name, sub: currentLang === 'en' ? w.countryEn : w.country, watch: t.winWatch,
+  })));
 
   // news
   txt('news-tag', t.newsTag); txt('news-title', t.newsTitle); txt('news-body', t.newsBody);
@@ -2911,15 +2991,16 @@ function setupOffscreenPause() {
       entries.forEach(e => hd.classList.toggle('hd-paused', !e.isIntersecting));
     }, { rootMargin: '120px 0px' }).observe(hd);
   }
-  const wGrid = document.getElementById('winners-grid');
-  if (wGrid) {
+  ['winners26-grid', 'winners-grid'].forEach((id) => {
+    const wGrid = document.getElementById(id);
+    if (!wGrid) return;
     new IntersectionObserver((entries) => {
       entries.forEach(e => {
         const track = wGrid.querySelector('.win-track');
         if (track) track.style.animationPlayState = e.isIntersecting ? '' : 'paused';
       });
     }, { rootMargin: '120px 0px' }).observe(wGrid);
-  }
+  });
 }
 
 // build the Taiwan photo collage backdrop behind the awards section
