@@ -49,7 +49,9 @@
   html.intro-lock, html.intro-lock body { overflow:hidden !important; height:100%; overscroll-behavior:none; }
   #wi-overlay { position:fixed; inset:0; z-index:9999; background:#1574e6; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:opacity .5s ease; }
   #wi-overlay.is-out { opacity:0; pointer-events:none; }
-  #wi-overlay .wi-frame { width:min(100vw, calc(100vh * 16 / 9)); }
+  /* 動畫置中，留一圈藍底；不要撐滿整個畫面 */
+  #wi-overlay .wi-frame { width:min(60vw, calc(52vh * 16 / 9), 820px); }
+  @media (max-width:700px) { #wi-overlay .wi-frame { width:min(86vw, calc(46vh * 16 / 9)); } }
   #wi-skip { position:absolute; right:clamp(16px,3vw,32px); bottom:clamp(16px,3vw,32px); font-family:'Montserrat','Noto Sans TC',sans-serif; font-weight:700; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.72); background:none; border:0; padding:8px; cursor:pointer; }
   #wi-skip:hover { color:#fff; }
   html { -webkit-text-size-adjust:100%; }
